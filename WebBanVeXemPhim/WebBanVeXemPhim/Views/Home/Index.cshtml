@@ -1,0 +1,596 @@
+﻿@model IEnumerable<WebBanVeXemPhim.Models.Phim>
+@{
+    ViewData["Title"] = "Trang Chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* Đảm bảo nền chính và nền phần phim có cùng màu */
+    .container.mt-4,
+    .container.mt-4 .movie-section {
+        background-color: #f8f9fa !important; /* Màu nền giống nhau */
+        border: none; /* Xóa viền nếu có */
+    }
+
+    /* Đảm bảo không có đường viền hay hiệu ứng bóng */
+    .movie-card {
+        background-color: transparent !important;
+        box-shadow: none !important; /* Loại bỏ bóng nếu có */
+        border: none !important; /* Loại bỏ viền nếu có */
+    }
+
+    /* Hiệu ứng chuyển slide mượt mà */
+    .carousel-fade .carousel-item {
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+    }
+
+        .carousel-fade .carousel-item.active {
+            opacity: 1;
+        }
+
+    /* Điều chỉnh hình ảnh */
+    .banner-img {
+        object-fit: cover;
+        height: 400px; /* Điều chỉnh kích thước theo trang */
+        border-radius: 12px;
+    }
+
+    .container {
+        max-width: 80%;
+        margin: 0 auto; /* Căn giữa */
+    }
+    /* Đảm bảo poster có cùng tỷ lệ */
+    .movie-poster {
+        position: relative;
+        overflow: hidden;
+        border-radius: 25px;
+    }
+
+        .movie-poster img {
+            width: 100%;
+            height: 400px; /* Điều chỉnh nếu cần */
+            object-fit: cover;
+            transition: all 0.3s ease-in-out;
+        }
+
+    .movie-card {
+        max-width: 250px
+    }
+
+        .movie-card:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+    /* Hiệu ứng làm tối khi hover */
+    .movie-poster::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 8px;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0); /* Ban đầu trong suốt */
+        transition: background 0.3s ease-in-out;
+    }
+
+    .play-icon {
+        font-size: 50px;
+        color: white;
+        border-radius: 50%;
+        padding: 15px;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+        z-index: 2;
+    }
+
+    /* Hiển thị nút play khi hover */
+    .movie-poster:hover .play-icon {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    /* Khi hover, làm tối nền */
+    .movie-poster:hover::after {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Badge độ tuổi */
+    .badge-age {
+        background-color: #ffc107; /* Vàng */
+        color: #000;
+        padding: 6px 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 6px;
+        z-index: 2;
+        position: relative;
+    }
+
+    .btn-buy-ticket {
+        width: 100%; /* Đảm bảo nút luôn rộng full */
+        background-color: #007bff; /* Màu xanh */
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+
+        .btn-buy-ticket:hover {
+            color: black;
+            background-color: #007bff; /* Màu xanh */
+        }
+
+    .movie-title:hover {
+        color: #ff5733 !important; /* Đổi màu thành cam khi hover */
+        text-shadow: 0px 0px 8px rgba(255, 87, 51, 0.7); /* Hiệu ứng phát sáng */
+    }
+
+    .tab-films > li.active {
+        border-bottom: 4px solid transparent;
+        border-image: linear-gradient(to right, #39adf0 0%, #075fa3 100%);
+        border-image-slice: 1;
+        border-width: 0px 0px 4px 0px;
+    }
+
+    .tab-films > li.active a h1 {
+        color: #03599d;
+    }
+
+    .nav-tabs a {
+        display: block;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .nav-tabs a h1 {
+        font-size: 30px;
+        color: black;
+        padding: .5rem;
+    }
+
+    .ngayHienThi.active {
+        border-bottom: 4px solid transparent;
+        border-image: linear-gradient(to right, #39adf0 0%, #075fa3 100%);
+        border-image-slice: 1;
+        border-width: 0px 0px 4px 0px;
+    }
+
+        .ngayHienThi.active span {
+            color: #03599d;
+        }
+
+</style>
+<script>
+    function openVideoModal(videoUrl, movieTitle) {
+        var videoModal = new bootstrap.Modal(document.getElementById('videoModal'), {
+            keyboard: false
+        });
+
+        var iframeElement = document.getElementById("youtubeIframe");
+
+        // Lấy ID video từ link YouTube
+        let videoId = extractYouTubeId(videoUrl);
+        if (videoId) {
+            iframeElement.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            videoModal.show();
+        }
+
+        // Khi modal đóng, reset iframe để dừng video
+        document.getElementById("videoModal").addEventListener('hidden.bs.modal', function () {
+            iframeElement.src = "";
+        });
+        var modalTitleElement = document.getElementById("modal_title");
+
+        // Cập nhật tiêu đề phim trong modal
+        modalTitleElement.innerText = "Trailer - " + movieTitle;
+    }
+
+    // Hàm trích xuất ID từ link YouTube (Hỗ trợ cả dạng dài & rút gọn)
+    function extractYouTubeId(url) {
+        let match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/))([a-zA-Z0-9_-]+)/);
+        return match ? match[1] : null;
+    }
+
+
+    // Hàm trích xuất ID từ link YouTube
+    function extractYouTubeId(url) {
+        let match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|.*\/))([a-zA-Z0-9_-]+)/);
+        return match ? match[1] : null;
+    }
+    function showMovies(section) {
+        // Ẩn tất cả các phần
+        document.querySelectorAll('.movie-section').forEach(section => section.classList.add('d-none'));
+
+        // Hiển thị phần được chọn
+        document.getElementById(section).classList.remove('d-none');
+
+        // Xóa class 'active' khỏi tất cả các tab
+        document.querySelectorAll('.tab-films li').forEach(tab => tab.classList.remove('active'));
+
+        // Thêm class 'active' vào tab được nhấn
+        if (section === 'comingSoon') {
+            document.querySelector('.tab-films li:nth-child(1)').classList.add('active');
+        } else if (section === 'nowShowing') {
+            document.querySelector('.tab-films li:nth-child(2)').classList.add('active');
+        } else {
+            document.querySelector('.tab-films li:nth-child(3)').classList.add('active');
+        }
+    }
+        document.addEventListener("DOMContentLoaded", function () {
+        // Khi bấm nút "MUA VÉ", tự động chọn ngày hiện tại
+        document.querySelectorAll('.btn-buy-ticket').forEach(button => {
+            button.addEventListener("click", function () {
+                var today = new Date();
+                var todayFormatted = today.getFullYear() + "-" +
+                        String(today.getMonth() + 1).padStart(2, '0') + "-" +
+                    String(today.getDate()).padStart(2, '0');
+
+                var MaPhim = this.getAttribute("data-phim-id"); // Lấy mã phim từ button
+                console.log("Mở modal phim:", MaPhim, "Ngày truyền:", todayFormatted);
+
+                ClickNgay(MaPhim, todayFormatted); // Hiển thị suất chiếu của ngày hôm nay
+            });
+        });
+    });
+
+    function ClickNgay(MaPhim, Ngaychieu) {
+        // Lấy modal tương ứng với phim đang mở
+        let modal = document.querySelector(`#ticketModal_${MaPhim}`);
+        if (!modal) {
+                console.warn(`Không tìm thấy modal cho MaPhim: ${MaPhim}`);
+            return;
+        }
+
+        // Bỏ class active ở tất cả các ngày trong modal đó
+            modal.querySelectorAll(".ngayHienThi").forEach(li => li.classList.remove("active"));
+
+        // Thêm class active vào ngày được click
+        let selectedDay = modal.querySelector(`.ngay-${Ngaychieu}`);
+        if (selectedDay) {
+                selectedDay.classList.add("active");
+        } else {
+            console.warn(`Không tìm thấy phần tử ngày: ngay-${Ngaychieu}`);
+        }
+
+        console.log("Ngày được click:", Ngaychieu);
+
+        // Ẩn tất cả suất chiếu trong modal đó
+        modal.querySelectorAll('.ngay-chieu').forEach(el => el.classList.add('d-none'));
+
+        // Hiển thị suất chiếu có cùng ngày
+        let elements = modal.querySelectorAll(`.ngay-${Ngaychieu}`);
+        if (elements.length > 0) {
+            elements.forEach(el => el.classList.remove('d-none'));
+            console.log("Hiển thị thành công:", elements);
+        } else {
+            console.warn("Không tìm thấy suất chiếu cho ngày:", Ngaychieu);
+        }
+    }
+
+</script>
+<!-- Banner (Carousel) -->
+<div id="bannerCarousel" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel" data-bs-interval="2500">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="2"></button>
+    </div>
+
+    <div class="carousel-inner rounded shadow-lg">
+        <div class="carousel-item active">
+            <img src="https://files.betacorp.vn/media/images/2025/02/17/con-tet-ni-oi-tang-ni-deal-hoi-1702-x-621-111106-170225-90.png" class="d-block w-100 rounded banner-img" alt="Banner 1">
+        </div>
+        <div class="carousel-item">
+            <img src="https://files.betacorp.vn/media/images/2025/02/14/1702x621-29-130857-140225-28.jpg" class="d-block w-100 rounded banner-img" alt="Banner 2">
+        </div>
+        <div class="carousel-item">
+            <img src="https://files.betacorp.vn/media/images/2025/02/14/ngt-payoff-poster-1702x621-sneak-155826-140225-38.jpg" class="d-block w-100 rounded banner-img" alt="Banner 3">
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+@* phát trailer *@
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="top:60px">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal_title">Trailer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <!-- phát video -->
+                <iframe id="youtubeIframe" width="100%" height="400"
+                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container mt-4">
+    <div class="container">
+        <div class="margin-bottom-35">
+            <div class="text-center">
+                <ul class="nav nav-tabs tab-films d-flex justify-content-center">
+                    <li>
+                        <a onclick="showMovies('comingSoon')">
+                            <h1 class="font-30 font-sm-15 font-xs-12 text-center">Phim Sắp chiếu</h1>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a onclick="showMovies('nowShowing')">
+                            <h1 class="font-30 font-sm-15 font-xs-12 text-center">Phim Đang chiếu</h1>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="showMovies('lastShowing')">
+                            <h1 class="font-30 font-sm-15 font-xs-12 text-center">Phim Dừng chiếu</h1>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    @*Phim đang chiếu*@
+    <div class="row row-cols-2 row-cols-md-4 g-4 movie-section" id="nowShowing">
+        @foreach (var item in Model)
+        {
+            var trailer = ((List<Trailer>)ViewBag.DanhSachTrailer)
+            .FirstOrDefault(t => t.MaPhim == item.MaPhim);
+            if (item.TrangThai == true && item.NgayKhoiChieu < DateOnly.FromDateTime(DateTime.Now.AddDays(3)))
+            {
+                <div class="col">
+                    <div class="card movie-card h-100 border-0 shadow-sm">
+                        <!-- Poster phim -->
+                        <div class="position-relative movie-poster" style="background-color:#f8f9fa">
+                            <img src="~/images/@item.Poster" class="card-img-top rounded-3" alt="@item.TenPhim">
+
+                            <!-- Nhãn độ tuổi -->
+                            @if (!string.IsNullOrEmpty(item.DoTuoi))
+                            {
+                                <span class="badge badge-age position-absolute top-0 start-0 m-3">
+                                    @item.DoTuoi
+                                </span>
+
+                            }
+
+
+                            <!-- Biểu tượng play -->
+                            @if (trailer != null && !string.IsNullOrEmpty(trailer.DuongDanTrailer))
+                            {
+                                <span class="play-icon" onclick="openVideoModal('@trailer.DuongDanTrailer', '@item.TenPhim')">
+                                    <i class="fas fa-play-circle"></i>
+                                </span>
+                            }
+                        </div>
+
+                        <div class="card-body" style="background-color:#f8f9fa">
+                            <a href="#" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">
+                                @(item.TenPhim.Length > 20 ? item.TenPhim.Substring(0, 20) + "..." : item.TenPhim)
+                            </a>
+                            <p class="card-text text-muted text-start mx-auto" style="font-size:14px">
+                                <strong>Thể loại:</strong> @item.TheLoai <br>
+                                <strong>Thời lượng:</strong> @item.ThoiLuong phút
+                            </p>
+                            <button class="btn btn-buy-ticket w-100 fw-bold"
+                                    data-phim-id="@item.MaPhim"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#ticketModal_@item.MaPhim">
+                                MUA VÉ
+                            </button>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                @*mua vé*@
+                <div class="modal fade" id="ticketModal_@item.MaPhim" tabindex="-1" aria-labelledby="ticketModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" style="max-height:800px;max-width: 1000px;margin-top:0px;">
+                        <div class="modal-content" style="height:550px">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ticketModalLabel">Lịch chiếu - Phim @item.TenPhim</h5>
+
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <h2 class="text-center p-2">Mua vé xem phim</h2>
+
+                            <div class="modal-body m-2">
+                                <ul class="d-flex flex-wrap list-unstyled" style="margin-bottom:0">
+                                    @{
+                                        List<DateOnly> ngayDaHienThi = new List<DateOnly>(); // Danh sách lưu ngày đã hiển thị
+                                        int soNgayHienThi = 0; // Biến đếm số ngày hiển thị tối đa 5
+                                        DateOnly ngayHienTai = DateOnly.FromDateTime(DateTime.Now); // Lấy ngày hiện tại
+                                        TimeOnly gioHienTai = TimeOnly.FromDateTime(DateTime.Now);
+
+                                    }
+
+                                    @foreach (var lc in ViewBag.danhSachLichChieu)
+                                    {
+                                        if (soNgayHienThi >= 5) // Giới hạn chỉ hiển thị 5 ngày
+                                        {
+                                            break;
+                                        }
+
+                                        if (lc.MaPhim == item.MaPhim && lc.NgayChieu >= ngayHienTai && !ngayDaHienThi.Contains(lc.NgayChieu) && lc.GioChieu > gioHienTai)
+                                        {
+                                            ngayDaHienThi.Add(lc.NgayChieu); // Thêm ngày vào danh sách để tránh trùng lặp
+                                            soNgayHienThi++; // Tăng số lượng ngày hiển thị
+
+                                            string ngay = lc.NgayChieu.ToString("dd");
+                                            string thang = lc.NgayChieu.ToString("MM");
+
+                                            // Lấy thứ trong tuần và chuyển đổi sang định dạng T2, T3, ..., CN
+                                            string thu = lc.NgayChieu.DayOfWeek switch
+                                            {
+                                                DayOfWeek.Monday => "T2",
+                                                DayOfWeek.Tuesday => "T3",
+                                                DayOfWeek.Wednesday => "T4",
+                                                DayOfWeek.Thursday => "T5",
+                                                DayOfWeek.Friday => "T6",
+                                                DayOfWeek.Saturday => "T7",
+                                                DayOfWeek.Sunday => "CN",
+                                                _ => ""
+                                            };
+
+                                            <li onclick="ClickNgay('@item.MaPhim', '@lc.NgayChieu.ToString("yyyy-MM-dd")')"
+                                                class="text-center d-block ngayHienThi ngay-@lc.NgayChieu.ToString("yyyy-MM-dd") ticketModal_@item.MaPhim"
+                                                style="width:170px;padding:0 8px 0 10px;cursor:pointer;user-select: none;">
+                                                <span style="font-size:45px">@ngay</span>
+                                                <span style="font-size:20px">/@thang-@thu</span>
+                                            </li>
+
+
+                                        }
+                                    }
+
+                                </ul><hr style="margin-top:0" />
+                                <p><strong style="font-size:25px">Giờ chiếu</strong></p>
+                                <ul class="d-flex flex-wrap list-unstyled" style="margin-bottom:0">
+                                    @foreach (var lc in ViewBag.danhSachLichChieu)
+                                    {
+                                        if (lc.MaPhim == item.MaPhim &&
+                                        (lc.NgayChieu > ngayHienTai || (lc.NgayChieu == ngayHienTai && lc.GioChieu > gioHienTai)))
+                                        {
+                                            <li
+                                                class="text-center d-block ngay-chieu d-none ngay-@lc.NgayChieu.ToString("yyyy-MM-dd")"
+                                                style="width:130px;padding:0 8px 0 10px ;margin-right: 30px;">
+                                                <button style="width:120px;border:none;margin-right:10px"> <span style="font-size:25px">@lc.GioChieu.ToString("HH:mm")</span></button>
+                                                <p>@lc.TongGheTrong ghế trống<p>
+                                            </li>
+
+                                        }
+                                    }
+
+
+                                </ul>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary">Xác nhận đặt vé</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+    <div class="row row-cols-2 row-cols-md-4 g-4 d-none movie-section" id="comingSoon">
+        @foreach (var item in Model)
+        {
+            var trailer = ((List<Trailer>)ViewBag.DanhSachTrailer)
+            .FirstOrDefault(t => t.MaPhim == item.MaPhim);
+            if (item.TrangThai == true && item.NgayKhoiChieu > DateOnly.FromDateTime(DateTime.Now.AddDays(3)))
+            {
+                <div class="col">
+                    <div class="card movie-card h-100 border-0 shadow-sm">
+                        <!-- Poster phim -->
+                        <div class="position-relative movie-poster" style="background-color:#f8f9fa">
+                            <img src="~/images/@item.Poster" class="card-img-top rounded-3" alt="@item.TenPhim">
+
+                            <!-- Nhãn độ tuổi -->
+                            @if (!string.IsNullOrEmpty(item.DoTuoi))
+                            {
+                                <span class="badge badge-age position-absolute top-0 start-0 m-3">
+                                    @item.DoTuoi
+                                </span>
+
+                            }
+
+
+                            <!-- Biểu tượng play -->
+                            @if (trailer != null && !string.IsNullOrEmpty(trailer.DuongDanTrailer))
+                            {
+                                <span class="play-icon" onclick="openVideoModal('@trailer.DuongDanTrailer', '@item.TenPhim')">
+                                    <i class="fas fa-play-circle"></i>
+                                </span>
+                            }
+                        </div>
+
+                        <div class="card-body" style="background-color:#f8f9fa">
+                            <a href="#" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">
+                                @(item.TenPhim.Length > 20 ? item.TenPhim.Substring(0, 20) + "..." : item.TenPhim)
+                            </a>
+                            <p class="card-text text-muted text-start mx-auto" style="font-size:14px">
+                                <strong>Thể loại:</strong> @item.TheLoai <br>
+                                <strong>Thời lượng:</strong> @item.ThoiLuong phút<br />
+                                <strong>Ngày khởi chiếu:</strong> @item.NgayKhoiChieu
+                            </p>
+                            <span class="badge bg-warning text-dark">Sắp chiếu</span>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="row row-cols-2 row-cols-md-4 g-4 d-none movie-section" id="lastShowing">
+        @foreach (var item in Model)
+        {
+            var trailer = ((List<Trailer>)ViewBag.DanhSachTrailer)
+            .FirstOrDefault(t => t.MaPhim == item.MaPhim);
+            if (item.TrangThai == false)
+            {
+                <div class="col">
+                    <div class="card movie-card h-100 border-0 shadow-sm">
+                        <!-- Poster phim -->
+                        <div class="position-relative movie-poster" style="background-color:#f8f9fa">
+                            <img src="~/images/@item.Poster" class="card-img-top rounded-3" alt="@item.TenPhim">
+
+                            <!-- Nhãn độ tuổi -->
+                            @if (!string.IsNullOrEmpty(item.DoTuoi))
+                            {
+                                <span class="badge badge-age position-absolute top-0 start-0 m-3">
+                                    @item.DoTuoi
+                                </span>
+
+                            }
+
+
+                            <!-- Biểu tượng play -->
+                            @if (trailer != null && !string.IsNullOrEmpty(trailer.DuongDanTrailer))
+                            {
+                                <span class="play-icon" onclick="openVideoModal('@trailer.DuongDanTrailer', '@item.TenPhim')">
+                                    <i class="fas fa-play-circle"></i>
+                                </span>
+                            }
+                        </div>
+
+                        <div class="card-body" style="background-color:#f8f9fa">
+                            <a href="#" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">
+                                @(item.TenPhim.Length > 20 ? item.TenPhim.Substring(0, 20) + "..." : item.TenPhim)
+                            </a>
+                            <p class="card-text text-muted text-start mx-auto" style="font-size:14px">
+                                <strong>Thể loại:</strong> @item.TheLoai <br>
+                                <strong>Thời lượng:</strong> @item.ThoiLuong phút<br />
+                                <strong>Ngày khởi chiếu:</strong> @item.NgayKhoiChieu
+                            </p>
+                            <span class="badge bg-danger text-white">Dừng chiếu</span>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
