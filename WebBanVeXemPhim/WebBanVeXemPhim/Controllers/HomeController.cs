@@ -26,37 +26,76 @@ namespace WebBanVeXemPhim.Controllers
             }
 
             var danhSachPhim = await query.OrderBy(p => p.MaPhim).ToListAsync();
-
             ViewBag.SearchString = searchString;
 
-            var danhSachTrailer = await _context.Trailers.ToListAsync(); // Lấy danh sách trailer
+            // Lấy danh sách trailer
+            var danhSachTrailer = await _context.Trailers.ToListAsync();
+            ViewBag.DanhSachTrailer = danhSachTrailer;
 
-            ViewBag.DanhSachTrailer = danhSachTrailer; // Gửi dữ liệu trailer qua ViewBag
-
-            var danhSachLichChieu = _context.LichChieus
-            .Include(lc => lc.MaPhongNavigation) // Load dữ liệu phòng chiếu
+            // Lấy danh sách lịch chiếu + số ghế trống
+            var danhSachLichChieu = await _context.LichChieus
+            .Include(lc => lc.MaPhongNavigation) // Load phòng chiếu
             .Select(lc => new
             {
                 lc.NgayChieu,
                 lc.GioChieu,
                 lc.MaPhim,
                 lc.MaLichChieu,
+                lc.MaPhong,
+                lc.GiaVe,
                 TongGhe = lc.MaPhongNavigation.SoLuongGhe,
-                SoGheDaDat = _context.Ves.Count(dv => dv.MaLichChieu == lc.MaLichChieu && dv.TrangThai == true)
+                SoGheDaDat = _context.Ves
+                    .Where(dv => dv.MaLichChieu == lc.MaLichChieu && dv.TrangThai == true)
+                    .Count()
             })
-            .ToList();
+            .OrderBy(lc => lc.NgayChieu) // 🟢 Sắp xếp theo ngày chiếu tăng dần
+            .ThenBy(lc => lc.GioChieu)  // 🟢 Sắp xếp tiếp theo giờ chiếu tăng dần
+            .ToListAsync();
 
-            // Truyền danh sách suất chiếu + số ghế trống qua ViewBag
+            // Tính số ghế trống và truyền vào ViewBag
             ViewBag.DanhSachLichChieu = danhSachLichChieu.Select(lc => new
             {
                 lc.NgayChieu,
                 lc.GioChieu,
                 lc.MaPhim,
                 lc.MaLichChieu,
+                lc.MaPhong,
+                lc.TongGhe,
+                lc.GiaVe,
                 TongGheTrong = lc.TongGhe - lc.SoGheDaDat
+
             }).ToList();
+            var DanhSachVe = await _context.Ves
+             .Include(v => v.MaGheNavigation) // Load thông tin ghế
+             .Select(v => new {
+                 MaVe = v.MaVe,         // Mã vé
+                 Giave=v.GiaVe,
+                 MaLichChieu = v.MaLichChieu, // Mã lịch chiếu
+                 MaGhe = v.MaGhe,       // Mã ghế
+                 SoGhe = v.MaGheNavigation.SoGhe, // Số ghế
+                 TrangThai = v.TrangThai // Trạng thái vé (true: đã đặt, false: còn trống)
+             })
+             .ToListAsync();
+            var danhSachGhe = await _context.Ghes
+             .Select(g => new
+             {
+                 g.LoaiGhe,
+                 g.MaGhe,   // Mã ghế
+                 g.SoGhe,   // Số ghế (A1, A2, B1, B2)
+                 g.MaPhong  // Mã phòng
+             })
+             .OrderBy(g => g.SoGhe) // Sắp xếp theo số ghế
+             .ToListAsync();
+
+            ViewBag.DanhSachGhe = danhSachGhe;
+
+
+
+            ViewBag.DanhSachVe = DanhSachVe;
+           
             return View(danhSachPhim);
         }
+
         public async Task<IActionResult> Home(string searchString)
         {
             // Lấy danh sách phim
@@ -77,13 +116,6 @@ namespace WebBanVeXemPhim.Controllers
             ViewBag.SearchString = searchString;
 
             return View(danhSachPhim);
-        }
-
-
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
