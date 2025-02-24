@@ -17,23 +17,32 @@ namespace WebBanVeXemPhim.Controllers
 
         public async Task<IActionResult> IndexAsync(string searchString)
         {
+            var currentTime = DateTime.Now;
+
+            // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
+            var veCanXoa = await _context.Ves
+                .Where(v => v.TrangThai == false &&
+                            EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
+                .ToListAsync();
+            _context.Ves.RemoveRange(veCanXoa);
+            await _context.SaveChangesAsync();
             // Lấy danh sách phim
-            var query = _context.Phims.AsQueryable();
+            var query = _context.Phims.AsNoTracking().AsQueryable();
             HttpContext.Session.SetInt32("MaKhachHang", 1);
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = query.Where(p => p.TenPhim.Contains(searchString));
             }
 
-            var danhSachPhim = await query.OrderBy(p => p.MaPhim).ToListAsync();
+            var danhSachPhim = await query.AsNoTracking().OrderBy(p => p.MaPhim).ToListAsync();
             ViewBag.SearchString = searchString;
 
             // Lấy danh sách trailer
-            var danhSachTrailer = await _context.Trailers.ToListAsync();
+            var danhSachTrailer = await _context.Trailers.AsNoTracking().ToListAsync();
             ViewBag.DanhSachTrailer = danhSachTrailer;
 
             // Lấy danh sách lịch chiếu + số ghế trống
-            var danhSachLichChieu = await _context.LichChieus
+            var danhSachLichChieu = await _context.LichChieus.AsNoTracking()
             .Include(lc => lc.MaPhongNavigation) // Load phòng chiếu
             .Select(lc => new
             {
@@ -65,7 +74,7 @@ namespace WebBanVeXemPhim.Controllers
                 TongGheTrong = lc.TongGhe - lc.SoGheDaDat
 
             }).ToList();
-            var DanhSachVe = await _context.Ves
+            var DanhSachVe = await _context.Ves.AsNoTracking()
              .Include(v => v.MaGheNavigation) // Load thông tin ghế
              .Select(v => new {
                  MaVe = v.MaVe,         // Mã vé
@@ -76,7 +85,7 @@ namespace WebBanVeXemPhim.Controllers
                  TrangThai = v.TrangThai // Trạng thái vé (true: đã đặt, false: còn trống)
              })
              .ToListAsync();
-            var danhSachGhe = await _context.Ghes
+            var danhSachGhe = await _context.Ghes.AsNoTracking()
              .Select(g => new
              {
                  g.LoaiGhe,
@@ -95,63 +104,6 @@ namespace WebBanVeXemPhim.Controllers
            
             return View(danhSachPhim);
         }
-
-        
-        public IActionResult BookTickets([FromBody] BookingRequest request)
-        {
-            try
-            {
-                if (request.Seats == null || request.Seats.Count == 0)
-                {
-                    return BadRequest(new { message = "Bạn chưa chọn ghế nào!" });
-                }
-
-                int? maKhachHang = HttpContext.Session.GetInt32("MaKhachHang");
-                //if (!maKhachHang.HasValue)
-                //{
-                //    return Unauthorized(new { message = "Bạn chưa đăng nhập!" });
-                //}
-
-                foreach (var seat in request.Seats) // Xóa vòng lặp dư thừa
-                {
-                    var newVes = new Ve
-                    {
-                        MaKhachHang = maKhachHang.Value,
-                        MaLichChieu = request.MaLichChieu,
-                        MaGhe = seat.MaGhe,
-                        GiaVe = seat.GiaGhe,
-                        TrangThai = true
-                    };
-
-                    _context.Ves.Add(newVes);
-                }
-
-                _context.SaveChanges();
-                return Ok(new { message = "Đặt vé thành công!" });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Lỗi hệ thống!", error = ex.Message });
-            }
-        }
-
-
-
-
-        // Model nhận dữ liệu từ FE
-        public class BookingRequest
-        {
-            public int MaLichChieu { get; set; }
-            public List<SeatInfo> Seats { get; set; }
-            public int TotalPrice { get; set; }
-        }
-
-        public class SeatInfo
-        {
-            public int MaGhe { get; set; }
-            public decimal GiaGhe { get; set; }
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

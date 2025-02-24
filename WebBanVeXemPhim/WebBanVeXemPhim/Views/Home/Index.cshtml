@@ -541,6 +541,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (confirm(confirmation)) {
                 if (confirm("Bạn có chắc chắn muốn đặt vé không?")) {
+
                     $.ajax({
                         url: "/DatVe/XacNhanDatVe",
                         type: "POST",
@@ -554,7 +555,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         success: function(response) {
                             if (response.ticketIds && response.ticketIds.length > 0) {
                                 alert("Đặt vé thành công! Mã vé: " + response.ticketIds.join(", "));
-                                window.location.href = "/DatVe/ThanhToan"; // Điều hướng đến trang thành công
+                                console.log("oderid được gửi di:",response.ticketIds[0])
+                               window.location.href = "/DatVe/index?orderId=" + response.ticketIds[0];
+                               
                             } else {
                                 alert("Đặt vé thất bại! Vui lòng thử lại.");
                             }
@@ -857,7 +860,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                                 {
                                                                                     @if (lc.MaLichChieu == ve.MaLichChieu && ghe.SoGhe == ve.SoGhe && ve.TrangThai == true)
                                                                                     {
-                                                                                       <button style="cursor:not-allowed"  class="seat booked" data-seat="@ve.SoGhe">@ve.SoGhe</button>
+                                                                                       <button style="cursor:not-allowed ; pointer-events: none;"  class="seat booked" data-seat="@ve.SoGhe">@ve.SoGhe</button>
                                                                                         checkGhe = 0;
                                                                                     }
                                                                                     @if (lc.MaLichChieu == ve.MaLichChieu && ghe.SoGhe == ve.SoGhe && ve.TrangThai == false)

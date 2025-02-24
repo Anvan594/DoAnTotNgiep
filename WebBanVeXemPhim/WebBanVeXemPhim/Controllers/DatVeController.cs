@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Sockets;
 using WebBanVeXemPhim.Models;
 
 namespace WebBanVeXemPhim.Controllers
@@ -13,8 +12,8 @@ namespace WebBanVeXemPhim.Controllers
         public DatVeController(QuanLyBanVeXemPhimContext context)
         {
             _context = context;
-
         }
+
         [HttpPost]
         public IActionResult XacNhanDatVe([FromBody] DatVeRequest request)
         {
@@ -23,7 +22,6 @@ namespace WebBanVeXemPhim.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Gọi phương thức DatVe để đặt vé
             var ticketIds = DatVe(request);
 
             if (ticketIds == null || ticketIds.Count == 0)
@@ -31,87 +29,80 @@ namespace WebBanVeXemPhim.Controllers
                 return BadRequest(new { message = "Không thể đặt vé. Vui lòng thử lại." });
             }
 
-            return Ok(new { ticketIds = ticketIds, message = "Đặt vé thành công!" });
+            return Ok(new { ticketIds, message = "Đặt vé thành công!" });
         }
 
         public List<int> DatVe(DatVeRequest request)
         {
-            List<int> ticketIds = new List<int>(); // Danh sách mã vé đã đặt
-
-            try
+            List<int> ticketIds = new List<int>();
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                foreach (var maGhe in request.Seats)
+                try
                 {
-                    // 🔎 Kiểm tra xem ghế đã có người đặt chưa
-                    bool isSeatBooked = _context.Ves.Any(v =>
-                        v.MaLichChieu == request.MaLichChieu &&
-                        v.MaGhe == maGhe &&
-                        v.TrangThai == false || v.TrangThai == true); // Chỉ kiểm tra vé đã đặt
-
-                    if (isSeatBooked)
+                    foreach (var maGhe in request.Seats)
                     {
-                        // Nếu ghế đã có người đặt, thông báo lỗi
-                        throw new Exception($"Ghế {maGhe} đang được ng khác đặt. Vui lòng chọn ghế khác!");
+                        bool isSeatBooked = _context.Ves.Any(v => v.MaLichChieu == request.MaLichChieu && v.MaGhe == maGhe);
+                        if (isSeatBooked)
+                        {
+                            throw new Exception($"Ghế {maGhe} đã có người đặt. Vui lòng chọn ghế khác!");
+                        }
+
+                        var ve = new Ve
+                        {
+                            MaLichChieu = request.MaLichChieu,
+                            MaGhe = maGhe,
+                            MaKhachHang = 1,
+                            GiaVe = request.TotalPrice / request.SoSeats,
+                            NgayDat = DateTime.Now,
+                            TrangThai = false
+                        };
+
+                        _context.Ves.Add(ve);
+                        _context.SaveChanges();
+
+                        ticketIds.Add(ve.MaVe);
                     }
 
-                    // 🆕 Nếu ghế chưa có ai đặt, tiến hành đặt vé
-                    var ve = new Ve
-                    {
-                        MaLichChieu = request.MaLichChieu,
-                        MaGhe = maGhe,
-                        MaKhachHang = 1, // TODO: Lấy từ User đang đăng nhập
-                        GiaVe = request.TotalPrice / request.SoSeats,
-                        NgayDat = DateTime.Now,
-                        TrangThai = false // Đánh dấu đã đặt
-                    };
-
-                    _context.Ves.Add(ve);
-                    _context.SaveChanges();
-
-                    ticketIds.Add(ve.MaVe); // Lưu mã vé
+                    transaction.Commit();
+                    return ticketIds;
                 }
-
-                return ticketIds; // Trả về danh sách mã vé đã đặt
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi đặt vé: " + ex.Message);
-                return new List<int>(); // Trả về danh sách rỗng nếu lỗi
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine("Lỗi đặt vé: " + ex.Message);
+                    return new List<int>();
+                }
             }
         }
 
-
-
-        public class DatVeRequest
-        {
-            [Required(ErrorMessage = "Mã lịch chiếu không được để trống.")]
-            public int MaLichChieu { get; set; }
-
-            [Required(ErrorMessage = "Vui lòng chọn ít nhất một ghế.")]
-            public List<int> Seats { get; set; } = new List<int>();
-
-            [Required(ErrorMessage = "Số lượng ghế không hợp lệ.")]
-            [Range(1, int.MaxValue, ErrorMessage = "Số ghế phải lớn hơn 0.")]
-            public int SoSeats { get; set; }
-
-            [Required(ErrorMessage = "Tổng tiền không hợp lệ.")]
-            [Range(1000, double.MaxValue, ErrorMessage = "Tổng tiền phải lớn hơn 1.000 VNĐ.")]
-            public decimal TotalPrice { get; set; }
-        }
         public IActionResult Index(int orderId)
         {
-            var order = _context.Ves
+
+            var ve = _context.Ves
+                .Include(v => v.MaGheNavigation)
                 .Where(v => v.MaVe == orderId)
                 .Select(v => new
                 {
-                    v.MaVe,
                     v.MaLichChieu,
-                    v.MaKhachHang,
-                    v.MaGheNavigation.SoGhe,
+                    v.MaKhachHang
+                })
+                .FirstOrDefault();
+            var order = _context.Ves
+                .Include(v => v.MaGheNavigation)
+                .Include(v => v.MaLichChieuNavigation)
+                .Include(v => v.MaKhachHangNavigation)
+                .Where(v => v.MaKhachHang==ve.MaKhachHang&&v.MaLichChieu==ve.MaLichChieu)
+                .Select(v => new
+                {
+                    v.MaVe,
+                    GioChieu=v.MaLichChieuNavigation.GioChieu,
+                    v.MaLichChieu,
+                    TenKhach=v.MaKhachHangNavigation.TenNguoiDung,
+                    SoGhe = v.MaGheNavigation != null ? v.MaGheNavigation.SoGhe : "Chưa rõ",
                     v.GiaVe,
                     v.NgayDat
                 })
-                .FirstOrDefault();
+                .ToList();
 
             if (order == null)
             {
@@ -121,23 +112,27 @@ namespace WebBanVeXemPhim.Controllers
             return View(order);
         }
 
-        // Xử lý thanh toán
         [HttpPost]
-        public IActionResult ProcessPayment(int orderId, string paymentMethod)
+        public IActionResult ThanhToan(int orderId, string paymentMethod)
         {
             var order = _context.Ves.FirstOrDefault(v => v.MaVe == orderId);
             if (order == null)
             {
-                return BadRequest("Đơn hàng không hợp lệ.");
+                return NotFound("Không tìm thấy đơn hàng!");
             }
 
-            // Cập nhật trạng thái thanh toán
+            var existingPayment = _context.ThanhToans.FirstOrDefault(p => p.MaVe == orderId);
+            if (existingPayment != null)
+            {
+                return BadRequest("Vé này đã được thanh toán!");
+            }
+
             var payment = new ThanhToan
             {
                 MaVe = order.MaVe,
                 PhuongThuc = paymentMethod,
                 NgayThanhToan = DateTime.Now,
-                TrangThai = "Đã Thanh Toán"
+                TrangThai = "Đã Thanh Toán"
             };
 
             _context.ThanhToans.Add(payment);
@@ -146,11 +141,26 @@ namespace WebBanVeXemPhim.Controllers
             return RedirectToAction("Success", new { orderId = order.MaVe });
         }
 
-        // Trang thanh toán thành công
         public IActionResult Success(int orderId)
         {
             return View(orderId);
         }
+
+        public class DatVeRequest
+        {
+            [Required(ErrorMessage = "Mã lịch chiếu không được để trống.")]
+            public int MaLichChieu { get; set; }
+
+            [Required(ErrorMessage = "Vui lòng chọn ít nhất một ghế.")]
+            public List<int> Seats { get; set; } = new List<int>();
+
+            [Required]
+            [Range(1, int.MaxValue, ErrorMessage = "Số ghế phải lớn hơn 0.")]
+            public int SoSeats { get; set; }
+
+            [Required]
+            [Range(1000, double.MaxValue, ErrorMessage = "Tổng tiền phải lớn hơn 1.000 VNĐ.")]
+            public decimal TotalPrice { get; set; }
+        }
     }
 }
-

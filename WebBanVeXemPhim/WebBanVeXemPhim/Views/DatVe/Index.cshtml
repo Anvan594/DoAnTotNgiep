@@ -1,3 +1,51 @@
-﻿<p>Ma Lich Chieu: @ViewData["MaLichChieu"]</p>
-<p>Seats: @ViewData["Seats"]</p>
-<p>Tong Tien: @ViewData["TongTien"]</p>
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+    decimal giave = 0;
+    string soghe = "";
+    string maKhach = "";
+    string dau = "";
+    DateTime ngaydat = default;
+    TimeOnly giochieu = default;
+}
+
+<h2>Chi tiết đơn hàng</h2>
+@foreach (var v in Model)
+{
+    giave = v.GiaVe + giave;
+    soghe = soghe + dau + v.SoGhe;
+    maKhach = v.TenKhach;
+    ngaydat = v.NgayDat;
+    dau = ", ";
+    giochieu = v.GioChieu;
+}
+<table class="table table-bordered" style="font-size:18px">
+    <tr>
+        <th>Mã Vé</th>
+        <td></td>
+    </tr>
+    <tr>
+        <th>Mã Khách Hàng</th>
+        <td>@maKhach</td>
+    </tr>
+    <tr>
+        <th>Số Ghế</th>
+        <td>@soghe</td>
+    </tr>
+    <tr>
+        <th>Mã Lịch Chiếu</th>
+        <td>@giochieu</td>
+    </tr>
+    <tr>
+        <th>Giá Vé</th>
+        <td>@giave.ToString("N0") VNĐ</td>
+    </tr>
+    <tr>
+        <th>Ngày Đặt</th>
+        <td>@ngaydat.ToString("dd/MM/yyyy")</td>
+    </tr>
+</table>
+
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Quay lại</a>

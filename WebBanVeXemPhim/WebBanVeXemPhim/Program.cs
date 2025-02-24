@@ -17,14 +17,17 @@ namespace WebBanVeXemPhim
                 options.Cookie.HttpOnly = true;  // Bảo mật cookie
                 options.Cookie.IsEssential = true;  // Cookie bắt buộc cho session
             });
-
+            
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient();
 
             builder.Services.AddDistributedMemoryCache();
+            
             var app = builder.Build();
+
+
 
             if (!app.Environment.IsDevelopment())
             {
