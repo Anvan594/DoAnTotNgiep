@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OmpOhGlCDSo=",
+  "dgSpecHash": "61uxUVpitKE=",
   "success": true,
   "projectFilePath": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\WebBanVeXemPhim.csproj",
   "expectedPackageFiles": [
@@ -124,6 +124,7 @@
     "C:\\Users\\An\\.nuget\\packages\\nuget.projectmodel\\6.11.0\\nuget.projectmodel.6.11.0.nupkg.sha512",
     "C:\\Users\\An\\.nuget\\packages\\nuget.protocol\\6.11.0\\nuget.protocol.6.11.0.nupkg.sha512",
     "C:\\Users\\An\\.nuget\\packages\\nuget.versioning\\6.11.0\\nuget.versioning.6.11.0.nupkg.sha512",
+    "C:\\Users\\An\\.nuget\\packages\\payos\\1.0.9\\payos.1.0.9.nupkg.sha512",
     "C:\\Users\\An\\.nuget\\packages\\system.clientmodel\\1.0.0\\system.clientmodel.1.0.0.nupkg.sha512",
     "C:\\Users\\An\\.nuget\\packages\\system.codedom\\5.0.0\\system.codedom.5.0.0.nupkg.sha512",
     "C:\\Users\\An\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",

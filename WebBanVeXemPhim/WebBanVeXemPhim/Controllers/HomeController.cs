@@ -28,7 +28,6 @@ namespace WebBanVeXemPhim.Controllers
             await _context.SaveChangesAsync();
             // Lấy danh sách phim
             var query = _context.Phims.AsNoTracking().AsQueryable();
-            HttpContext.Session.SetInt32("MaKhachHang", 1);
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = query.Where(p => p.TenPhim.Contains(searchString));
@@ -103,6 +102,19 @@ namespace WebBanVeXemPhim.Controllers
             ViewBag.DanhSachVe = DanhSachVe;
            
             return View(danhSachPhim);
+        }
+        public async Task<IActionResult> XoaVe()
+        {
+            var currentTime = DateTime.Now;
+
+            // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
+            var veCanXoa = await _context.Ves
+                .Where(v => v.TrangThai == false &&
+                            EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
+                .ToListAsync();
+            _context.Ves.RemoveRange(veCanXoa);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

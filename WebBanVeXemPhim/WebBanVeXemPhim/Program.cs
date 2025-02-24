@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Net.payOS;
 using WebBanVeXemPhim.Models;
 
 namespace WebBanVeXemPhim
@@ -24,7 +25,12 @@ namespace WebBanVeXemPhim
             builder.Services.AddHttpClient();
 
             builder.Services.AddDistributedMemoryCache();
-            
+
+            // Cấu hình PayOS
+            var clientId = builder.Configuration["PayOS:ClientId"];
+            var apiKey = builder.Configuration["PayOS:ApiKey"];
+            var checksumKey = builder.Configuration["PayOS:ChecksumKey"];
+            builder.Services.AddSingleton(new PayOS(clientId, apiKey, checksumKey));
             var app = builder.Build();
 
 
@@ -40,6 +46,7 @@ namespace WebBanVeXemPhim
             app.UseStaticFiles();
 
             app.UseRouting();
+
             app.UseSession();
             app.UseAuthorization();
             app.MapControllerRoute(

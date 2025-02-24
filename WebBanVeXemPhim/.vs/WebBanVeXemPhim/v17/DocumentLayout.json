@@ -3,20 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\areas\\admins\\controllers\\lichchieuscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\areas\\admins\\controllers\\lichchieuscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\areas\\admins\\views\\lichchieus\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\areas\\admins\\views\\lichchieus\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\areas\\admins\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\areas\\admins\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\areas\\admins\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\areas\\admins\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\controllers\\datvecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\controllers\\datvecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\models\\ve.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\models\\ve.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|c:\\users\\an\\documents\\github\\doantotngiep\\webbanvexemphim\\webbanvexemphim\\models\\lichchieu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5429ACBD-819C-496F-B618-205901146532}|WebBanVeXemPhim\\WebBanVeXemPhim.csproj|solutionrelative:webbanvexemphim\\models\\lichchieu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,57 +42,111 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Ve.cs",
-              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Models\\Ve.cs",
-              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Models\\Ve.cs",
-              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Models\\Ve.cs",
-              "RelativeToolTip": "WebBanVeXemPhim\\Models\\Ve.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAqwBQAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "LichChieusController.cs",
+              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Areas\\admins\\Controllers\\LichChieusController.cs",
+              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Areas\\admins\\Controllers\\LichChieusController.cs",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Areas\\admins\\Controllers\\LichChieusController.cs",
+              "RelativeToolTip": "WebBanVeXemPhim\\Areas\\admins\\Controllers\\LichChieusController.cs",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T11:26:20.895Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "WebBanVeXemPhim\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAEwDAAAAAAAAAAAEwF4DAACQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-02-22T15:48:05.824Z",
+              "WhenOpened": "2025-02-24T20:57:45.684Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Controllers\\HomeController.cs",
-              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "WebBanVeXemPhim\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBgAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-22T16:44:02.525Z",
+              "DocumentIndex": 1,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Areas\\admins\\Views\\LichChieus\\Create.cshtml",
+              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Areas\\admins\\Views\\LichChieus\\Create.cshtml",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Areas\\admins\\Views\\LichChieus\\Create.cshtml",
+              "RelativeToolTip": "WebBanVeXemPhim\\Areas\\admins\\Views\\LichChieus\\Create.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-24T20:54:25.207Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "LichChieu.cs",
-              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Models\\LichChieu.cs",
-              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Models\\LichChieu.cs",
-              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Models\\LichChieu.cs",
-              "RelativeToolTip": "WebBanVeXemPhim\\Models\\LichChieu.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAqwBcAAAArAAAAAAAAAA==",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Views\\Login\\Index.cshtml",
+              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Views\\Login\\Index.cshtml",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Views\\Login\\Index.cshtml",
+              "RelativeToolTip": "WebBanVeXemPhim\\Views\\Login\\Index.cshtml",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAGgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-24T20:53:06.95Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Areas\\admins\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Areas\\admins\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Areas\\admins\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "WebBanVeXemPhim\\Areas\\admins\\Controllers\\LoginController.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-22T20:40:12.327Z"
+              "WhenOpened": "2025-02-24T20:52:22.487Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Areas\\admins\\Views\\Login\\Index.cshtml",
+              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Areas\\admins\\Views\\Login\\Index.cshtml",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Areas\\admins\\Views\\Login\\Index.cshtml",
+              "RelativeToolTip": "WebBanVeXemPhim\\Areas\\admins\\Views\\Login\\Index.cshtml",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAAAGgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-24T20:52:15.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "WebBanVeXemPhim\\Controllers\\LoginController.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAgwC0AAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-24T20:27:01.343Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "WebBanVeXemPhim\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAYwHAAAABUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-24T20:24:02.308Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DatVeController.cs",
+              "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Controllers\\DatVeController.cs",
+              "RelativeDocumentMoniker": "WebBanVeXemPhim\\Controllers\\DatVeController.cs",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Controllers\\DatVeController.cs",
+              "RelativeToolTip": "WebBanVeXemPhim\\Controllers\\DatVeController.cs",
+              "ViewState": "AgIAAI0AAAAAAAAAAAAcwJ0AAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-24T20:23:21.22Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -145,7 +145,22 @@ namespace WebBanVeXemPhim.Controllers
         {
             return View(orderId);
         }
+        public async Task<IActionResult> dieuhuong(int orderId)
+        {
+            int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung")??0;
+            if (MaNguoiDung != 0)
+            {
+                var veCanXoa = await _context.Ves
+               .Where(v => v.TrangThai == false && v.MaKhachHang == MaNguoiDung)
+               .ToListAsync();
+                _context.Ves.RemoveRange(veCanXoa);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
 
+
+        }
         public class DatVeRequest
         {
             [Required(ErrorMessage = "Mã lịch chiếu không được để trống.")]

@@ -777,3 +777,4 @@ C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\De
 C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\WebBanVeXemPhim.pdb
 C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\WebBanVeXemPhim.genruntimeconfig.cache
 C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\ref\WebBanVeXemPhim.dll
+C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\payos-lib-backend-dotnet.dll
