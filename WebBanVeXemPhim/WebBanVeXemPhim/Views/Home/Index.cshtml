@@ -2,7 +2,9 @@
 @{
     ViewData["Title"] = "Trang Chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var dachay = Context.Session.GetInt32("dachay");
 }
+
 <style>
     /* Đảm bảo nền chính và nền phần phim có cùng màu */
     .container.mt-4,
@@ -433,12 +435,79 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     document.querySelectorAll(".confirmBooking").forEach(button => {
+//         button.addEventListener("click", function () {
+//             let maLichChieu = this.getAttribute("data-malichchieu");
+//             let selectedSeats = document.querySelectorAll(`.seat.selected[data-maGhe='${maLichChieu}']`);
+//             let maxSeats = 5;
+//             if (selectedSeats.length === 0) {
+//                 alert("Bạn chưa chọn ghế!");
+//                 return;
+//             }
+
+//             if (selectedSeats.length > maxSeats) {
+//                 alert(`Bạn chỉ được đặt tối đa ${maxSeats} ghế.`);
+//                 return;
+//             }
+
+//             let seatNumbers = [];
+//             let seatNumbers_ghe = [];
+//             let totalPrice = 0;
+
+//             selectedSeats.forEach(seat => {
+//                 let seatNumber = seat.getAttribute("data-seat-ma");
+//                 let seatNumber_ghe = seat.getAttribute("data-seat");
+//                 let seatPrice = parseInt(seat.getAttribute("data-price")) || 0;
+//                 if (seat.classList.contains("seat_vip")) {
+//                 seatPrice += 5000; // Cộng thêm 5000 cho ghế VIP
+//                 }
+//                 seatNumbers.push([seatNumber])
+//                 seatNumbers_ghe.push(seatNumber_ghe)
+//                 totalPrice += seatPrice;
+//             });
+
+//             let confirmation = `Lịch chiếu: ${maLichChieu}\nGhế:${seatNumbers_ghe.join(", ")}\nTổng tiền: ${totalPrice.toLocaleString()} VNĐ`;
+//             console.log("lịch chiếu", maLichChieu, "ghe", seatNumbers,"số ghế",seatNumbers_ghe, "tổng tiền", totalPrice);
+//             if (confirm(confirmation)) {
+//                 if (confirm("Bạn có chắc chắn muốn đặt vé không?")) {
+//                 $.ajax({
+//                     url: "/DatVe/Create",
+//                     type: "POST",
+//                     contentType: "application/json",
+//                     data: JSON.stringify({
+//                         maLichChieu: maLichChieu,
+//                         seats: seatNumbers,
+//                         so_seats:seatNumbers_ghe,
+//                         totalPrice: totalPrice
+//                     }),
+//                     success: function(response) {
+//                         alert("Đặt vé thành công! Mã vé: " + response.ticketId);
+//                         window.location.href = "/DatVe/create";
+//                     },
+//                    error: function(xhr, status, error) {
+//                     console.error("Lỗi:", error);
+//                     console.log("Chi tiết lỗi:", xhr.responseText); // In lỗi ra Console
+//                     alert("Có lỗi xảy ra khi đặt vé. Vui lòng thử lại!");
+// }
+
+//                 });
+
+
+//                 }
+
+//             }
+//         });
+//     });
+    
+// });
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".confirmBooking").forEach(button => {
         button.addEventListener("click", function () {
             let maLichChieu = this.getAttribute("data-malichchieu");
             let selectedSeats = document.querySelectorAll(`.seat.selected[data-maGhe='${maLichChieu}']`);
             let maxSeats = 5;
+
             if (selectedSeats.length === 0) {
                 alert("Bạn chưa chọn ghế!");
                 return;
@@ -450,42 +519,57 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             let seatNumbers = [];
+            let seatNumbers_ghe = [];
             let totalPrice = 0;
 
             selectedSeats.forEach(seat => {
-                let seatNumber = seat.getAttribute("data-seat");
+                let seatNumber = seat.getAttribute("data-seat-ma"); // Mã ghế trong DB
+                let seatNumber_ghe = seat.getAttribute("data-seat"); // Số ghế hiển thị
                 let seatPrice = parseInt(seat.getAttribute("data-price")) || 0;
 
-                seatNumbers.push(seatNumber);
+                if (seat.classList.contains("seat_vip")) {
+                    seatPrice += 5000; // Cộng thêm 5000 cho ghế VIP
+                }
+
+                seatNumbers.push(seatNumber); // Đúng định dạng
+                seatNumbers_ghe.push(seatNumber_ghe);
                 totalPrice += seatPrice;
             });
 
-            let confirmation = `Lịch chiếu: ${maLichChieu}\nGhế: ${seatNumbers.join(", ")}\nTổng tiền: ${totalPrice.toLocaleString()} VNĐ`;
-            console.log("lịch chiếu", maLichChieu, "ghe", seatNumbers, "tổng tiền", totalPrice);
-            // if (confirm(confirmation)) {
-            //     fetch("/api/booking", {
-            //         method: "POST",
-            //         headers: { "Content-Type": "application/json" },
-            //         body: JSON.stringify({
-            //             maLichChieu: maLichChieu,
-            //             seats: seatNumbers,
-            //             totalPrice: totalPrice
-            //         }),
-            //     })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         alert("Đặt vé thành công! Mã vé: " + data.ticketId);
-            //         window.location.href = "/xac-nhan-thanh-toan";
-            //     })
-            //     .catch(error => console.error("Lỗi:", error));
-            // }
+            let confirmation = `Lịch chiếu: ${maLichChieu}\nGhế: ${seatNumbers_ghe.join(", ")}\nTổng tiền: ${totalPrice.toLocaleString()} VNĐ`;
+            console.log("Lịch chiếu:", maLichChieu, "Ghế:", seatNumbers, "Số ghế:", seatNumbers_ghe, "Tổng tiền:", totalPrice);
+
+            if (confirm(confirmation)) {
+                if (confirm("Bạn có chắc chắn muốn đặt vé không?")) {
+                    $.ajax({
+                        url: "/DatVe/XacNhanDatVe",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            maLichChieu: maLichChieu,
+                            seats: seatNumbers, // Đúng định dạng
+                            soSeats: seatNumbers.length, // Số ghế đã chọn
+                            totalPrice: totalPrice
+                        }),
+                        success: function(response) {
+                            if (response.ticketIds && response.ticketIds.length > 0) {
+                                alert("Đặt vé thành công! Mã vé: " + response.ticketIds.join(", "));
+                                window.location.href = "/DatVe/ThanhToan"; // Điều hướng đến trang thành công
+                            } else {
+                                alert("Đặt vé thất bại! Vui lòng thử lại.");
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Lỗi:", error);
+                            console.log("Chi tiết lỗi:", xhr.responseText);
+                            alert("Có lỗi xảy ra khi đặt vé. Vui lòng thử lại!");
+                        }
+                    });
+                }
+            }
         });
     });
-    
 });
-
-
-
 
 </script>
 <!-- Banner (Carousel) -->
@@ -562,7 +646,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <br />
     <br />
-    @*Phim đang chiếu*@
+    @*Phim đang chiếu*@<button onclick="submitBooking()">Đặt vé</button>
     <div class="row row-cols-2 row-cols-md-4 g-4 movie-section" id="nowShowing">
         @foreach (var item in Model)
         {
@@ -580,7 +664,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             @if (!string.IsNullOrEmpty(item.DoTuoi))
                             {
                                 <span class="badge badge-age position-absolute top-0 start-0 m-3">
-                                    @item.DoTuoi
+                                    @item.DoTuoi+@dachay
                                 </span>
 
                             }
@@ -729,16 +813,19 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     <!-- Sử dụng modal-lg để tránh lỗi hiển thị -->
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Chọn Ghế & Thanh Toán</h5>
+                                                            <h3 class="modal-title">Chọn Ghế & Thanh Toán</h3>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                        
                                                         <div class="modal-body">
-                                                            <p>Chọn ghế bạn muốn đặt:</p>
+                                                            <p style="font-size:20px">Chọn ghế bạn muốn đặt:</p>
 
                                                             <div class="d-flex"style="user-select: none;">
                                                                 <!-- Cột bên trái: Ghế -->
-                                                                <div class="seat-container" style="flex: 2;">
+                                                                <div class="seat-container " style="flex: 2; max-height: 400px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                                                                    <div class="screen text-center" style="position: relative; width: 60%; height: 30px; display: flex;text-align:center; justify-content: center; align-items: center; margin-bottom: 20px;">
+                                                                        <div style="position: absolute; top: 0; left: 50%; width: 100%; height: 10px; background: transparent; border-top: 5px solid #ccc; border-radius: 50% / 100% 100% 0 0; transform: translateX(-25%);">Màn hình</div>
+                                                                    </div>
                                                                     @{
                                                                         string currentRow = "";
                                                                         var danhSachGhe = ((IEnumerable<dynamic>)ViewBag.DanhSachGhe)
@@ -770,7 +857,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                                 {
                                                                                     @if (lc.MaLichChieu == ve.MaLichChieu && ghe.SoGhe == ve.SoGhe && ve.TrangThai == true)
                                                                                     {
-                                                                                       <button  class="seat booked" data-seat="@ve.SoGhe">@ve.SoGhe</button>
+                                                                                       <button style="cursor:not-allowed"  class="seat booked" data-seat="@ve.SoGhe">@ve.SoGhe</button>
                                                                                         checkGhe = 0;
                                                                                     }
                                                                                     @if (lc.MaLichChieu == ve.MaLichChieu && ghe.SoGhe == ve.SoGhe && ve.TrangThai == false)
@@ -784,11 +871,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                                 {
                                                                                     if (ghe.LoaiGhe == "VIP")
                                                                                     {
-                                                                                        <button data-maGhe="@lc.MaLichChieu" class="seat seat_vip" data-price="@lc.GiaVe" data-seat="@ghe.SoGhe">@ghe.SoGhe</button> 
+                                                                                        <button data-maGhe="@lc.MaLichChieu" class="seat seat_vip" data-seat-ma="@ghe.MaGhe" data-price="@lc.GiaVe" data-seat="@ghe.SoGhe">@ghe.SoGhe</button> 
                                                                                     }
                                                                                     else
                                                                                     {
-                                                                                        <button data-maGhe="@lc.MaLichChieu" class="seat" data-seat="@ghe.SoGhe" data-price="@lc.GiaVe">@ghe.SoGhe</button> 
+                                                                                        <button data-maGhe="@lc.MaLichChieu" class="seat" data-seat-ma="@ghe.MaGhe" data-seat="@ghe.SoGhe" data-price="@lc.GiaVe">@ghe.SoGhe</button> 
                                                                                     }
                                                                                 }
                                                                             }

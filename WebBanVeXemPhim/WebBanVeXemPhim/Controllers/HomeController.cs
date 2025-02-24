@@ -19,7 +19,7 @@ namespace WebBanVeXemPhim.Controllers
         {
             // Lấy danh sách phim
             var query = _context.Phims.AsQueryable();
-
+            HttpContext.Session.SetInt32("MaKhachHang", 1);
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = query.Where(p => p.TenPhim.Contains(searchString));
@@ -96,26 +96,60 @@ namespace WebBanVeXemPhim.Controllers
             return View(danhSachPhim);
         }
 
-        public async Task<IActionResult> Home(string searchString)
+        
+        public IActionResult BookTickets([FromBody] BookingRequest request)
         {
-            // Lấy danh sách phim
-            var query = _context.Phims.AsQueryable();
-
-            if (!string.IsNullOrEmpty(searchString))
+            try
             {
-                query = query.Where(p => p.TenPhim.Contains(searchString));
+                if (request.Seats == null || request.Seats.Count == 0)
+                {
+                    return BadRequest(new { message = "Bạn chưa chọn ghế nào!" });
+                }
+
+                int? maKhachHang = HttpContext.Session.GetInt32("MaKhachHang");
+                //if (!maKhachHang.HasValue)
+                //{
+                //    return Unauthorized(new { message = "Bạn chưa đăng nhập!" });
+                //}
+
+                foreach (var seat in request.Seats) // Xóa vòng lặp dư thừa
+                {
+                    var newVes = new Ve
+                    {
+                        MaKhachHang = maKhachHang.Value,
+                        MaLichChieu = request.MaLichChieu,
+                        MaGhe = seat.MaGhe,
+                        GiaVe = seat.GiaGhe,
+                        TrangThai = true
+                    };
+
+                    _context.Ves.Add(newVes);
+                }
+
+                _context.SaveChanges();
+                return Ok(new { message = "Đặt vé thành công!" });
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống!", error = ex.Message });
+            }
+        }
 
-            var danhSachPhim = await query.OrderBy(p => p.MaPhim).ToListAsync();
 
-            ViewBag.SearchString = searchString;
 
-            var danhSachTrailer = await _context.Trailers.ToListAsync(); // Lấy danh sách trailer
 
-            ViewBag.DanhSachTrailer = danhSachTrailer; // Gửi dữ liệu trailer qua ViewBag
-            ViewBag.SearchString = searchString;
+        // Model nhận dữ liệu từ FE
+        public class BookingRequest
+        {
+            public int MaLichChieu { get; set; }
+            public List<SeatInfo> Seats { get; set; }
+            public int TotalPrice { get; set; }
+        }
 
-            return View(danhSachPhim);
+        public class SeatInfo
+        {
+            public int MaGhe { get; set; }
+            public decimal GiaGhe { get; set; }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
