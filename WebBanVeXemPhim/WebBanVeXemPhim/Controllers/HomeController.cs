@@ -14,10 +14,42 @@ namespace WebBanVeXemPhim.Controllers
         {
             _context = context;
         }
+        public async Task<IActionResult> VeDaDat()
+        {
+            int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+            if (MaNguoiDung == 0)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            var order = await _context.Ves
+                .Include(v => v.MaGheNavigation)
+                .Include(v => v.MaLichChieuNavigation)
+                .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
+                .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
+                .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == true)
+                .OrderByDescending(v => v.MaVe)
+                .Select(v => new
+                {
+                    SoGhe = v.MaGheNavigation.SoGhe,
+                    SoPhong = v.MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                    GioChieu = v.MaLichChieuNavigation.GioChieu, 
+                    NgayChieu = v.MaLichChieuNavigation.NgayChieu, 
+                    TenPhim = v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                    ThoiLuong = v.MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                    GiaVe = v.GiaVe,
+                    MaVe = v.MaVe,
+                    MaLichChieu = v.MaLichChieu,
+                    MaKhachHang = v.MaKhachHang
+                })
+                .ToListAsync(); // Dùng ToListAsync để tránh lỗi kiểu dữ liệu Task
+            ViewBag.VeDaDat = order;
+            return View();
+        }
 
         public async Task<IActionResult> IndexAsync(string searchString)
         {
-           
+
             var currentTime = DateTime.Now;
 
             // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
@@ -76,9 +108,10 @@ namespace WebBanVeXemPhim.Controllers
             }).ToList();
             var DanhSachVe = await _context.Ves.AsNoTracking()
              .Include(v => v.MaGheNavigation) // Load thông tin ghế
-             .Select(v => new {
+             .Select(v => new
+             {
                  MaVe = v.MaVe,         // Mã vé
-                 Giave=v.GiaVe,
+                 Giave = v.GiaVe,
                  MaLichChieu = v.MaLichChieu, // Mã lịch chiếu
                  MaGhe = v.MaGhe,       // Mã ghế
                  SoGhe = v.MaGheNavigation.SoGhe, // Số ghế
@@ -101,7 +134,7 @@ namespace WebBanVeXemPhim.Controllers
 
 
             ViewBag.DanhSachVe = DanhSachVe;
-           
+
             return View(danhSachPhim);
         }
         public async Task<IActionResult> XoaVe()

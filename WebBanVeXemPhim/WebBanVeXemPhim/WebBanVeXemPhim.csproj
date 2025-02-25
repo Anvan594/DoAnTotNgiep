@@ -25,4 +25,11 @@
     <Folder Include="wwwroot\Trailers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Home\VeDaDat.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

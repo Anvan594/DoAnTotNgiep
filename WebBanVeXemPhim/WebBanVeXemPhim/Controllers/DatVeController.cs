@@ -94,16 +94,17 @@ namespace WebBanVeXemPhim.Controllers
                 .Include(v => v.MaLichChieuNavigation)
                 .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
                 .Include(v => v.MaKhachHangNavigation)
-                .Where(v => v.MaKhachHang==ve.MaKhachHang && v.MaLichChieu==ve.MaLichChieu && v.TrangThai==false)
+                .Where(v => v.MaKhachHang == ve.MaKhachHang && v.MaLichChieu == ve.MaLichChieu && v.TrangThai == false)
                 .Select(v => new
                 {
                     v.MaVe,
-                    GioChieu=v.MaLichChieuNavigation.GioChieu,
+                    GioChieu = v.MaLichChieuNavigation.GioChieu,
                     v.MaLichChieu,
                     v.MaKhachHang,
-                    TenPhim=v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
-                    TenKhach=v.MaKhachHangNavigation.TenNguoiDung,
+                    TenPhim = v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                    TenKhach = v.MaKhachHangNavigation.TenNguoiDung,
                     SoGhe = v.MaGheNavigation != null ? v.MaGheNavigation.SoGhe : "Chưa rõ",
+                    v.MaGhe,
                     v.GiaVe,
                     v.NgayDat
                 })
@@ -125,15 +126,26 @@ namespace WebBanVeXemPhim.Controllers
             int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
 
             var order = _context.Ves
+                .Include(v => v.MaGheNavigation)
+                .Include(v=>v.MaLichChieuNavigation)
+                .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
+                .Include(v=>v.MaLichChieuNavigation.MaPhongNavigation)
                 .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == false)
                 .Select(v => new
                 {
+                    SoGhe=v.MaGheNavigation.SoGhe,
+                    SoPhong=v.MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                    GioChieu=v.MaLichChieuNavigation.GioChieu,
+                    Ngaychieu=v.MaLichChieuNavigation.NgayChieu,
+                    TenPhim=v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                    ThoiLuong=v.MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                    v.GiaVe,
                     v.MaVe,
                     v.MaLichChieu,
                     v.MaKhachHang
                 })
                 .ToArray();
-
+            ViewBag.VeDaMua = order;
             if (!order.Any())
             {
                 return NotFound("Không tìm thấy đơn hàng!");
@@ -162,7 +174,7 @@ namespace WebBanVeXemPhim.Controllers
 
             await UpdateVe(MaNguoiDung);
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -193,22 +205,24 @@ namespace WebBanVeXemPhim.Controllers
         public async Task<IActionResult> UpdateVe(int MaNguoiDung)
         {
             // Tìm vé cần cập nhật
-            var veCanUpdate = await _context.Ves
+            var veCanUpdate = _context.Ves
                 .Where(v => v.TrangThai == false && v.MaKhachHang == MaNguoiDung)
-                .FirstOrDefaultAsync(); // Thêm `await` vì đây là truy vấn async
+                .ToList(); // Thêm `await` vì đây là truy vấn async
 
             // Kiểm tra nếu không tìm thấy vé nào
             if (veCanUpdate == null)
             {
                 return NotFound("Không tìm thấy vé nào cần cập nhật!");
             }
-
+            foreach (var ve in veCanUpdate)
+            {
+                ve.TrangThai = true;
+               
+            }
+            await _context.SaveChangesAsync();
             // Cập nhật trạng thái của vé
-            veCanUpdate.TrangThai = true;
 
             // Lưu thay đổi vào database
-            await _context.SaveChangesAsync();
-
             return Ok("Cập nhật vé thành công!");
         }
 

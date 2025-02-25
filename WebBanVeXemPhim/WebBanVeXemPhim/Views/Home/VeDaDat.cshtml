@@ -1,0 +1,147 @@
+﻿@model IEnumerable<WebBanVeXemPhim.Controllers.HomeController>
+@{
+    ViewData["Title"] = "Lịch sử mua vé";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function showBarcode(makhach) {
+        let binary = makhach.toString(2); // Chuyển số sang hệ nhị phân
+        console.log("Số nhị phân:", binary); // Chỉ hiển thị trên Console, không hiển thị trên màn hình
+        JsBarcode("#barcode", binary, {
+            format: "CODE128",
+            displayValue: true,
+            fontSize: 18
+        });
+    }
+
+</script>
+
+<!-- Modal hiển thị mã vạch -->
+<!-- Button để mở modal -->
+
+
+<!-- Modal Bootstrap -->
+<div class="modal fade" id="barcodeModal" tabindex="-1" aria-labelledby="barcodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="barcodeModalLabel">🛒 Mã Vạch Của Bạn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <svg id="barcode"></svg>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary">📜 Lịch Sử Mua Vé 📜</h2>
+    <div class="card shadow mt-4">
+        <div class="card-body">
+            <h5 class="card-title text-center text-success">Danh sách vé đã mua</h5>
+            <div class="table-responsive mt-3">
+                <table class="table table-bordered text-center">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Tên phim</th>
+                            <th>Ngày chiếu</th>
+                            <th>Giờ chiếu</th>
+                            <th>Thời lượng</th>
+                            <th>Phòng chiếu</th>
+                            <th>Ghế ngồi</th>
+                            <th>Giá vé</th>
+                            <th>Mã Vạch</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int dem = 1;
+                            int currentMaLichChieu = -1;
+                            string soghe = "";
+                            decimal giave = 0;
+                            string TenPhim = "";
+                            DateOnly NgayChieu = default;
+                            TimeOnly GioChieu = default;
+                            int ThoiLuong = 0;
+                            string SoPhong = "";
+                            int MaVe = 0;
+
+                        }
+
+                        @foreach (var o in ViewBag.VeDaDat)
+                        {
+                            if (o.MaLichChieu != currentMaLichChieu)
+                            {
+                                // Nếu không phải dòng đầu tiên, in ra dữ liệu của lịch chiếu trước đó
+                                if (currentMaLichChieu != -1)
+                                {
+                                    <tr>
+                                        <td>@dem</td>
+                                        <td>@o.TenPhim</td>
+                                        <td>@o.NgayChieu.ToString("dd/MM/yy")</td>
+                                        <td>@o.GioChieu</td>
+                                        <td>@o.ThoiLuong phút</td>
+                                        <td>@o.SoPhong</td>
+                                        <td>@soghe.TrimEnd(',', ' ')</td>
+                                        <td class="text-danger fw-bold">@giave.ToString("N0") VNĐ</td>
+                                        <td>
+                                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#barcodeModal" onclick="showBarcode(@o.MaVe)">
+                                                📦 Hiện Mã Vạch
+                                            </button>
+                                        </td>
+                                        
+                                    </tr>
+                                    dem++;
+                                }
+
+                                // Reset lại biến để chuẩn bị cho nhóm lịch chiếu mới
+                                soghe = o.SoGhe + ", ";
+                                giave = o.GiaVe;
+                                TenPhim = o.TenPhim;
+                                NgayChieu = o.NgayChieu;
+                                GioChieu = o.GioChieu;
+                                SoPhong = o.SoPhong;
+                                ThoiLuong = o.ThoiLuong;
+                                currentMaLichChieu = o.MaLichChieu;
+                                MaVe = o.MaVe;
+                            }
+                            else
+                            {
+                                // Cộng dồn ghế và giá vé
+                                soghe += o.SoGhe + ", ";
+                                giave += o.GiaVe;
+                            }
+                        }
+                        <tr>
+                            <td>@dem</td>
+                            <td>@TenPhim</td>
+                            <td>@NgayChieu.ToString("dd/MM/yyyy")</td>
+                            <td>@GioChieu</td>
+                            <td>@ThoiLuong phút</td>
+                            <td>@SoPhong</td>
+                            <td>@soghe.TrimEnd(',', ' ')</td>
+                            <td class="text-danger fw-bold">@giave.ToString("N0") VNĐ</td>
+                            <td>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#barcodeModal" onclick="showBarcode(@MaVe)">
+                                    📦 Hiện Mã Vạch
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-primary px-4">🏠 Về trang chủ</a>
+            </div>
+        </div>
+    </div>
+</div>

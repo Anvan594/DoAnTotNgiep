@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Net.payOS;
 using Net.payOS.Types;
+using WebBanVeXemPhim.Models;
 
 namespace WebBanVeXemPhim.Controllers
 {
@@ -9,15 +12,22 @@ namespace WebBanVeXemPhim.Controllers
     public class CheckoutApiController : Controller
     {
         private readonly PayOS _payOS;
+        private readonly QuanLyBanVeXemPhimContext _context;
 
         // Inject PayOS service
-        public CheckoutApiController(PayOS payOS)
+        public CheckoutApiController(PayOS payOS , QuanLyBanVeXemPhimContext context)
         {
             _payOS = payOS;
+            _context = context;
         }
         [HttpPost]
         public async Task<IActionResult> Create(int maKhach, decimal giave, string soghe, DateTime ngaydat, string giochieu,int MaLichChieu,string TenPhim)
         {
+            //bool isSeatBooked = _context.Ves.Any(v => v.MaLichChieu == MaLichChieu);
+            //if (isSeatBooked)
+            //{
+            //    throw new Exception($"Ghế đã có người đặt. Vui lòng chọn ghế khác!");
+            //}
             // Dữ liệu của đơn hàng
             Console.WriteLine("mã khách là " + maKhach);
             var domain = "https://localhost:7126"; // Đảm bảo đây là domain thực tế của bạn
