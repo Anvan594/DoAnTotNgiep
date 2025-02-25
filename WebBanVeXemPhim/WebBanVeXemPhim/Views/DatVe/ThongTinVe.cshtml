@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Thanh toán thành công";
+}
+
+<div class="container mt-5 text-center">
+    <h2 class="text-success">🎉 Thanh toán thành công! 🎉</h2>
+     @* <p>Cảm ơn <strong>@ViewBag.TenNguoiDung</strong> đã đặt vé tại hệ thống của chúng tôi.</p> *@
+
+    <div class="card mx-auto mt-4 shadow" style="max-width: 500px;">
+        <div class="card-body">
+            <h5 class="card-title text-primary">Thông tin đơn hàng</h5>
+            <ul class="list-group list-group-flush">
+                @* <li class="list-group-item"><strong>Mã vé:</strong> @ViewBag.MaVe</li>
+                <li class="list-group-item"><strong>Mã lịch chiếu:</strong> @ViewBag.MaLichChieu</li>
+                <li class="list-group-item"><strong>Số ghế:</strong> @ViewBag.SoGhe</li> *@
+                <li class="list-group-item"><strong>Trạng thái:</strong> <span class="text-success">Đã thanh toán</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <a href="/" class="btn btn-primary mt-4">Về trang chủ</a>
+</div>

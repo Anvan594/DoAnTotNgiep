@@ -17,6 +17,7 @@ namespace WebBanVeXemPhim.Controllers
 
         public async Task<IActionResult> IndexAsync(string searchString)
         {
+           
             var currentTime = DateTime.Now;
 
             // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút

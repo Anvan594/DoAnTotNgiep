@@ -3,6 +3,7 @@
     ViewData["Title"] = "Trang Chủ";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var dachay = Context.Session.GetInt32("dachay");
+    int MaKhachHang = Context.Session.GetInt32("NguoiDung")??0;
 }
 
 <style>
@@ -257,6 +258,12 @@
 }
 </style>
 <script>
+    function DangNhap() {
+        alert("Bạn cần đăng nhập để đặt vé!");
+        window.location.href = "/Login/Index"; // Chuyển hướng đến trang đăng nhập
+        return;
+    }
+
     function openVideoModal(videoUrl, movieTitle) {
         var videoModal = new bootstrap.Modal(document.getElementById('videoModal'), {
             keyboard: false
@@ -509,7 +516,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 <!-- Banner (Carousel) -->
-<div id="bannerCarousel" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel" data-bs-interval="2500">
+<div id="bannerCarousel" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel" data-bs-interval="2500"">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"></button>
         <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"></button>
@@ -600,7 +607,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             @if (!string.IsNullOrEmpty(item.DoTuoi))
                             {
                                 <span class="badge badge-age position-absolute top-0 start-0 m-3">
-                                    @item.DoTuoi+@dachay
+                                    @item.DoTuoi
                                 </span>
 
                             }
@@ -749,12 +756,12 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     <!-- Sử dụng modal-lg để tránh lỗi hiển thị -->
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h3 class="modal-title">Chọn Ghế & Thanh Toán</h3>
+                                                            <h2 class="modal-title">Chọn Ghế & Thanh Toán (Phim: @item.TenPhim - Giờ chiếu: @lc.GioChieu) </h2>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                        
                                                         <div class="modal-body">
-                                                            <p style="font-size:20px">Chọn ghế bạn muốn đặt:</p>
+                                                            <p style="font-size:25px">Chọn ghế bạn muốn đặt:</p>
 
                                                             <div class="d-flex"style="user-select: none;">
                                                                 <!-- Cột bên trái: Ghế -->
@@ -827,18 +834,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                                                 <!-- Cột bên phải: Thanh toán -->
                                                                 <div class="payment-container ms-4 p-3 border rounded" style="flex: 1;">
-                                                                    <p class="mt-3"><strong>Phương thức thanh toán:</strong></p>
-                                                                    <select class="form-select">
-                                                                        <option value="momo">MoMo</option>
-                                                                        <option value="zalopay">ZaloPay</option>
-                                                                        <option value="visa">Thẻ Visa</option>
-                                                                    </select>
+                                                                    <div class="text-center">
+                                                                    <img src="~/images/@item.Poster" class=" rounded-3 " width="150px" alt="@item.TenPhim">
+                                                                    </div>
+                                                                   <p class="mt-3" style="font-size:16px">Tổng tiền: <span class="totalPrice_@lc.MaLichChieu">0</span></p>
 
-                                                                   <p class="mt-3">Tổng tiền: <span class="totalPrice_@lc.MaLichChieu">0</span> VNĐ</p>
-
-                                                                    <div class="modal-footer">
+                                                                    <div class="modal-footer"  style="margin-top: auto;">
                                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                                        @if (MaKhachHang!=0){
                                                                         <button type="button" class="btn btn-success confirmBooking"  data-malichchieu="@lc.MaLichChieu">Xác nhận thanh toán</button>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                        <button type="button" class="btn btn-success" onclick="DangNhap()">Xác nhận thanh toán</button>
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                                 
@@ -987,4 +996,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     </div>
 </div>
-

@@ -5,6 +5,7 @@ using WebBanVeXemPhim.Models;
 
 namespace WebBanVeXemPhim.Controllers
 {
+    [TypeFilter(typeof(CheckLoginFilter))]
     public class DatVeController : Controller
     {
         private readonly QuanLyBanVeXemPhimContext _context;
@@ -13,7 +14,7 @@ namespace WebBanVeXemPhim.Controllers
         {
             _context = context;
         }
-
+        
         [HttpPost]
         public IActionResult XacNhanDatVe([FromBody] DatVeRequest request)
         {
@@ -34,6 +35,7 @@ namespace WebBanVeXemPhim.Controllers
 
         public List<int> DatVe(DatVeRequest request)
         {
+            int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
             List<int> ticketIds = new List<int>();
             using (var transaction = _context.Database.BeginTransaction())
             {
@@ -51,7 +53,7 @@ namespace WebBanVeXemPhim.Controllers
                         {
                             MaLichChieu = request.MaLichChieu,
                             MaGhe = maGhe,
-                            MaKhachHang = 1,
+                            MaKhachHang = MaNguoiDung,
                             GiaVe = request.TotalPrice / request.SoSeats,
                             NgayDat = DateTime.Now,
                             TrangThai = false
@@ -80,7 +82,7 @@ namespace WebBanVeXemPhim.Controllers
 
             var ve = _context.Ves
                 .Include(v => v.MaGheNavigation)
-                .Where(v => v.MaVe == orderId)
+                .Where(v => v.MaVe == orderId && v.TrangThai==false)
                 .Select(v => new
                 {
                     v.MaLichChieu,
@@ -90,13 +92,16 @@ namespace WebBanVeXemPhim.Controllers
             var order = _context.Ves
                 .Include(v => v.MaGheNavigation)
                 .Include(v => v.MaLichChieuNavigation)
+                .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
                 .Include(v => v.MaKhachHangNavigation)
-                .Where(v => v.MaKhachHang==ve.MaKhachHang&&v.MaLichChieu==ve.MaLichChieu)
+                .Where(v => v.MaKhachHang==ve.MaKhachHang && v.MaLichChieu==ve.MaLichChieu && v.TrangThai==false)
                 .Select(v => new
                 {
                     v.MaVe,
                     GioChieu=v.MaLichChieuNavigation.GioChieu,
                     v.MaLichChieu,
+                    v.MaKhachHang,
+                    TenPhim=v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
                     TenKhach=v.MaKhachHangNavigation.TenNguoiDung,
                     SoGhe = v.MaGheNavigation != null ? v.MaGheNavigation.SoGhe : "Chưa rõ",
                     v.GiaVe,
@@ -111,41 +116,61 @@ namespace WebBanVeXemPhim.Controllers
 
             return View(order);
         }
-
-        [HttpPost]
-        public IActionResult ThanhToan(int orderId, string paymentMethod)
+        public async Task<IActionResult> ThongTinVe( bool check)
         {
-            var order = _context.Ves.FirstOrDefault(v => v.MaVe == orderId);
-            if (order == null)
+            if (check == false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+
+            var order = _context.Ves
+                .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == false)
+                .Select(v => new
+                {
+                    v.MaVe,
+                    v.MaLichChieu,
+                    v.MaKhachHang
+                })
+                .ToArray();
+
+            if (!order.Any())
             {
                 return NotFound("Không tìm thấy đơn hàng!");
             }
 
-            var existingPayment = _context.ThanhToans.FirstOrDefault(p => p.MaVe == orderId);
-            if (existingPayment != null)
+            var payments = new List<ThanhToan>();
+            foreach (var item in order)
             {
-                return BadRequest("Vé này đã được thanh toán!");
+                var existingPayment = _context.ThanhToans.FirstOrDefault(p => p.MaVe == item.MaVe);
+                if (existingPayment != null)
+                {
+                    return BadRequest("Vé này đã được thanh toán!");
+                }
+
+                payments.Add(new ThanhToan
+                {
+                    MaVe = item.MaVe,
+                    PhuongThuc = "Chuyển khoản qua ngân hàng",
+                    NgayThanhToan = DateTime.Now,
+                    TrangThai = "Đã Thanh Toán"
+                });
             }
 
-            var payment = new ThanhToan
-            {
-                MaVe = order.MaVe,
-                PhuongThuc = paymentMethod,
-                NgayThanhToan = DateTime.Now,
-                TrangThai = "Đã Thanh Toán"
-            };
+            _context.ThanhToans.AddRange(payments);
+            await _context.SaveChangesAsync();
 
-            _context.ThanhToans.Add(payment);
-            _context.SaveChanges();
+            await UpdateVe(MaNguoiDung);
 
-            return RedirectToAction("Success", new { orderId = order.MaVe });
+            return View();
         }
+
 
         public IActionResult Success(int orderId)
         {
             return View(orderId);
         }
-        public async Task<IActionResult> dieuhuong(int orderId)
+        public async Task<IActionResult> dieuhuong()
         {
             int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung")??0;
             if (MaNguoiDung != 0)
@@ -158,9 +183,38 @@ namespace WebBanVeXemPhim.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("Index", "Home");
-
+        }
+        public IActionResult ThanhToanThanhCong()
+        {
+            long MaDonHang = HttpContext.Session.GetInt32("MaDonHang") ?? 0;
+            return RedirectToAction("CheckOrderStatus", "PayOS", new { orderCode = MaDonHang });
 
         }
+        public async Task<IActionResult> UpdateVe(int MaNguoiDung)
+        {
+            // Tìm vé cần cập nhật
+            var veCanUpdate = await _context.Ves
+                .Where(v => v.TrangThai == false && v.MaKhachHang == MaNguoiDung)
+                .FirstOrDefaultAsync(); // Thêm `await` vì đây là truy vấn async
+
+            // Kiểm tra nếu không tìm thấy vé nào
+            if (veCanUpdate == null)
+            {
+                return NotFound("Không tìm thấy vé nào cần cập nhật!");
+            }
+
+            // Cập nhật trạng thái của vé
+            veCanUpdate.TrangThai = true;
+
+            // Lưu thay đổi vào database
+            await _context.SaveChangesAsync();
+
+            return Ok("Cập nhật vé thành công!");
+        }
+
+
+
+
         public class DatVeRequest
         {
             [Required(ErrorMessage = "Mã lịch chiếu không được để trống.")]

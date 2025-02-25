@@ -43,10 +43,11 @@ namespace WebBanVeXemPhim.Controllers
             }
 
             // Đăng nhập thành công
-            HttpContext.Session.SetInt32("NguoiDung", dataLogin.MaNguoiDung);
-                return RedirectToAction("Index", "Home");
             
-
+            HttpContext.Session.SetInt32("NguoiDung", dataLogin.MaNguoiDung);
+            var user = HttpContext.Session.GetInt32("NguoiDung");
+            HttpContext.Session.SetString("Email", dataLogin.Email);
+                return RedirectToAction("index", "Home");
 
         }
         [HttpGet]// thoát đăng nhập, huỷ session

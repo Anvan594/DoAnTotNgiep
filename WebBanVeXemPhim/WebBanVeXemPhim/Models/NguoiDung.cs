@@ -7,11 +7,11 @@ public partial class NguoiDung
 {
     public int MaNguoiDung { get; set; }
 
-    public string TenNguoiDung { get; set; } = null!;
+    public string TenNguoiDung { get; set; } 
 
-    public string Email { get; set; } = null!;
+    public string Email { get; set; } 
 
-    public string MatKhau { get; set; } = null!;
+    public string MatKhau { get; set; }
 
     public bool? TrangThai { get; set; }
 

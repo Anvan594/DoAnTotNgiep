@@ -5,10 +5,12 @@
     decimal giave = 0;
     string soghe = "";
     string dau = "";
-    string makhach = "";
+    string tenKhach = "";
+    int Makhach = 0;
     int maLichChieu = 0;
     DateTime ngaydat = default;
     TimeOnly giochieu = default;
+    string TenPhim = "";
 }
 
 @foreach (var v in Model)
@@ -16,10 +18,12 @@
     maLichChieu = v.MaLichChieu;
     giave = v.GiaVe + giave;
     soghe = soghe + dau + v.SoGhe;
-    makhach = v.TenKhach;
+    tenKhach = v.TenKhach;
     ngaydat = v.NgayDat;
     dau = ", ";
     giochieu = v.GioChieu;
+    Makhach = v.MaKhachHang;
+    TenPhim = v.TenPhim;
 }
 <div class="container mt-4 p-4">
 
@@ -35,8 +39,8 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th>Mã khách hàng</th>
-                        <td>@makhach</td>
+                        <th>Tên khách hàng</th>
+                        <td>@tenKhach</td>
                     </tr>
                     <tr>
                         <th>Số ghế</th>
@@ -61,8 +65,10 @@
 
     <div class="text-center mt-4">
          <form method="post" asp-controller="CheckoutApi" asp-action="Create">
+            <input hidden type="number" name="Makhach" value="@Makhach" />
             <input hidden type="number" name="MaLichChieu" value="@maLichChieu" /> 
             <input hidden type="text" name="soghe" value="@soghe" required />
+            <input hidden type="text" name="TenPhim" value="@TenPhim" required />
             <input hidden type="number" name="giave" value="@giave" required />
             <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
             <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
