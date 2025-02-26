@@ -119,62 +119,64 @@ namespace WebBanVeXemPhim.Controllers
         }
         public async Task<IActionResult> ThongTinVe( bool check)
         {
-            if (check == false)
+            if (check == true)
             {
-                return RedirectToAction("Index", "Home");
-            }
-            int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+                int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
 
-            var order = _context.Ves
-                .Include(v => v.MaGheNavigation)
-                .Include(v=>v.MaLichChieuNavigation)
-                .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
-                .Include(v=>v.MaLichChieuNavigation.MaPhongNavigation)
-                .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == false)
-                .Select(v => new
+                var order = _context.Ves
+                    .Include(v => v.MaGheNavigation)
+                    .Include(v => v.MaLichChieuNavigation)
+                    .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
+                    .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
+                    .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == false)
+                    .Select(v => new
+                    {
+                        SoGhe = v.MaGheNavigation.SoGhe,
+                        SoPhong = v.MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                        GioChieu = v.MaLichChieuNavigation.GioChieu,
+                        Ngaychieu = v.MaLichChieuNavigation.NgayChieu,
+                        TenPhim = v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                        ThoiLuong = v.MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                        v.GiaVe,
+                        v.MaVe,
+                        v.MaLichChieu,
+                        v.MaKhachHang
+                    })
+                    .ToArray();
+                ViewBag.VeDaMua = order;
+                if (!order.Any())
                 {
-                    SoGhe=v.MaGheNavigation.SoGhe,
-                    SoPhong=v.MaLichChieuNavigation.MaPhongNavigation.TenPhong,
-                    GioChieu=v.MaLichChieuNavigation.GioChieu,
-                    Ngaychieu=v.MaLichChieuNavigation.NgayChieu,
-                    TenPhim=v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
-                    ThoiLuong=v.MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
-                    v.GiaVe,
-                    v.MaVe,
-                    v.MaLichChieu,
-                    v.MaKhachHang
-                })
-                .ToArray();
-            ViewBag.VeDaMua = order;
-            if (!order.Any())
-            {
-                return NotFound("Không tìm thấy đơn hàng!");
-            }
-
-            var payments = new List<ThanhToan>();
-            foreach (var item in order)
-            {
-                var existingPayment = _context.ThanhToans.FirstOrDefault(p => p.MaVe == item.MaVe);
-                if (existingPayment != null)
-                {
-                    return BadRequest("Vé này đã được thanh toán!");
+                    return NotFound("Không tìm thấy đơn hàng!");
                 }
 
-                payments.Add(new ThanhToan
+                var payments = new List<ThanhToan>();
+                foreach (var item in order)
                 {
-                    MaVe = item.MaVe,
-                    PhuongThuc = "Chuyển khoản qua ngân hàng",
-                    NgayThanhToan = DateTime.Now,
-                    TrangThai = "Đã Thanh Toán"
-                });
+                    var existingPayment = _context.ThanhToans.FirstOrDefault(p => p.MaVe == item.MaVe);
+                    if (existingPayment != null)
+                    {
+                        return BadRequest("Vé này đã được thanh toán!");
+                    }
+
+                    payments.Add(new ThanhToan
+                    {
+                        MaVe = item.MaVe,
+                        PhuongThuc = "Chuyển khoản qua ngân hàng",
+                        NgayThanhToan = DateTime.Now,
+                        TrangThai = "Đã Thanh Toán"
+                    });
+                }
+
+                _context.ThanhToans.AddRange(payments);
+                await _context.SaveChangesAsync();
+
+                await UpdateVe(MaNguoiDung);
+
+                return RedirectToAction("Index", "Home");
+              
             }
+            return RedirectToAction("ThanhToanThanhCong", "DatVe");
 
-            _context.ThanhToans.AddRange(payments);
-            await _context.SaveChangesAsync();
-
-            await UpdateVe(MaNguoiDung);
-
-            return RedirectToAction("Index", "Home");
         }
 
 

@@ -23,14 +23,7 @@ namespace WebBanVeXemPhim.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(int maKhach, decimal giave, string soghe, DateTime ngaydat, string giochieu,int MaLichChieu,string TenPhim)
         {
-            //bool isSeatBooked = _context.Ves.Any(v => v.MaLichChieu == MaLichChieu);
-            //if (isSeatBooked)
-            //{
-            //    throw new Exception($"Ghế đã có người đặt. Vui lòng chọn ghế khác!");
-            //}
-            // Dữ liệu của đơn hàng
-            Console.WriteLine("mã khách là " + maKhach);
-            var domain = "https://localhost:7126"; // Đảm bảo đây là domain thực tế của bạn
+            var domain = "https://localhost:7126"; 
             
             long code = int.Parse(DateTimeOffset.Now.ToString("ffffff"));
             int MaDonHang = (int)code;
@@ -46,8 +39,9 @@ namespace WebBanVeXemPhim.Controllers
             
             var response = await _payOS.createPaymentLink(paymentLinkRequest);
             // Chuyển hướng đến trang thanh toán
+            HttpContext.Session.SetString("LinkThanhToan", response.checkoutUrl);
             Response.Headers.Append("Location", response.checkoutUrl);
-            return new StatusCodeResult(303); // Mã trạng thái 303 để chuyển hướng
+            return new StatusCodeResult(303);
         }
 
     }

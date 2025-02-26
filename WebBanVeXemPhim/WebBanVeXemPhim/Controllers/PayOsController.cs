@@ -20,6 +20,7 @@ public class PayOSController : ControllerBase
     {
         try
         {
+            string LinhThanhToan = HttpContext.Session.GetString("LinkThanhToan");
             // Gọi API PayOS để lấy thông tin đơn hàng
             var response = await _payOS.getPaymentLinkInformation(orderCode);
             if (response.status == "PAID")
@@ -27,13 +28,13 @@ public class PayOSController : ControllerBase
                 return RedirectToAction("ThongTinVe", "DatVe", new { check = true });
 
             }
-            return RedirectToAction("Index", "Home");
-            // Trả về thông tin đơn hàng
-            //return Ok(new
-            //{
-            //    orderCode = response.orderCode,
-            //    status = response.status // Trạng thái: PAID, CANCELLED, PENDING
-            //});
+            if (response.status == "PENDING")
+            {
+                LinhThanhToan = HttpContext.Session.GetString("LinkThanhToan");
+                return Redirect(LinhThanhToan);
+            }
+            
+            return new JsonResult(new { redirectToUrl = LinhThanhToan });
         }
         catch (Exception ex)
         {

@@ -53,12 +53,12 @@ namespace WebBanVeXemPhim.Controllers
             var currentTime = DateTime.Now;
 
             // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
-            var veCanXoa = await _context.Ves
-                .Where(v => v.TrangThai == false &&
-                            EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
-                .ToListAsync();
-            _context.Ves.RemoveRange(veCanXoa);
-            await _context.SaveChangesAsync();
+            //var veCanXoa = await _context.Ves
+            //    .Where(v => v.TrangThai == false &&
+            //                EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
+            //    .ToListAsync();
+            //_context.Ves.RemoveRange(veCanXoa);
+            //await _context.SaveChangesAsync();
             // Lấy danh sách phim
             var query = _context.Phims.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
