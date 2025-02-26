@@ -76,9 +76,11 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         public IActionResult Create()
         {
             ViewBag.MaPhim = new SelectList(_context.Phims
-                .Where(p => p.TrangThai == true && p.NgayKhoiChieu <= DateOnly.FromDateTime(DateTime.Now)) // Điều kiện lọc phim đã khởi chiếu
-                .OrderByDescending(p => p.NgayKhoiChieu), // Sắp xếp theo ngày khởi chiếu mới nhất
-                "MaPhim", "TenPhim"); // Chọn dữ liệu cho dropdown
+     .Where(p => p.TrangThai == true &&
+                 p.NgayKhoiChieu <= DateOnly.FromDateTime(DateTime.Now.AddDays(8))) // Chuyển đổi để so sánh
+     .OrderByDescending(p => p.NgayKhoiChieu), // Sắp xếp theo ngày khởi chiếu mới nhất
+     "MaPhim", "TenPhim"); // Chọn dữ liệu cho dropdown
+
             ViewBag.MaPhong = new SelectList(_context.Phongs, "MaPhong", "TenPhong");
             return PartialView("Create");
         }
@@ -95,11 +97,10 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 
             List<LichChieu> lichChieus = new List<LichChieu>();
             TimeOnly gioChieu = lichChieu.GioChieu; // Lấy giờ chiếu ban đầu
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 8; i++)
             {
                 // Kiểm tra lịch chiếu có bị trùng không
                 bool isDuplicate = await _context.LichChieus.AnyAsync(lc =>
-                    lc.MaPhim == lichChieu.MaPhim &&
                     lc.MaPhong == lichChieu.MaPhong &&
                     lc.NgayChieu == lichChieu.NgayChieu &&
                     lc.GioChieu == gioChieu);

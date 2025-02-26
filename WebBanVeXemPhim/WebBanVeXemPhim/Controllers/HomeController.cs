@@ -51,13 +51,6 @@ namespace WebBanVeXemPhim.Controllers
         {
 
             var currentTime = DateTime.Now;
-
-            // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
-            //var veCanXoa = await _context.Ves
-            //    .Where(v => v.TrangThai == false &&
-            //                EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
-            //    .ToListAsync();
-            //_context.Ves.RemoveRange(veCanXoa);
             //await _context.SaveChangesAsync();
             // Lấy danh sách phim
             var query = _context.Phims.AsNoTracking().AsQueryable();
@@ -137,18 +130,33 @@ namespace WebBanVeXemPhim.Controllers
 
             return View(danhSachPhim);
         }
-        public async Task<IActionResult> XoaVe()
+        public async Task<IActionResult> XoaVe(int MaLichChieu)
         {
-            var currentTime = DateTime.Now;
-
-            // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
-            var veCanXoa = await _context.Ves
-                .Where(v => v.TrangThai == false &&
-                            EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
-                .ToListAsync();
-            _context.Ves.RemoveRange(veCanXoa);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            if(MaLichChieu != 0)
+            {
+                int MaKhachHang = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+                // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
+                var veCanXoa = await _context.Ves
+                    .Where(v => v.TrangThai == false && v.MaKhachHang == MaKhachHang &&v.MaLichChieu==MaLichChieu)
+                    .ToListAsync();
+                _context.Ves.RemoveRange(veCanXoa);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var currentTime = DateTime.Now;
+                int MaKhachHang = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+                // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
+                var veCanXoa = await _context.Ves
+                    .Where(v => v.TrangThai == false && v.MaKhachHang == MaKhachHang &&
+                                EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
+                    .ToListAsync();
+                _context.Ves.RemoveRange(veCanXoa);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

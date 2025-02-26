@@ -73,7 +73,7 @@
             <input hidden type="number" name="giave" value="@giave" required />
             <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
             <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
-            <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg">Quay lại</a>
+            <a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg">Quay lại</a>
             <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg">Tạo Link thanh toán</button>
         </form>
 

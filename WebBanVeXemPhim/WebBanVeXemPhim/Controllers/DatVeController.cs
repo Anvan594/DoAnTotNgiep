@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 using WebBanVeXemPhim.Models;
 
 namespace WebBanVeXemPhim.Controllers
@@ -18,11 +19,11 @@ namespace WebBanVeXemPhim.Controllers
         [HttpPost]
         public IActionResult XacNhanDatVe([FromBody] DatVeRequest request)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             var ticketIds = DatVe(request);
 
             if (ticketIds == null || ticketIds.Count == 0)
@@ -144,6 +145,7 @@ namespace WebBanVeXemPhim.Controllers
                     })
                     .ToArray();
                 ViewBag.VeDaMua = order;
+                int MaLichChieu = order[0].MaLichChieu;
                 if (!order.Any())
                 {
                     return NotFound("Không tìm thấy đơn hàng!");
@@ -170,7 +172,7 @@ namespace WebBanVeXemPhim.Controllers
                 _context.ThanhToans.AddRange(payments);
                 await _context.SaveChangesAsync();
 
-                await UpdateVe(MaNguoiDung);
+                await UpdateVe(MaNguoiDung, MaLichChieu);
 
                 return RedirectToAction("Index", "Home");
               
@@ -204,11 +206,11 @@ namespace WebBanVeXemPhim.Controllers
             return RedirectToAction("CheckOrderStatus", "PayOS", new { orderCode = MaDonHang });
 
         }
-        public async Task<IActionResult> UpdateVe(int MaNguoiDung)
+        public async Task<IActionResult> UpdateVe(int MaNguoiDung, int MaLichChieu)
         {
             // Tìm vé cần cập nhật
             var veCanUpdate = _context.Ves
-                .Where(v => v.TrangThai == false && v.MaKhachHang == MaNguoiDung)
+                .Where(v => v.TrangThai == false && v.MaKhachHang == MaNguoiDung && v.MaLichChieu==MaLichChieu)
                 .ToList(); // Thêm `await` vì đây là truy vấn async
 
             // Kiểm tra nếu không tìm thấy vé nào
@@ -227,7 +229,19 @@ namespace WebBanVeXemPhim.Controllers
             // Lưu thay đổi vào database
             return Ok("Cập nhật vé thành công!");
         }
-
+        public async Task<IActionResult> XoaVe(int MaLichChieu)
+        {
+            var currentTime = DateTime.Now;
+            int MaKhachHang = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+            // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
+            var veCanXoa = await _context.Ves
+                .Where(v => v.TrangThai == false && v.MaKhachHang == MaKhachHang && v.MaLichChieu == MaLichChieu&&
+                            EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
+                .ToListAsync();
+            _context.Ves.RemoveRange(veCanXoa);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
 
 
 
