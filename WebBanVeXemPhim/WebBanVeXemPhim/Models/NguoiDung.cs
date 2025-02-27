@@ -13,7 +13,7 @@ public partial class NguoiDung
 
     public string MatKhau { get; set; }
 
-    public bool? TrangThai { get; set; }
+    public bool? TrangThai { get; set; }=false;
 
     public virtual ICollection<ThongBao> ThongBaos { get; set; } = new List<ThongBao>();
 

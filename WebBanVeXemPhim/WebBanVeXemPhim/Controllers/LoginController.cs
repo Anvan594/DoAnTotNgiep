@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 using WebBanVeXemPhim.Models;
 
 namespace WebBanVeXemPhim.Controllers
@@ -22,7 +24,7 @@ namespace WebBanVeXemPhim.Controllers
                 return View(model);// trả về trạng thái lỗi
             }
             // sẽ xử lý logic phần đăng nhập tại đây
-            var pass = model.MatKhau;
+            var pass = HashPassword(model.MatKhau);
             var dataLogin = _context.NguoiDungs
     .Where(x => x.Email == model.Email && x.MatKhau == pass)
     .Select(x => new { x.MaNguoiDung, x.Email, x.TrangThai }) // Chỉ lấy cột cần thiết
@@ -50,12 +52,29 @@ namespace WebBanVeXemPhim.Controllers
                 return RedirectToAction("index", "Home");
 
         }
+        public IActionResult DangKy()
+        {
+            return View();
+        }
+        public IActionResult QuenMatKhau()
+        {
+            return View();
+        }
         [HttpGet]// thoát đăng nhập, huỷ session
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("NguoiDung"); // huỷ session với key AdminLogin đã lưu trước đó
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","home");
+        }
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(bytes).Replace("-", "").ToLower();
+            }
         }
     }
+
 }

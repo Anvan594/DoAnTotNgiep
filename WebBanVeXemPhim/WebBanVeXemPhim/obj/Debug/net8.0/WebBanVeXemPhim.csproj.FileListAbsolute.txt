@@ -778,3 +778,8 @@ C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\De
 C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\WebBanVeXemPhim.genruntimeconfig.cache
 C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\ref\WebBanVeXemPhim.dll
 C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\payos-lib-backend-dotnet.dll
+C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\MailKit.dll
+C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\MimeKit.dll
+C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll

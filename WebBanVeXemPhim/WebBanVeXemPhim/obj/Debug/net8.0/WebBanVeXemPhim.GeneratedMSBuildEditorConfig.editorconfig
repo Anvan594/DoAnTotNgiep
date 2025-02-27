@@ -206,6 +206,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/DangKy/DangKy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFuZ0t5XERhbmdLeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/DatVe/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGF0VmVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -230,8 +234,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWZURhRGF0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/Login/DangKy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cRGFuZ0t5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/Login/QuenMatKhau.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUXVlbk1hdEtoYXUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/Shared/Error.cshtml]
