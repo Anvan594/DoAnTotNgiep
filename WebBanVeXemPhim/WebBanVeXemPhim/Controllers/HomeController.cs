@@ -46,13 +46,38 @@ namespace WebBanVeXemPhim.Controllers
             ViewBag.VeDaDat = order;
             return View();
         }
-
+        public IActionResult Privacy()
+        {
+            return View();
+        }
         public async Task<IActionResult> IndexAsync(string searchString)
         {
-
             var currentTime = DateTime.Now;
-            //await _context.SaveChangesAsync();
-            // Lấy danh sách phim
+
+            // Lấy danh sách mã vé đã thanh toán
+            var danhSachMaVeThanhToan = _context.ThanhToans.Select(t => t.MaVe).ToList();
+
+            // Cập nhật trạng thái vé đã thanh toán
+            var danhSachVeThanhToan = _context.Ves
+                .Where(v => danhSachMaVeThanhToan.Contains(v.MaVe) && v.TrangThai == false)
+                .ToList();
+
+            foreach (var ve in danhSachVeThanhToan)
+            {
+                ve.TrangThai = true;
+            }
+
+            // Xóa vé chưa thanh toán sau 10 phút
+            var danhSachVeHetHan = _context.Ves
+                .Where(v => !danhSachMaVeThanhToan.Contains(v.MaVe) 
+                            && v.TrangThai == false  
+                            && EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
+                .ToList();
+
+            _context.Ves.RemoveRange(danhSachVeHetHan); // Xóa tất cả vé quá hạn
+            _context.SaveChanges();
+
+
             var query = _context.Phims.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {

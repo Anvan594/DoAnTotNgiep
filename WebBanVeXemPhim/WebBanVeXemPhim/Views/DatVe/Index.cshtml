@@ -1,6 +1,8 @@
 ﻿@model dynamic
 
 @{
+    var link = Context.Session.GetString("LinkThanhToan") ?? "";
+    int OrderId = ViewBag.OrderId;
     ViewData["Title"] = "Chi tiết đơn hàng";
     decimal giave = 0;
     string soghe = "";
@@ -27,9 +29,57 @@
     TenPhim = v.TenPhim;
 }
 <div class="container mt-4 p-4">
-
     
-    <div class="row">
+
+    <style>
+        #iframeWrapper {
+            position: relative;
+            width: 750px; /* Điều chỉnh kích thước khung hiển thị */
+            height: 340px; /* Điều chỉnh kích thước khung hiển thị */
+            overflow: hidden; /* Ẩn phần bị dư thừa */
+            border: 1px solid #ccc; /* Tạo viền nếu muốn */
+        }
+
+        #paymentIframe {
+            width: 1030px; /* Phóng to iframe để di chuyển nội dung */
+            height: 700px; /* Phóng to iframe để di chuyển nội dung */
+            position: absolute;
+            top: -260px; /* Cắt nội dung trên */
+            left: -80px; /* Cắt nội dung bên trái */
+        }
+    </style>
+    @if (!string.IsNullOrEmpty(link))
+    {
+        <script>
+            window.onload = function () {
+                $('#paymentModal').modal('show');
+            };
+            document.getElementById("openModalBtn").addEventListener("click", function () {
+                var myModal = new bootstrap.Modal(document.getElementById("paymentModal"), {
+                    keyboard: false
+                });
+                myModal.show();
+            });
+        </script>
+    }
+
+    <!-- Modal Bootstrap -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="left:-130px;top:100px">
+            <div class="modal-content" style="width:800px">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Thanh Toán</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Vui lòng quét mã để thanh toán:</p>
+                    <div id="iframeWrapper">
+                        <iframe src="@link" id="paymentIframe" style="width:1030px;height:700px;border:none"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <div class="col-md-8">
             <h2 class="text-center mb-4">Chi tiết đơn hàng</h2>
@@ -62,21 +112,75 @@
                 </tbody>
             </table>
         </div>
-    </div>
-
-    <div class="text-center mt-4">
-         <form method="post" asp-controller="CheckoutApi" asp-action="Create">
+    @{
+        if (link != "")
+        {
+            <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel">Thanh Toán</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Vui lòng quét mã để thanh toán:</p>
+                            <a href="@link" class="btn btn-success" target="_blank">Thanh toán ngay</a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <form method="post" asp-controller="CheckoutApi" asp-action="Create" id="paymentForm">
+        <input hidden type="number" name="Makhach" value="@Makhach" />
+        <input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
+        <input hidden type="text" name="soghe" value="@soghe" required />
+        <input hidden type="text" name="TenPhim" value="@TenPhim" required />
+        <input hidden type="number" name="giave" value="@giave" required />
+        <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
+        <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
+        <a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg">Quay lại</a>
+        <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg">Tạo Link thanh toán</button>
+    </form>
+    @if (link == "")
+    {
+        <form asp-controller="CheckoutApi" asp-action="Create_json" method="post">
             <input hidden type="number" name="Makhach" value="@Makhach" />
-            <input hidden type="number" name="MaLichChieu" value="@maLichChieu" /> 
+            <input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
             <input hidden type="text" name="soghe" value="@soghe" required />
             <input hidden type="text" name="TenPhim" value="@TenPhim" required />
             <input hidden type="number" name="giave" value="@giave" required />
             <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
             <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
-            <a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg">Quay lại</a>
-            <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg">Tạo Link thanh toán</button>
+            <input type="hidden" name="orderId" value="@OrderId" />
+            <button type="submit" class="btn btn-primary  btn-lg">Tạo QR thanh toán</button>
         </form>
+    }
+    else
+    {
+        <button id="openModalBtn" class="btn btn-primary  btn-lg">Mở Thanh Toán</button>
+    }
 
-        
-    </div>
+
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.getElementById("openIframeBtn").addEventListener("click", function () {
+        document.getElementById("customModal").style.display = "flex";
+    });
+
+    document.getElementById("closeModal").addEventListener("click", function () {
+        document.getElementById("customModal").style.display = "none";
+    });
+
+    // Đóng modal khi click ra ngoài
+    window.onclick = function (event) {
+        let modal = document.getElementById("customModal");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+</script>

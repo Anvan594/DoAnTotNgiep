@@ -115,7 +115,7 @@ namespace WebBanVeXemPhim.Controllers
             {
                 return NotFound("Không tìm thấy đơn hàng!");
             }
-
+            ViewBag.OrderId = orderId;
             return View(order);
         }
         public async Task<IActionResult> ThongTinVe( bool check)

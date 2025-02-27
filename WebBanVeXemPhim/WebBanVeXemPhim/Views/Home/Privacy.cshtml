@@ -1,6 +1,133 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán PayOS</title>
+    <script src="https://cdn.payos.vn/payos-checkout/v1/stable/payos-initialize.js"></script>
+</head>
+<body>
+    <h2>Thông Tin Đơn Hàng</h2>
+    <div id="content-container">
+        <p><strong>Tên sản phẩm:</strong> Mì tôm Hảo Hảo ly</p>
+        <p><strong>Giá tiền:</strong> 2,000 VNĐ</p>
+        <p><strong>Số lượng:</strong> 1</p>
+    </div>
 
-<p>Use this page to detail your site's privacy policy.</p>
+    <div id="button-container">
+        <button type="button"
+                id="create-payment-link-btn"
+                style="
+                width: 100%;
+                background-color: blue;
+                color: white;
+                border: none;
+                padding: 10px;
+                font-size: 15px;
+            ">
+            Tạo Link Thanh Toán
+        </button>
+    </div>
+
+    <!-- Vùng nhúng giao diện thanh toán -->
+    <div id="embeded-payment-container"></div>
+
+    <script>
+        /* eslint-disable no-undef */
+        const buttonContainer = document.getElementById("button-container");
+        const contentContainer = document.getElementById("content-container");
+        let isOpen = false;
+        let checkoutInstance = null;
+
+        let config = {
+            RETURN_URL: "https://localhost:7126/",
+            ELEMENT_ID: "embeded-payment-container",
+            CHECKOUT_URL: "",
+            embedded: true,
+            onSuccess: (event) => {
+                contentContainer.innerHTML = `
+                            <div style="padding-top: 20px; padding-bottom:20px">
+                                Thanh toán thành công!
+                            </div>
+                        `;
+                buttonContainer.innerHTML = `
+                            <button
+                                type="button"
+                                id="create-payment-link-btn"
+                                style="
+                                width: 100%;
+                                background-color: blue;
+                                color: white;
+                                border: none;
+                                padding: 10px;
+                                font-size: 15px;
+                                "
+                            >
+                                Quay lại trang thanh toán
+                            </button>
+                        `;
+            },
+        };
+
+        buttonContainer.addEventListener("click", async () => {
+            if (isOpen) {
+                if (checkoutInstance) {
+                    checkoutInstance.exit();
+                }
+                contentContainer.innerHTML = `
+                            <p><strong>Tên sản phẩm:</strong> Mì tôm Hảo Hảo ly</p>
+                            <p><strong>Giá tiền:</strong> 2,000 VNĐ</p>
+                            <p><strong>Số lượng:</strong> 1</p>
+                        `;
+            } else {
+                const checkoutUrl = "https://pay.payos.vn/web/32f60d4ca1ad4bb7a59c830a7190a04d/";
+                config.CHECKOUT_URL = checkoutUrl;
+
+                checkoutInstance = PayOSCheckout.usePayOS(config);
+                checkoutInstance.open();
+            }
+
+            isOpen = !isOpen;
+            changeButton();
+        });
+
+        // const getPaymentLink = async () => {
+        //     try {
+        //         const response = await fetch("", {
+        //             method: "POST",
+        //             headers: { "Content-Type": "application/json" },
+        //         });
+
+        //         if (!response.ok) {
+        //             throw new Error("Lỗi từ server!");
+        //         }
+
+        //         const result = await response.json();
+        //         return result.checkoutUrl;
+        //     } catch (error) {
+        //         console.error("Lỗi khi gọi API:", error);
+        //         return "";
+        //     }
+        // };
+
+        const changeButton = () => {
+            buttonContainer.innerHTML = `
+                        <button
+                            type="button"
+                            id="create-payment-link-btn"
+                            style="
+                                width: 100%;
+                                background-color: ${isOpen ? "gray" : "blue"};
+                                color: white;
+                                border: none;
+                                padding: 10px;
+                                font-size: 15px;
+                            "
+                        >
+                            ${isOpen ? "Đóng link thanh toán" : "Tạo Link thanh toán"}
+                        </button>
+                    `;
+        };
+    </script>
+</body>
+</html>
