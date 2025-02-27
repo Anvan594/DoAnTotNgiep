@@ -48,7 +48,7 @@
             left: -80px; /* Cắt nội dung bên trái */
         }
     </style>
-    @if (!string.IsNullOrEmpty(link))
+@*     @if (!string.IsNullOrEmpty(link))
     {
         <script>
             window.onload = function () {
@@ -61,7 +61,7 @@
                 myModal.show();
             });
         </script>
-    }
+    } *@
 
     <!-- Modal Bootstrap -->
     <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -134,7 +134,7 @@
             </div>
         }
     }
-    <form method="post" asp-controller="CheckoutApi" asp-action="Create" id="paymentForm">
+        <form method="post" asp-controller="CheckoutApi" asp-action="Create" id="paymentForm" style="display:flex">
         <input hidden type="number" name="Makhach" value="@Makhach" />
         <input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
         <input hidden type="text" name="soghe" value="@soghe" required />
@@ -142,32 +142,31 @@
         <input hidden type="number" name="giave" value="@giave" required />
         <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
         <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
-        <a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg">Quay lại</a>
+        <a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg" style="margin-right:25px">Quay lại</a>
         <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg">Tạo Link thanh toán</button>
     </form>
-    @if (link == "")
-    {
-        <form asp-controller="CheckoutApi" asp-action="Create_json" method="post">
-            <input hidden type="number" name="Makhach" value="@Makhach" />
-            <input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
-            <input hidden type="text" name="soghe" value="@soghe" required />
-            <input hidden type="text" name="TenPhim" value="@TenPhim" required />
-            <input hidden type="number" name="giave" value="@giave" required />
-            <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
-            <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
-            <input type="hidden" name="orderId" value="@OrderId" />
-            <button type="submit" class="btn btn-primary  btn-lg">Tạo QR thanh toán</button>
-        </form>
-    }
-    else
-    {
-        <button id="openModalBtn" class="btn btn-primary  btn-lg">Mở Thanh Toán</button>
-    }
+       @*  @if (link == "")
+        {
+            <form asp-controller="CheckoutApi" asp-action="Create_json" method="post">
+                <input hidden type="number" name="Makhach" value="@Makhach" />
+                <input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
+                <input hidden type="text" name="soghe" value="@soghe" required />
+                <input hidden type="text" name="TenPhim" value="@TenPhim" required />
+                <input hidden type="number" name="giave" value="@giave" required />
+                <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
+                <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
+                <input type="hidden" name="orderId" value="@OrderId" />
+                <button type="submit" class="btn btn-primary  btn-lg">Tạo QR thanh toán</button>
+            </form>
+        }
+        else
+        {
+            <button id="openModalBtn" class="btn btn-primary  btn-lg">Mở Thanh Toán</button>
+        } *@
 
-
-</div>
+    </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
+@* <script>
     document.getElementById("openIframeBtn").addEventListener("click", function () {
         document.getElementById("customModal").style.display = "flex";
     });
@@ -183,4 +182,4 @@
             modal.style.display = "none";
         }
     };
-</script>
+</script> *@

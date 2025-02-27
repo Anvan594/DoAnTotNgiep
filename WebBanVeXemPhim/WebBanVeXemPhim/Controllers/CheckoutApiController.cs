@@ -53,7 +53,7 @@ namespace WebBanVeXemPhim.Controllers
             var domain = "https://localhost:7126";
 
             long code = int.Parse(DateTimeOffset.Now.ToString("ffffff"));
-            long expirationTime = ((DateTimeOffset)DateTime.UtcNow.AddMinutes(30)).ToUnixTimeSeconds();
+            long expirationTime = ((DateTimeOffset)DateTime.UtcNow.AddMinutes(10)).ToUnixTimeSeconds();
 
             int MaDonHang = (int)code;
             HttpContext.Session.SetInt32("MaDonHang", MaDonHang);
