@@ -25,45 +25,90 @@ namespace WebBanVeXemPhim.Controllers
                 return RedirectToAction("Index", "Login");
             }
 
+            // Thiết lập số bản ghi mỗi trang và trang hiện tại (mặc định trang 1)
             int pageSize = 8;
             int pageNumber = page ?? 1;
 
-            // Truy vấn ban đầu, sau đó nhóm theo MaLichChieu
-            var groupedQuery = _context.Ves
-                .Include(v => v.MaGheNavigation)
-                .Include(v => v.MaLichChieuNavigation)
-                    .ThenInclude(lc => lc.MaPhimNavigation)
-                .Include(v => v.MaLichChieuNavigation)
-                    .ThenInclude(lc => lc.MaPhongNavigation)
-                .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == true)
-                .GroupBy(v => v.MaLichChieu)
-                .Select(g => new
+            // Xây dựng truy vấn ban đầu dưới dạng IQueryable
+            var danhSachVe = _context.Ves
+    .Include(v => v.MaGheNavigation)
+    .Include(v => v.MaLichChieuNavigation)
+    .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
+    .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
+    .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == true)
+    .OrderByDescending(v => v.NgayDat)
+    .ThenBy(v => v.MaLichChieu) // Giữ thứ tự ban đầu
+    .ThenBy(v => v.MaVe) // Đảm bảo vé cùng lịch chiếu giữ đúng thứ tự
+    .ToList();
+
+            var result = new List<object>();
+            int? currentMaLichChieu = null;
+            string soghe = "";
+            decimal giave = 0;
+
+            foreach (var ve in danhSachVe)
+            {
+                if (currentMaLichChieu == null || ve.MaLichChieu != currentMaLichChieu)
                 {
-                    MaLichChieu = g.Key,
-                    // Lấy thông tin từ phần tử đầu tiên của nhóm
-                    SoGhe = g.FirstOrDefault().MaGheNavigation.SoGhe,
-                    SoPhong = g.FirstOrDefault().MaLichChieuNavigation.MaPhongNavigation.TenPhong,
-                    GioChieu = g.FirstOrDefault().MaLichChieuNavigation.GioChieu,
-                    NgayChieu = g.FirstOrDefault().MaLichChieuNavigation.NgayChieu,
-                    TenPhim = g.FirstOrDefault().MaLichChieuNavigation.MaPhimNavigation.TenPhim,
-                    ThoiLuong = g.FirstOrDefault().MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
-                    GiaVe = g.FirstOrDefault().GiaVe,
-                    // Nếu cần mã vé bạn có thể chọn theo logic riêng (ví dụ: vé có giá thấp nhất, cao nhất,...)
-                    MaVe = g.FirstOrDefault().MaVe,
-                    MaKhachHang = g.FirstOrDefault().MaKhachHang
+                    // Nếu không phải dòng đầu tiên, thêm dữ liệu đã gộp vào danh sách kết quả
+                    if (currentMaLichChieu != null)
+                    {
+                        result.Add(new
+                        {
+                            MaLichChieu = currentMaLichChieu,
+                            ThoiLuong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                            TenPhim = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                            NgayChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.NgayChieu,
+                            GioChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.GioChieu,
+                            SoPhong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                            SoGhe = soghe.TrimEnd(',', ' '), // Bỏ dấu phẩy cuối cùng
+                            GiaVe = giave
+                        });
+                    }
+
+                    // Reset dữ liệu cho nhóm mới
+                    currentMaLichChieu = ve.MaLichChieu;
+                    soghe = ve.MaGheNavigation.SoGhe + ", ";
+                    giave = ve.GiaVe;
+                }
+                else
+                {
+                    // Nếu cùng lịch chiếu, tiếp tục ghép ghế & cộng tiền
+                    soghe += ve.MaGheNavigation.SoGhe + ", ";
+                    giave += ve.GiaVe;
+                }
+            }
+
+            // Thêm nhóm cuối cùng vào danh sách kết quả
+            if (currentMaLichChieu != null)
+            {
+                result.Add(new
+                {
+                   
+                    MaLichChieu = currentMaLichChieu,
+                    ThoiLuong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                    TenPhim = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                    NgayChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.NgayChieu,
+                    GioChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.GioChieu,
+                    SoPhong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                    SoGhe = soghe.TrimEnd(',', ' '),
+                    GiaVe = giave
                 });
+            }
 
-            // Đếm tổng số nhóm (tức là số lịch chiếu)
-            int totalRecords = await groupedQuery.CountAsync();
+            ViewBag.VeDaDat = result;
+            // Đếm tổng số bản ghi
+            int totalRecords = result.Count();
+            // Tính số trang (làm tròn lên)
             int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
-
-            // Sắp xếp kết quả nhóm theo một trường nào đó (ví dụ: NgayChieu hoặc MaLichChieu) để có thứ tự nhất quán
-            var orders = await groupedQuery
-                .OrderByDescending(x => x.MaLichChieu) // hoặc OrderByDescending(x => x.NgayChieu)
+            
+            // Lấy dữ liệu của trang hiện tại với Skip/Take
+            var orders = result
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync();
-
+                .ToList();
+            
+            // Gán dữ liệu phân trang sang View thông qua ViewBag
             ViewBag.VeDaDat = orders;
             ViewBag.CurrentPage = pageNumber;
             ViewBag.TotalPages = totalPages;
@@ -175,11 +220,10 @@ namespace WebBanVeXemPhim.Controllers
              .ToListAsync();
 
             ViewBag.DanhSachGhe = danhSachGhe;
-
-
-
             ViewBag.DanhSachVe = DanhSachVe;
-
+            int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+            var SoThongBao=_context.ThongBaos.Where(tb=>tb.MaNguoiDung == MaNguoiDung&&tb.TrangThai==false).ToArray();
+            HttpContext.Session.SetInt32("SoThongBao", SoThongBao.Length);
             return View(danhSachPhim);
         }
         public async Task<IActionResult> XoaVe(int MaLichChieu)

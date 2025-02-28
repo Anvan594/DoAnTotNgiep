@@ -10,8 +10,9 @@ public partial class ThongBao
     public int MaNguoiDung { get; set; }
 
     public string NoiDung { get; set; }
+    public bool TrangThai {  get; set; }=false;
 
-    public DateTime? NgayGui { get; set; }
+    public DateTime? NgayGui { get; set; }=DateTime.Now;
 
     public virtual NguoiDung MaNguoiDungNavigation { get; set; } = null!;
 }

@@ -152,8 +152,15 @@ namespace WebBanVeXemPhim.Controllers
                 }
 
                 var payments = new List<ThanhToan>();
+                var SoGhe_ThongBao="";
                 foreach (var item in order)
                 {
+                    if (!string.IsNullOrEmpty(SoGhe_ThongBao))
+                    {
+                        SoGhe_ThongBao += ", ";
+                    }
+                    SoGhe_ThongBao += item.SoGhe;
+
                     var existingPayment = _context.ThanhToans.FirstOrDefault(p => p.MaVe == item.MaVe);
                     if (existingPayment != null)
                     {
@@ -168,7 +175,12 @@ namespace WebBanVeXemPhim.Controllers
                         TrangThai = "Đã Thanh Toán"
                     });
                 }
-
+                var ThongBao = new ThongBao
+                {
+                    MaNguoiDung = MaNguoiDung,
+                    NoiDung ="Bạn đã đặt vé thành công<br/>Tên Phim: " + order[0].TenPhim+"<br/>Ngày chiếu:"+order[0].Ngaychieu+" Giờ chiếu: " + order[0].GioChieu + "<br/> Số ghế: "+SoGhe_ThongBao
+                };
+                _context.ThongBaos.Add(ThongBao);
                 _context.ThanhToans.AddRange(payments);
                 await _context.SaveChangesAsync();
 

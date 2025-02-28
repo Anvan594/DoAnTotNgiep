@@ -453,7 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function () {
             let maLichChieu = this.getAttribute("data-malichchieu");
             let selectedSeats = document.querySelectorAll(`.seat.selected[data-maGhe='${maLichChieu}']`);
-            let maxSeats = 5;
+            let maxSeats = 10;
 
             if (selectedSeats.length === 0) {
                 alert("Bạn chưa chọn ghế!");
@@ -497,7 +497,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         }),
                         success: function(response) {
                             if (response.ticketIds && response.ticketIds.length > 0) {
-                                alert("Đặt vé thành công! Mã vé: " + response.ticketIds.join(", "));
+                                //alert("Đặt vé thành công! Mã vé: " + response.ticketIds.join(", "));
                                 console.log("oderid được gửi di:",response.ticketIds[0])
                                window.location.href = "/DatVe/index?orderId=" + response.ticketIds[0];
                                

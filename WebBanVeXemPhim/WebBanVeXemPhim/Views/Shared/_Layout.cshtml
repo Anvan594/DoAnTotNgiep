@@ -35,8 +35,8 @@
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             }
         /* Wrapper chứa nội dung và footer:
-                       - margin-top: 60px để đẩy nội dung xuống dưới navbar
-                       - height: calc(100% - 60px) đảm bảo wrapper chiếm phần còn lại của viewport */
+                                               - margin-top: 60px để đẩy nội dung xuống dưới navbar
+                                               - height: calc(100% - 60px) đảm bảo wrapper chiếm phần còn lại của viewport */
         #page-wrapper {
             display: flex;
             flex-direction: column;
@@ -49,7 +49,8 @@
             min-height: 700px; /* Nếu muốn đảm bảo tối thiểu 700px cho nội dung */
             padding: 20px;
         }
-        nav{
+
+        nav {
             background: #1a2035;
         }
         /* Footer */
@@ -68,6 +69,66 @@
                 footer a:hover {
                     text-decoration: underline;
                 }
+
+        .notification-icon {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 24px;
+            color: #adb5bd;
+        }
+
+        /* Badge hiển thị số lượng */
+        .notification-badge {
+            position: absolute;
+            top: -2px; /* Điều chỉnh vị trí */
+            right: -5px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 0 4px 2px 4px;
+            border-radius: 50%;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* Hộp thông báo */
+        .notification-content {
+            display: none;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 300px;
+            text-align: left;
+            z-index: 1000;
+        }
+
+        .notification-icon:hover .notification-content {
+            display: block;
+        }
+
+        /* Danh sách thông báo */
+        .notification-content ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+            .notification-content ul li {
+                padding: 5px 0;
+                border-bottom: 1px solid #ddd;
+            }
+
+                .notification-content ul li:last-child {
+                    border-bottom: none;
+                }
     </style>
 </head>
 @{
@@ -82,7 +143,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto" style="font-size:17px">
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Trang Chủ</a>
                     </li>
@@ -100,6 +161,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Login" asp-action="Logout">Đăng Xuất</a>
+                        </li>
+                        <li class="nav-item">
+                            @await Component.InvokeAsync("Header")
                         </li>
                     }
                     else
