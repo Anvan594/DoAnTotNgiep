@@ -81,17 +81,14 @@
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <div class="login-container">
             <div class="card login-card">
-                <div class="text-center mb-3">
-                    <h3><i class="fa-solid fa-user-shield"></i></h3>
-                    <p class="text-muted">Đăng nhập vào trang web</p>
-                </div>
+                <h3 class="text-center mb-4">Đăng Nhập</h3>
                 @if (!ViewData.ModelState.IsValid)
                 {
                     <div class="alert alert-danger text-center">
                         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                     </div>
                 }
-                <form asp-action="Index" method="post">
+                <form id="loginForm" asp-action="Index" method="post">
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
                         <input type="email" class="form-control" asp-for="Email" placeholder="Nhập email của bạn" required>
@@ -139,6 +136,7 @@
         const rememberedEmail = localStorage.getItem("rememberedEmail");
         if (rememberedEmail) {
             document.querySelector('input[type="email"]').value = rememberedEmail;
+            document.querySelector('input[type=password]').value = localStorage.getItem("rememberedPassword");
             document.getElementById("remember").checked = true;
         }
     };
@@ -151,8 +149,10 @@
 
         // Lưu email nếu checkbox được chọn
         const emailInput = document.querySelector('input[type="email"]');
+        const passlInput = document.querySelector('input[type="password"]');
         if (document.getElementById("remember").checked) {
             localStorage.setItem("rememberedEmail", emailInput.value);
+            localStorage.setItem("rememberedPassword", passlInput.value);
         } else {
             localStorage.removeItem("rememberedEmail");
         }

@@ -9,7 +9,7 @@ public partial class ThongBao
 
     public int MaNguoiDung { get; set; }
 
-    public string NoiDung { get; set; } = null!;
+    public string NoiDung { get; set; }
 
     public DateTime? NgayGui { get; set; }
 

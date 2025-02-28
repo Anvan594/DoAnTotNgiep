@@ -27,7 +27,7 @@ namespace WebBanVeXemPhim.Controllers
             var pass = HashPassword(model.MatKhau);
             var dataLogin = _context.NguoiDungs
     .Where(x => x.Email == model.Email && x.MatKhau == pass)
-    .Select(x => new { x.MaNguoiDung, x.Email, x.TrangThai }) // Chỉ lấy cột cần thiết
+    .Select(x => new { x.MaNguoiDung, x.Email, x.TrangThai,x.TenNguoiDung }) // Chỉ lấy cột cần thiết
     .FirstOrDefault();
 
 
@@ -47,9 +47,9 @@ namespace WebBanVeXemPhim.Controllers
             // Đăng nhập thành công
             
             HttpContext.Session.SetInt32("NguoiDung", dataLogin.MaNguoiDung);
-            var user = HttpContext.Session.GetInt32("NguoiDung");
             HttpContext.Session.SetString("Email", dataLogin.Email);
-                return RedirectToAction("index", "Home");
+            HttpContext.Session.SetString("TenNguoiDung", dataLogin.TenNguoiDung);
+            return RedirectToAction("index", "Home");
 
         }
         public IActionResult DangKy()

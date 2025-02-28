@@ -623,7 +623,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
 
                         <div class="card-body" style="background-color:#f8f9fa">
-                            <a href="#" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">
+                            <a asp-controller="ChiTietPhim" asp-action="Index" asp-route-id="@item.MaPhim" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">                                
                                 @(item.TenPhim.Length > 20 ? item.TenPhim.Substring(0, 20) + "..." : item.TenPhim)
                             </a>
                             <p class="card-text text-muted text-start mx-auto" style="font-size:14px">
@@ -930,7 +930,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
 
                         <div class="card-body" style="background-color:#f8f9fa">
-                            <a href="#" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">
+                            <a asp-controller="ChiTietPhim" asp-action="Index" asp-route-id="@item.MaPhim" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">                                
                                 @(item.TenPhim.Length > 20 ? item.TenPhim.Substring(0, 20) + "..." : item.TenPhim)
                             </a>
                             <p class="card-text text-muted text-start mx-auto" style="font-size:14px">
@@ -979,7 +979,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
 
                         <div class="card-body" style="background-color:#f8f9fa">
-                            <a href="#" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">
+                            <a asp-controller="ChiTietPhim" asp-action="Index" asp-route-id="@item.MaPhim" class="card-title fw-bold text-primary text-decoration-none d-block mb-2 movie-title" style="font-size:18px">                                
                                 @(item.TenPhim.Length > 20 ? item.TenPhim.Substring(0, 20) + "..." : item.TenPhim)
                             </a>
                             <p class="card-text text-muted text-start mx-auto" style="font-size:14px">

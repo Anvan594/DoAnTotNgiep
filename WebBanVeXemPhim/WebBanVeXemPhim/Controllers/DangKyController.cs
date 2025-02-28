@@ -83,8 +83,9 @@ public class DangKyController : Controller
         // Cập nhật trạng thái tài khoản
         user.TrangThai = true;
         await _context.SaveChangesAsync();
-
-        return RedirectToAction("Index","Login");
+        HttpContext.Session.SetInt32("NguoiDung", user.MaNguoiDung);
+        HttpContext.Session.SetString("TenNguoiDung", user.TenNguoiDung);
+        return RedirectToAction("Index","home");
     }
     [HttpGet("xacnhan_code")]
     public async Task<IActionResult> XacNhan_code(string email, string token)

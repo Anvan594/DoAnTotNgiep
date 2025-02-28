@@ -10,45 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
 
     <style>
+        /* Đặt chiều cao 100% cho html, body */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
         body {
             background-color: #f8f9fa;
             font-family: 'Oswald', sans-serif;
         }
-
-        /* Navbar */
+        /* Navbar: fixed ở đầu trang */
         .navbar {
             padding: 10px;
-        }
-
-        /* Banner */
-        .carousel-item {
-            transform: translateX(50px);
-            transition: opacity 1s ease-in-out, transform 1s cubic-bezier(0.3, 0, 0.7, 1);
-        }
-
-            .carousel-item.active {
-                opacity: 1;
-                transform: translateX(0);
-            }
-
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            padding: 10px;
-        }
-
-        /* Hiệu ứng thẻ phim */
-        .movie-card {
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-            .movie-card:hover {
-                transform: scale(1.05);
-                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            }
-        /* Navbar cố định khi cuộn */
-        .navbar {
             position: fixed;
             top: 0;
             width: 100%;
@@ -56,38 +30,52 @@
             transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
-        /* Tạo khoảng trống để tránh che nội dung */
-        body {
-            padding-top: 60px; /* Để tránh bị che bởi navbar */
+            .navbar.scrolled {
+                background-color: rgba(0, 0, 0, 0.9);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+        /* Wrapper chứa nội dung và footer:
+                       - margin-top: 60px để đẩy nội dung xuống dưới navbar
+                       - height: calc(100% - 60px) đảm bảo wrapper chiếm phần còn lại của viewport */
+        #page-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 60px);
+            margin-top: 60px;
+        }
+        /* Nội dung chính, sử dụng flex: 1 để mở rộng chiếm không gian còn lại */
+        #content {
+            flex: 1;
+            min-height: 700px; /* Nếu muốn đảm bảo tối thiểu 700px cho nội dung */
+            padding: 20px;
+        }
+        nav{
+            background: #1a2035;
+        }
+        /* Footer */
+        footer {
+            background-color: #1a2035;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
         }
 
-        /* Hiệu ứng khi cuộn xuống */
-        .navbar.scrolled {
-            background-color: rgba(0, 0, 0, 0.9); /* Tăng độ tối */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
+            footer a {
+                color: #fff;
+                text-decoration: none;
+            }
 
-        #loading {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-        }
+                footer a:hover {
+                    text-decoration: underline;
+                }
     </style>
 </head>
 @{
-    int check =Context.Session.GetInt32("NguoiDung")??0;
+    int check = Context.Session.GetInt32("NguoiDung") ?? 0;
 }
 <body>
-    <div id="loading">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
         <div class="container">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">Beta Cinemas</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -98,53 +86,97 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="Index">Trang Chủ</a>
                     </li>
-                    @if(check!=0){
+                    @if (check != 0)
+                    {
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="VeDaDat">Vé đã mua</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="#">Lịch Chiếu</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Liên Hệ</a></li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Login" asp-action="Logout">Đăng xuất</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="HoSo">
+                                Xin chào @Context.Session.GetString("TenNguoiDung") !
+                            </a>
                         </li>
-                    }else
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Login" asp-action="Logout">Đăng Xuất</a>
+                        </li>
+                    }
+                    else
                     {
                         <li class="nav-item"><a class="nav-link" href="#">Lịch Chiếu</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Liên Hệ</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Login" asp-action="Index">Đăng Nhập</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Login" asp-action="DangKy">Đăng Ký</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Login" asp-action="Index">Đăng Nhập</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Login" asp-action="DangKy">Đăng Ký</a>
+                        </li>
                     }
                 </ul>
             </div>
         </div>
     </nav>
-    <div>
+
+    <!-- Wrapper chứa nội dung và footer -->
+    <div id="page-wrapper">
+        <!-- Nội dung chính -->
         @RenderBody()
+        <!-- Footer -->
+        <footer class="footer text-white pt-4 text-start">
+            <div class="container">
+                <div class="row">
+                    <!-- Cột thông tin về chúng tôi -->
+                    <div class="col-md-4 mb-3">
+                        <h5>Về Chúng Tôi</h5>
+                        <p>Beta Cinemas là hệ thống rạp chiếu phim hàng đầu, mang đến trải nghiệm xem phim tuyệt vời cho bạn.</p>
+                    </div>
+                    <!-- Cột liên kết nhanh -->
+                    <div class="col-md-4 mb-3">
+                        <h5>Liên Kết Nhanh</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white">Trang Chủ</a></li>
+                            <li><a href="#" class="text-white">Lịch Chiếu</a></li>
+                            <li><a href="#" class="text-white">Liên Hệ</a></li>
+                            <li><a href="#" class="text-white">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <!-- Cột mạng xã hội -->
+                    <div class="col-md-4 mb-3">
+                        <h5>Theo Dõi Chúng Tôi</h5>
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#" class="text-white">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#" class="text-white">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#" class="text-white">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#" class="text-white">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - WebBanVeXemPhim - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<script>
-    function showLoading() {
-        document.getElementById("loading").style.display = "block";
-    }
-
-    // Hàm ẩn loading spinner
-    function hideLoading() {
-        document.getElementById("loading").style.display = "none";
-    }
-</script>

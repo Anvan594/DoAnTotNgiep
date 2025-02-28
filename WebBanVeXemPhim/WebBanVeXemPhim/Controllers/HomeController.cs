@@ -14,38 +14,65 @@ namespace WebBanVeXemPhim.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> VeDaDat()
+
+
+        public async Task<IActionResult> VeDaDat(int? page)
         {
+            // Lấy MaNguoiDung từ Session
             int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
             if (MaNguoiDung == 0)
             {
                 return RedirectToAction("Index", "Login");
             }
 
-            var order = await _context.Ves
+            int pageSize = 8;
+            int pageNumber = page ?? 1;
+
+            // Truy vấn ban đầu, sau đó nhóm theo MaLichChieu
+            var groupedQuery = _context.Ves
                 .Include(v => v.MaGheNavigation)
                 .Include(v => v.MaLichChieuNavigation)
-                .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
-                .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
+                    .ThenInclude(lc => lc.MaPhimNavigation)
+                .Include(v => v.MaLichChieuNavigation)
+                    .ThenInclude(lc => lc.MaPhongNavigation)
                 .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == true)
-                .OrderByDescending(v => v.MaVe)
-                .Select(v => new
+                .GroupBy(v => v.MaLichChieu)
+                .Select(g => new
                 {
-                    SoGhe = v.MaGheNavigation.SoGhe,
-                    SoPhong = v.MaLichChieuNavigation.MaPhongNavigation.TenPhong,
-                    GioChieu = v.MaLichChieuNavigation.GioChieu, 
-                    NgayChieu = v.MaLichChieuNavigation.NgayChieu, 
-                    TenPhim = v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
-                    ThoiLuong = v.MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
-                    GiaVe = v.GiaVe,
-                    MaVe = v.MaVe,
-                    MaLichChieu = v.MaLichChieu,
-                    MaKhachHang = v.MaKhachHang
-                })
-                .ToListAsync(); // Dùng ToListAsync để tránh lỗi kiểu dữ liệu Task
-            ViewBag.VeDaDat = order;
+                    MaLichChieu = g.Key,
+                    // Lấy thông tin từ phần tử đầu tiên của nhóm
+                    SoGhe = g.FirstOrDefault().MaGheNavigation.SoGhe,
+                    SoPhong = g.FirstOrDefault().MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                    GioChieu = g.FirstOrDefault().MaLichChieuNavigation.GioChieu,
+                    NgayChieu = g.FirstOrDefault().MaLichChieuNavigation.NgayChieu,
+                    TenPhim = g.FirstOrDefault().MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                    ThoiLuong = g.FirstOrDefault().MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                    GiaVe = g.FirstOrDefault().GiaVe,
+                    // Nếu cần mã vé bạn có thể chọn theo logic riêng (ví dụ: vé có giá thấp nhất, cao nhất,...)
+                    MaVe = g.FirstOrDefault().MaVe,
+                    MaKhachHang = g.FirstOrDefault().MaKhachHang
+                });
+
+            // Đếm tổng số nhóm (tức là số lịch chiếu)
+            int totalRecords = await groupedQuery.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            // Sắp xếp kết quả nhóm theo một trường nào đó (ví dụ: NgayChieu hoặc MaLichChieu) để có thứ tự nhất quán
+            var orders = await groupedQuery
+                .OrderByDescending(x => x.MaLichChieu) // hoặc OrderByDescending(x => x.NgayChieu)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            ViewBag.VeDaDat = orders;
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalRecords = totalRecords;
+
             return View();
         }
+
+
         public IActionResult Privacy()
         {
             return View();
@@ -69,8 +96,8 @@ namespace WebBanVeXemPhim.Controllers
 
             // Xóa vé chưa thanh toán sau 10 phút
             var danhSachVeHetHan = _context.Ves
-                .Where(v => !danhSachMaVeThanhToan.Contains(v.MaVe) 
-                            && v.TrangThai == false  
+                .Where(v => !danhSachMaVeThanhToan.Contains(v.MaVe)
+                            && v.TrangThai == false
                             && EF.Functions.DateDiffMinute(v.NgayDat, currentTime) > 10)
                 .ToList();
 
@@ -157,12 +184,12 @@ namespace WebBanVeXemPhim.Controllers
         }
         public async Task<IActionResult> XoaVe(int MaLichChieu)
         {
-            if(MaLichChieu != 0)
+            if (MaLichChieu != 0)
             {
                 int MaKhachHang = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
                 // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
                 var veCanXoa = await _context.Ves
-                    .Where(v => v.TrangThai == false && v.MaKhachHang == MaKhachHang &&v.MaLichChieu==MaLichChieu)
+                    .Where(v => v.TrangThai == false && v.MaKhachHang == MaKhachHang && v.MaLichChieu == MaLichChieu)
                     .ToListAsync();
                 _context.Ves.RemoveRange(veCanXoa);
                 await _context.SaveChangesAsync();
@@ -181,7 +208,7 @@ namespace WebBanVeXemPhim.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            
+
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -70,25 +70,10 @@
 			}
 
 			/* Spinner loading */
-			#loading {
-				display: none;
-				position: fixed;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				z-index: 9999;
-			}
 		</style>
 	</head>
 	<body>
 		<div class="overlay"></div>
-		<!-- Lớp phủ làm mờ nền -->
-		<!-- Spinner loading -->
-		<div id="loading">
-			<div class="spinner-border text-primary" role="status">
-				<span class="visually-hidden">Loading...</span>
-			</div>
-		</div>
 		<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
 			<div class="forgot-container">
 				<div class="card forgot-card">
@@ -99,7 +84,11 @@
 							<label for="email" class="form-label">Email của bạn:</label>
 							<input type="email" id="email" class="form-control" placeholder="Nhập email" required>
 						</div>
-						<button class="btn btn-primary w-100" onclick="sendResetCode()">Gửi mã xác nhận</button>
+					<button class="btn btn-primary w-100" id="GuiMaButton" onclick="sendResetCode()">Gửi mã xác nhận</button>
+					<button class="btn btn-primary w-100" id="loadingButton" style="display: none;" disabled>
+						<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+						Đang gửi mã...
+					</button>
 					</div>
 					<!-- Bước 2: Nhập mã xác nhận -->
 					<div id="step2" style="display: none;">
@@ -107,7 +96,11 @@
 							<label for="resetCode" class="form-label">Nhập mã xác nhận:</label>
 							<input type="text" id="resetCode" class="form-control" placeholder="Nhập mã 6 số" required>
 						</div>
-						<button class="btn btn-success w-100" onclick="verifyCode()">Xác nhận</button>
+					<button class="btn btn-success w-100" id="XacNhanButton" onclick="verifyCode()">Xác nhận</button>
+					<button class="btn btn-success w-100" id="loadingXNButton" style="display: none;" disabled>
+						<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+						Đang xác nhận...
+					</button>
 					</div>
 					<!-- Bước 3: Đặt lại mật khẩu -->
 					<div id="step3" style="display: none;">
@@ -122,11 +115,11 @@
 		</div>
 		<script>
 			async function sendResetCode() {
-				alert("Mã xác nhận đang được gửi đến email của bạn");
 				let email = document.getElementById("email").value;
 				if (!email) return alert("Vui lòng nhập email.");
 				// Hiển thị loading (nếu cần)
-				document.getElementById("loading").style.display = "block";
+				document.getElementById("GuiMaButton").style.display = "none";
+				document.getElementById("loadingButton").style.display = "block";
 				let response = await fetch("/quenmatkhau", {
 					method: "POST",
 					headers: {
@@ -142,9 +135,8 @@
 					document.getElementById("step1").style.display = "none";
 					document.getElementById("step2").style.display = "block";
 					// Mở Gmail trong tab mới
-					window.open("https://mail.google.com/login", "_blank");
+					window.open("https://mail.google.com", "_blank");
 				}
-				document.getElementById("loading").style.display = "none";
 			}
 			async function verifyCode() {
 				let email = document.getElementById("email").value;
@@ -152,7 +144,8 @@
     
 				if (!code) return alert("Vui lòng nhập mã xác nhận.");
 
-					document.getElementById("loading").style.display = "block";
+				document.getElementById("XacNhanButton").style.display = "none";
+				document.getElementById("loadingXNButton").style.display = "block";
 
 				let response = await fetch("/xacnhanma", {
 					method: "POST",
@@ -166,11 +159,10 @@
 				if (response.ok) {
 					document.getElementById("step2").style.display = "none";
 					document.getElementById("step3").style.display = "block";
-
-					
+				}else{
+				document.getElementById("XacNhanButton").style.display = "block";
+				document.getElementById("loadingXNButton").style.display = "none";
 				}
-
-				document.getElementById("loading").style.display = "none";
 			}
 			async function resetPassword() {
 				let email = document.getElementById("email").value;
@@ -179,7 +171,6 @@
 				if (newPassword.length < 6) {
 					return alert("Mật khẩu phải có ít nhất 6 ký tự.");
 				}
-				document.getElementById("loading").style.display = "block";
 				try {
 					let response = await fetch("/doimatkhau", {
 						method: "POST",
@@ -195,8 +186,6 @@
 					let result = await response.text();
 					alert(result);
 					if (response.ok) {
-						//document.getElementById("step3").style.display = "none";
-						// Chuyển hướng sang trang đăng nhập sau 2 giây
 						setTimeout(() => {
 							window.location.href = "/Login/index";
 						}, 500);
