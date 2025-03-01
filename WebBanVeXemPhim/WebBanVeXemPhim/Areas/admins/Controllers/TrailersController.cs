@@ -68,11 +68,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         public IActionResult Create()
         {
             ViewBag.DanhSachPhim = _context.Phims
-             .Where(p => p.TrangThai == true)
-             .OrderByDescending(p => p.NgayKhoiChieu)
-             .ToList();
-
-
+            .Where(p => p.TrangThai == true && !_context.Trailers.Any(t => t.MaPhim == p.MaPhim)) // Chỉ lấy phim chưa có trailer
+            .OrderByDescending(p => p.NgayKhoiChieu)
+            .ToList();
 
             return PartialView("Create");
         }

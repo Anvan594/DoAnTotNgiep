@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dgCDZsL0+V2TKtsd/F2QmULeOd+AmG7BLeRdGncI2/o=",
+  "Hash": "wJHFNjX3u6UV5H2yzMeO+UhLAUJzGF2vVTU1S9aOdCc=",
   "Source": "WebBanVeXemPhim",
   "BasePath": "_content/WebBanVeXemPhim",
   "Mode": "Default",
@@ -7788,6 +7788,25 @@
       "OriginalItemSpec": "wwwroot\\images\\37678e3b-3e8c-40b2-a017-795826186793_DenAmHon.png"
     },
     {
+      "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\4d92146d-9c14-44ec-968a-41aeb9790ebc_SatThuVoCungCucHai.jpg",
+      "SourceId": "WebBanVeXemPhim",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\",
+      "BasePath": "_content/WebBanVeXemPhim",
+      "RelativePath": "images/4d92146d-9c14-44ec-968a-41aeb9790ebc_SatThuVoCungCucHai.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\4d92146d-9c14-44ec-968a-41aeb9790ebc_SatThuVoCungCucHai.jpg"
+    },
+    {
       "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\59a4f373-3fad-4416-a758-f0cee0c1214b_TheGioiMoi.png",
       "SourceId": "WebBanVeXemPhim",
       "SourceType": "Discovered",
@@ -7957,6 +7976,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\e2a12f25-d650-4d81-826a-94e62b68df35_AnhKhongDau.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\ed26fcf7-3f11-4c08-88f4-18e0beadd896_QuyNhapTrang.png",
+      "SourceId": "WebBanVeXemPhim",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\",
+      "BasePath": "_content/WebBanVeXemPhim",
+      "RelativePath": "images/ed26fcf7-3f11-4c08-88f4-18e0beadd896_QuyNhapTrang.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\ed26fcf7-3f11-4c08-88f4-18e0beadd896_QuyNhapTrang.png"
     },
     {
       "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\emvatrinh.jpg",

@@ -30,16 +30,16 @@ namespace WebBanVeXemPhim.Controllers
             int pageNumber = page ?? 1;
 
             // Xây dựng truy vấn ban đầu dưới dạng IQueryable
-            var danhSachVe = _context.Ves
-    .Include(v => v.MaGheNavigation)
-    .Include(v => v.MaLichChieuNavigation)
-    .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
-    .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
-    .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == true)
-    .OrderByDescending(v => v.NgayDat)
-    .ThenBy(v => v.MaLichChieu) // Giữ thứ tự ban đầu
-    .ThenBy(v => v.MaVe) // Đảm bảo vé cùng lịch chiếu giữ đúng thứ tự
-    .ToList();
+                    var danhSachVe = _context.Ves
+            .Include(v => v.MaGheNavigation)
+            .Include(v => v.MaLichChieuNavigation)
+            .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
+            .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
+            .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == true)
+            .OrderByDescending(v => v.NgayDat)
+            .ThenBy(v => v.MaLichChieu) // Giữ thứ tự ban đầu
+            .ThenBy(v => v.MaVe) // Đảm bảo vé cùng lịch chiếu giữ đúng thứ tự
+            .ToList();
 
             var result = new List<object>();
             int? currentMaLichChieu = null;
@@ -125,6 +125,16 @@ namespace WebBanVeXemPhim.Controllers
         public async Task<IActionResult> IndexAsync(string searchString)
         {
             var currentTime = DateTime.Now;
+            int MaKhachHang = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+            // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
+            if (MaKhachHang != 0) {
+                var veCanXoa = await _context.Ves
+               .Where(v => v.TrangThai == false && v.MaKhachHang == MaKhachHang)
+               .ToListAsync();
+                _context.Ves.RemoveRange(veCanXoa);
+                await _context.SaveChangesAsync();
+            }
+           
 
             // Lấy danh sách mã vé đã thanh toán
             var danhSachMaVeThanhToan = _context.ThanhToans.Select(t => t.MaVe).ToList();

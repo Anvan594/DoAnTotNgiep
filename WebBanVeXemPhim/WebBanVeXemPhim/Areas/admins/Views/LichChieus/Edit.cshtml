@@ -44,11 +44,16 @@
                 <div class="form-group">
                 <label asp-for="GioChieu" class="control-label">Giờ chiếu</label>
                 <select asp-for="GioChieu" class="form-control">
-                    @foreach (var gio in new List<string> { "06:00", "08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00" })
-                    {
-                        <option value="@gio">@gio</option>
-                    }
+                      
+                            @foreach (var gio in ViewBag.GioChieu as List<string>)
+                            {
+                                <option value="@gio" selected="@(gio == Model.GioChieu.ToString("HH:mm") ? "selected" : null)">
+                                    @gio
+                                </option>
+                            }
+
                 </select>
+                    
                 <span asp-validation-for="GioChieu" class="text-danger"></span>
             </div>
 
@@ -77,6 +82,8 @@
         function updateGioChieuOptions() {
             var maPhong = $("select[name='MaPhong']").val();
             var gioChieuSelect = $("select[name='GioChieu']");
+            var currentValue = gioChieuSelect.val(); // Lưu lại giá trị đang chọn
+
             gioChieuSelect.empty(); // Xóa danh sách giờ cũ
 
             if (maPhong) {
@@ -86,10 +93,21 @@
                     : ["07:30", "09:30", "11:30", "13:30", "15:30", "17:30", "19:30", "21:30", "23:30"];
 
                 $.each(gioChieuList, function (index, value) {
-                    gioChieuSelect.append(new Option(value, value));
+                    var option = new Option(value, value);
+                    if (value === currentValue) {
+                        option.selected = true; // Giữ lại giá trị cũ nếu hợp lệ
+                    }
+                    gioChieuSelect.append(option);
                 });
+
+                // Nếu giá trị cũ không hợp lệ, chọn giá trị đầu tiên
+                if (!gioChieuList.includes(currentValue)) {
+                    gioChieuSelect.val(gioChieuList[0]);
+                }
             }
         }
+
+
 
         $("select[name='MaPhong']").change(function () {
             updateGioChieuOptions();

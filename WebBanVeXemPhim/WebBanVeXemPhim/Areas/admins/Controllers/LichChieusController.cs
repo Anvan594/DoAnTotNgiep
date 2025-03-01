@@ -148,7 +148,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         ? new List<string> { "06:00", "08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00" }
         : new List<string> { "07:30", "09:30", "11:30", "13:30", "15:30", "17:30", "19:30", "21:30", "23:30" };
 
-
+            ViewBag.GioChieu = gioChieuList;
             ViewBag.MaPhim = new SelectList(_context.Phims, "MaPhim", "TenPhim", lichChieu.MaPhim);
             ViewBag.MaPhong = new SelectList(_context.Phongs, "MaPhong", "TenPhong", lichChieu.MaPhong);
             return PartialView("Edit", lichChieu);

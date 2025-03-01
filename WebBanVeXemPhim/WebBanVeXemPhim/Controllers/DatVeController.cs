@@ -99,7 +99,10 @@ namespace WebBanVeXemPhim.Controllers
                 .Select(v => new
                 {
                     v.MaVe,
+                    Anh=v.MaLichChieuNavigation.MaPhimNavigation.Poster,
+                    ThoiLuong = v.MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
                     GioChieu = v.MaLichChieuNavigation.GioChieu,
+                    NgayChieu=v.MaLichChieuNavigation.NgayChieu,
                     v.MaLichChieu,
                     v.MaKhachHang,
                     TenPhim = v.MaLichChieuNavigation.MaPhimNavigation.TenPhim,
