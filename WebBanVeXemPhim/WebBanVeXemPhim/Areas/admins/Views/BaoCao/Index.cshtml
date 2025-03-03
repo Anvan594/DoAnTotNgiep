@@ -1,0 +1,91 @@
+﻿<div class="container mt-4">
+    <h2 class="text-center">Báo cáo thống kê</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Doanh thu hôm nay</h5>
+                    <p class="card-text">@(((decimal)ViewData["RevenueToday"]).ToString("N0")) VNĐ</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Số vé bán hôm nay</h5>
+                    <p class="card-text">@ViewData["TicketsSoldToday"] vé</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bảng top 5 phim bán chạy -->
+    <div class="mt-4">
+        <h4>Top 5 phim bán chạy trong tháng</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Ảnh</th>
+                    <th>Tên phim</th>
+                    <th>Đạo diễn</th>
+                    <th>Số vé bán</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.TopPhim != null)
+                {
+                    
+                    int stt = 1;
+                    foreach (var movie in ViewBag.TopPhim)
+                    {
+                        <tr>
+                            <td>@stt</td>
+                            <td><img src="~/images/@movie.AnhPhim" alt="@movie.TenPhim" width="80"></td>
+                            <td>@movie.TenPhim</td>
+                            <td>@movie.DaoDien</td>
+                            <td>@movie.SoVe</td>
+                        </tr>
+                        stt++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">Không có dữ liệu</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <form method="get" action="BaoCao/XuatBaoCao">
+            <label>
+                <input type="radio" name="kieuBaoCao" value="ngay" checked> Theo ngày
+            </label>
+            <input type="date" name="ngay">
+
+            <label>
+                <input type="radio" name="kieuBaoCao" value="thang"> Theo tháng
+            </label>
+            <input type="month" name="thangNam">
+
+            <label>
+                <input type="radio" name="kieuBaoCao" value="nam"> Theo năm
+            </label>
+            <input type="number" name="nam" min="2000" max="2100">
+
+            <label>
+                <input type="radio" name="kieuBaoCao" value="khoangNgay"> Từ ngày đến ngày
+            </label>
+            <input type="date" name="tuNgay">
+            <input type="date" name="denNgay">
+
+            <button type="submit">Xuất báo cáo</button>
+        </form>
+
+    </div>
+</div>

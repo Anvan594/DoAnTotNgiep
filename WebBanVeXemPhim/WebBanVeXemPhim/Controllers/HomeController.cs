@@ -16,106 +16,7 @@ namespace WebBanVeXemPhim.Controllers
         }
 
 
-        public async Task<IActionResult> VeDaDat(int? page)
-        {
-            // Lấy MaNguoiDung từ Session
-            int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
-            if (MaNguoiDung == 0)
-            {
-                return RedirectToAction("Index", "Login");
-            }
-
-            // Thiết lập số bản ghi mỗi trang và trang hiện tại (mặc định trang 1)
-            int pageSize = 8;
-            int pageNumber = page ?? 1;
-
-            // Xây dựng truy vấn ban đầu dưới dạng IQueryable
-                    var danhSachVe = _context.Ves
-            .Include(v => v.MaGheNavigation)
-            .Include(v => v.MaLichChieuNavigation)
-            .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
-            .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
-            .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == true)
-            .OrderByDescending(v => v.NgayDat)
-            .ThenBy(v => v.MaLichChieu) // Giữ thứ tự ban đầu
-            .ThenBy(v => v.MaVe) // Đảm bảo vé cùng lịch chiếu giữ đúng thứ tự
-            .ToList();
-
-            var result = new List<object>();
-            int? currentMaLichChieu = null;
-            string soghe = "";
-            decimal giave = 0;
-
-            foreach (var ve in danhSachVe)
-            {
-                if (currentMaLichChieu == null || ve.MaLichChieu != currentMaLichChieu)
-                {
-                    // Nếu không phải dòng đầu tiên, thêm dữ liệu đã gộp vào danh sách kết quả
-                    if (currentMaLichChieu != null)
-                    {
-                        result.Add(new
-                        {
-                            MaLichChieu = currentMaLichChieu,
-                            ThoiLuong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
-                            TenPhim = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.TenPhim,
-                            NgayChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.NgayChieu,
-                            GioChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.GioChieu,
-                            SoPhong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhongNavigation.TenPhong,
-                            SoGhe = soghe.TrimEnd(',', ' '), // Bỏ dấu phẩy cuối cùng
-                            GiaVe = giave
-                        });
-                    }
-
-                    // Reset dữ liệu cho nhóm mới
-                    currentMaLichChieu = ve.MaLichChieu;
-                    soghe = ve.MaGheNavigation.SoGhe + ", ";
-                    giave = ve.GiaVe;
-                }
-                else
-                {
-                    // Nếu cùng lịch chiếu, tiếp tục ghép ghế & cộng tiền
-                    soghe += ve.MaGheNavigation.SoGhe + ", ";
-                    giave += ve.GiaVe;
-                }
-            }
-
-            // Thêm nhóm cuối cùng vào danh sách kết quả
-            if (currentMaLichChieu != null)
-            {
-                result.Add(new
-                {
-                   
-                    MaLichChieu = currentMaLichChieu,
-                    ThoiLuong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
-                    TenPhim = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.TenPhim,
-                    NgayChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.NgayChieu,
-                    GioChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.GioChieu,
-                    SoPhong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhongNavigation.TenPhong,
-                    SoGhe = soghe.TrimEnd(',', ' '),
-                    GiaVe = giave
-                });
-            }
-
-            ViewBag.VeDaDat = result;
-            // Đếm tổng số bản ghi
-            int totalRecords = result.Count();
-            // Tính số trang (làm tròn lên)
-            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
-            
-            // Lấy dữ liệu của trang hiện tại với Skip/Take
-            var orders = result
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            
-            // Gán dữ liệu phân trang sang View thông qua ViewBag
-            ViewBag.VeDaDat = orders;
-            ViewBag.CurrentPage = pageNumber;
-            ViewBag.TotalPages = totalPages;
-            ViewBag.TotalRecords = totalRecords;
-
-            return View();
-        }
+        
 
 
         public IActionResult Privacy()
@@ -235,6 +136,106 @@ namespace WebBanVeXemPhim.Controllers
             var SoThongBao=_context.ThongBaos.Where(tb=>tb.MaNguoiDung == MaNguoiDung&&tb.TrangThai==false).ToArray();
             HttpContext.Session.SetInt32("SoThongBao", SoThongBao.Length);
             return View(danhSachPhim);
+        }
+        public async Task<IActionResult> VeDaDat(int? page)
+        {
+            // Lấy MaNguoiDung từ Session
+            int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
+            if (MaNguoiDung == 0)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Thiết lập số bản ghi mỗi trang và trang hiện tại (mặc định trang 1)
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
+
+            // Xây dựng truy vấn ban đầu dưới dạng IQueryable
+                    var danhSachVe = _context.Ves
+            .Include(v => v.MaGheNavigation)
+            .Include(v => v.MaLichChieuNavigation)
+            .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
+            .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
+            .Where(v => v.MaKhachHang == MaNguoiDung && v.TrangThai == true)
+            .OrderByDescending(v => v.NgayDat)
+            .ThenBy(v => v.MaLichChieu) // Giữ thứ tự ban đầu
+            .ThenBy(v => v.MaVe) // Đảm bảo vé cùng lịch chiếu giữ đúng thứ tự
+            .ToList();
+
+            var result = new List<object>();
+            int? currentMaLichChieu = null;
+            string soghe = "";
+            decimal giave = 0;
+
+            foreach (var ve in danhSachVe)
+            {
+                if (currentMaLichChieu == null || ve.MaLichChieu != currentMaLichChieu)
+                {
+                    // Nếu không phải dòng đầu tiên, thêm dữ liệu đã gộp vào danh sách kết quả
+                    if (currentMaLichChieu != null)
+                    {
+                        result.Add(new
+                        {
+                            MaLichChieu = currentMaLichChieu,
+                            ThoiLuong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                            TenPhim = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                            NgayChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.NgayChieu,
+                            GioChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.GioChieu,
+                            SoPhong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                            SoGhe = soghe.TrimEnd(',', ' '), // Bỏ dấu phẩy cuối cùng
+                            GiaVe = giave
+                        });
+                    }
+
+                    // Reset dữ liệu cho nhóm mới
+                    currentMaLichChieu = ve.MaLichChieu;
+                    soghe = ve.MaGheNavigation.SoGhe + ", ";
+                    giave = ve.GiaVe;
+                }
+                else
+                {
+                    // Nếu cùng lịch chiếu, tiếp tục ghép ghế & cộng tiền
+                    soghe += ve.MaGheNavigation.SoGhe + ", ";
+                    giave += ve.GiaVe;
+                }
+            }
+
+            // Thêm nhóm cuối cùng vào danh sách kết quả
+            if (currentMaLichChieu != null)
+            {
+                result.Add(new
+                {
+                   
+                    MaLichChieu = currentMaLichChieu,
+                    ThoiLuong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                    TenPhim = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                    NgayChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.NgayChieu,
+                    GioChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.GioChieu,
+                    SoPhong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                    SoGhe = soghe.TrimEnd(',', ' '),
+                    GiaVe = giave
+                });
+            }
+
+            ViewBag.VeDaDat = result;
+            // Đếm tổng số bản ghi
+            int totalRecords = result.Count();
+            // Tính số trang (làm tròn lên)
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+            
+            // Lấy dữ liệu của trang hiện tại với Skip/Take
+            var orders = result
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            
+            // Gán dữ liệu phân trang sang View thông qua ViewBag
+            ViewBag.VeDaDat = orders;
+            ViewBag.CurrentPage = pageNumber;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalRecords = totalRecords;
+
+            return View();
         }
         public async Task<IActionResult> XoaVe(int MaLichChieu)
         {

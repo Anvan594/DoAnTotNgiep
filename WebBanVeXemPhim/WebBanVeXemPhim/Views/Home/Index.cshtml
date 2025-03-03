@@ -453,7 +453,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function () {
             let maLichChieu = this.getAttribute("data-malichchieu");
             let selectedSeats = document.querySelectorAll(`.seat.selected[data-maGhe='${maLichChieu}']`);
-            let maxSeats = 10;
+            let maxSeats = 101;
 
             if (selectedSeats.length === 0) {
                 alert("Bạn chưa chọn ghế!");
