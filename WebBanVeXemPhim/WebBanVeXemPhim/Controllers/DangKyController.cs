@@ -5,9 +5,12 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using MailKit.Search;
+using MailKit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebBanVeXemPhim.Models;
+using MailKit.Net.Imap;
 
 [Route("dangky")]
 public class DangKyController : Controller
@@ -27,24 +30,33 @@ public class DangKyController : Controller
     {
         if (model == null || string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
         {
-            return BadRequest("Vui lòng điền đầy đủ thông tin.");
+            return Ok("Vui lòng điền đầy đủ thông tin.");
         }
 
         if (!IsValidEmail(model.Email))
         {
-            return BadRequest("Email không hợp lệ.");
+            return Ok("Email không hợp lệ.");
         }
 
         if (await _context.NguoiDungs.AnyAsync(u => u.Email == model.Email))
         {
-            return BadRequest("Email đã tồn tại.");
+            return Ok("Email đã tồn tại.");
         }
 
-        // Tạo token xác nhận email
-        string token = GenerateToken();
-        string confirmationLink = $"{Request.Scheme}://{Request.Host}/dangky/xacnhan?email={model.Email}&token={token}";
+        // Gửi thử email
+        await GuiXacNhanEmail(model.Email, model.Username, "https://fake-link.com");
 
-        // Lưu vào database
+        // Chờ 2 phút để nhận phản hồi từ Gmail
+        await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+        // Kiểm tra email tồn tại
+        bool emailTonTai = await KiemTraEmailTonTai(model.Email);
+        if (!emailTonTai)
+        {
+            return Ok("Email không tồn tại!");
+        }
+
+        // Nếu email hợp lệ, lưu tài khoản
         var user = new NguoiDung
         {
             TenNguoiDung = model.Username,
@@ -56,18 +68,9 @@ public class DangKyController : Controller
         _context.NguoiDungs.Add(user);
         await _context.SaveChangesAsync();
 
-        // Gửi email xác thực
-        bool emailSent = await GuiXacNhanEmail(model.Email, model.Username, confirmationLink);
-
-        if (emailSent)
-        {
-            return Ok("Vui lòng kiểm tra email để xác nhận tài khoản!");
-        }
-        else
-        {
-            return StatusCode(500, "Lỗi gửi email, vui lòng thử lại.");
-        }
+        return Ok("Vui lòng kiểm tra email để xác nhận tài khoản!");
     }
+
 
     // Xác nhận tài khoản qua email
     [HttpGet("xacnhan")]
@@ -167,5 +170,67 @@ public class DangKyController : Controller
             Console.WriteLine("Lỗi gửi email: " + ex.Message);
             return false;
         }
+    }
+    public async Task<bool> KiemTraEmailTonTai(string email_kt)
+    {
+        string email = "your-email@gmail.com";  // Thay bằng email của bạn
+        string password = "your-app-password";  // Thay bằng mật khẩu ứng dụng
+
+        try
+        {
+            using (var client = new ImapClient())
+            {
+                // Kết nối Gmail bằng IMAP
+                client.Connect("imap.gmail.com", 993, true);
+                client.Authenticate(email, password);
+
+                // Mở hộp thư đến
+                var inbox = client.Inbox;
+                inbox.Open(FolderAccess.ReadOnly);
+
+                // Chờ 2 phút trước khi kiểm tra email
+                await Task.Delay(TimeSpan.FromMilliseconds(500));
+
+                // Tìm email từ Mailer-Daemon hoặc Postmaster
+                var uids = inbox.Search(SearchQuery.FromContains("mailer-daemon@googlemail.com")
+                                                .Or(SearchQuery.FromContains("postmaster")));
+
+                if (uids.Count == 0)
+                {
+                    Console.WriteLine("✅ Không có email báo lỗi → Địa chỉ có thể tồn tại.");
+                    return true;
+                }
+                else
+                {
+                    foreach (var uid in uids.Take(5)) // Kiểm tra 5 email gần nhất
+                    {
+                        var message = inbox.GetMessage(uid);
+                        string content = message.TextBody.ToLower();
+
+                        // Kiểm tra nhiều thông báo lỗi khác nhau
+                        if (content.Contains("mail delivery failed") ||
+                            content.Contains("undelivered mail returned to sender") ||
+                            content.Contains("không tìm thấy địa chỉ") ||
+                            content.Contains("recipient address rejected"))
+                        {
+                            Console.WriteLine("❌ Email không tồn tại! Gmail báo lỗi không thể gửi.");
+                            Console.WriteLine($"📩 Tiêu đề: {message.Subject}");
+                            Console.WriteLine($"📅 Ngày: {message.Date}");
+                            Console.WriteLine($"📧 Nội dung: {content.Substring(0, Math.Min(300, content.Length))}...");
+                            return false;
+                        }
+                    }
+                }
+
+                client.Disconnect(true);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Lỗi: {ex.Message}");
+            return false;
+        }
+
+        return true;
     }
 }
