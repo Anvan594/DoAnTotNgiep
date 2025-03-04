@@ -26,7 +26,6 @@
                 <tr>
                     <th>Tên người dùng</th>
                     <th>Email</th>
-                    <th>Mật khẩu</th>
                     <th>Trạng thái</th>
                     <th>Chức năng</th>
                 </tr>
@@ -37,7 +36,6 @@
                     <tr id="row_@item.MaNguoiDung">
                         <td>@Html.DisplayFor(modelItem => item.TenNguoiDung)</td>
                         <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MatKhau)</td>
                         <td>
                             @if (item.TrangThai==true)
                             {
