@@ -30,7 +30,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
             var pass = model.MatKhau;
             var dataLogin = _context.TaiKhoanAdmins
     .Where(x => x.Email == model.Email && x.MatKhau == pass)
-    .Select(x => new { x.MaAdmin, x.Email,x.TrangThai }) // Chỉ lấy cột cần thiết
+    .Select(x => new { x.MaAdmin, x.Email,x.TrangThai,x.ChucVu,x.SoDienThoai,x.TenDangNhap }) // Chỉ lấy cột cần thiết
     .FirstOrDefault();
 
 
@@ -48,16 +48,26 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
             }
 
             // Đăng nhập thành công
-            HttpContext.Session.SetString("AdminLogin", model.Email);
-            return RedirectToAction("Index", "Home");
+            if (dataLogin.ChucVu == "Admin")
+            {
+                HttpContext.Session.SetString("AdminLogin", model.Email);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                HttpContext.Session.SetString("ChucVu", dataLogin.ChucVu);
+                HttpContext.Session.SetInt32("NguoiDung", 37);
+                HttpContext.Session.SetString("TenNguoiDung", dataLogin.TenDangNhap);
+                HttpContext.Session.SetString("Email", dataLogin.Email);
+                return Redirect("~/../NhanVien/Index");
 
-
+            }
         }
         [HttpGet]// thoát đăng nhập, huỷ session
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("AdminLogin"); // huỷ session với key AdminLogin đã lưu trước đó
-
+            HttpContext.Session.Remove("ChucVu");
             return RedirectToAction("Index");
         }
     }

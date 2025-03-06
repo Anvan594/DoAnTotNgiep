@@ -139,7 +139,7 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark ">
-        <div class="container1" style="width: 90% !important; display:flex;">
+        <div class="container d-flex justify-content-center" style="width: 85% !important; display:flex; ">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">Beta Cinemas</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -159,6 +159,7 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="HoSo">
                                 Xin chào @Context.Session.GetString("TenNguoiDung") !
+                                Xin chào @Context.Session.GetInt32("NguoiDung") !
                             </a>
                         </li>
                         <li class="nav-item">

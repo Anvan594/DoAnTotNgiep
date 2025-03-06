@@ -3,52 +3,90 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/admins/Views/Shared/_LayoutAdmin.cshtml";
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Vé đã thanh toán</h1>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PhuongThuc)
+                Mã Vé
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TrangThai)
+               Ngày thanh toán
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NgayThanhToan)
+                Phương thức thanh toán
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaVeNavigation)
+                Trạng thái thanh toán
             </th>
-            <th></th>
+
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhuongThuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrangThai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayThanhToan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaVeNavigation.MaVe)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaThanhToan">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaThanhToan">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaThanhToan">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaVeNavigation.MaVe)
+                <td>
+                        @Html.DisplayFor(modelItem => item.NgayThanhToan)
+                </td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhuongThuc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrangThai)
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>
+<div class="d-flex justify-content-center">
+    <nav>
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageNumber=@(currentPage - 1)">Trước</a>
+                </li>
+            }
+
+            <!-- Hiển thị trang đầu tiên -->
+            @if (currentPage > 3)
+            {
+                <li class="page-item"><a class="page-link" href="?pageNumber=1">1</a></li>
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            }
+
+            <!-- Hiển thị các trang xung quanh trang hiện tại -->
+            @for (int i = Math.Max(1, currentPage - 1); i <= Math.Min(totalPages, currentPage + 1); i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i">@i</a>
+                </li>
+            }
+
+            <!-- Hiển thị trang cuối cùng -->
+            @if (currentPage < totalPages - 2)
+            {
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+                <li class="page-item"><a class="page-link" href="?pageNumber=@totalPages">@totalPages</a></li>
+            }
+
+            @if (currentPage < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageNumber=@(currentPage + 1)">Sau</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>

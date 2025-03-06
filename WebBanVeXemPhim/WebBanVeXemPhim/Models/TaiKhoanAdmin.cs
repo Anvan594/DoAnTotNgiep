@@ -17,7 +17,8 @@ public partial class TaiKhoanAdmin
     public string Email { get; set; } = null!;
     [Display(Name = "Số điện thoại")]
     public string? SoDienThoai { get; set; }
-
+    [Display(Name = "Chức vụ")]
+    public string? ChucVu { get; set; }
     public DateTime? NgayTao { get; set; }
     [Display(Name = "Trạng thái")]
     public bool? TrangThai { get; set; }

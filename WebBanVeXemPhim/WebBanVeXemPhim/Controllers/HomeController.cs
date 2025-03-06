@@ -25,6 +25,11 @@ namespace WebBanVeXemPhim.Controllers
         }
         public async Task<IActionResult> IndexAsync(string searchString)
         {
+            var ChucVu = HttpContext.Session.GetString("ChucVu") ?? "";
+            if (ChucVu == "Nhan Vien")
+            {
+                return RedirectToAction("Index", "NhanVien");
+            }
             var currentTime = DateTime.Now;
             int MaKhachHang = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
             // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút

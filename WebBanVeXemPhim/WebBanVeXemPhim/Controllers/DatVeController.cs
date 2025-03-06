@@ -188,7 +188,11 @@ namespace WebBanVeXemPhim.Controllers
                 await _context.SaveChangesAsync();
 
                 await UpdateVe(MaNguoiDung, MaLichChieu);
-
+                var ChucVu = HttpContext.Session.GetString("ChucVu") ?? "";
+                if (ChucVu == "Nhan Vien")
+                {
+                    return RedirectToAction("Index", "NhanVien");
+                }
                 return RedirectToAction("Index", "Home");
               
             }

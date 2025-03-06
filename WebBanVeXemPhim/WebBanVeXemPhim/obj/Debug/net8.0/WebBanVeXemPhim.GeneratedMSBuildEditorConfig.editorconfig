@@ -158,22 +158,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXFRhaUtob2FuQWRtaW5zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/ThanhToans/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXFRoYW5oVG9hbnNcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/ThanhToans/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXFRoYW5oVG9hbnNcRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/ThanhToans/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXFRoYW5oVG9hbnNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/ThanhToans/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXFRoYW5oVG9hbnNcRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/ThanhToans/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXFRoYW5oVG9hbnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -252,6 +236,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/Login/QuenMatKhau.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUXVlbk1hdEtoYXUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/NhanVien/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmhhblZpZW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/Shared/Components/Header/ThongBao.cshtml]

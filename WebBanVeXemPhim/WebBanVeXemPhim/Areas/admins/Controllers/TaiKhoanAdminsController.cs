@@ -125,7 +125,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaAdmin,TenDangNhap,MatKhau,HoTen,Email,SoDienThoai,NgayTao,TrangThai")] TaiKhoanAdmin taiKhoanAdmin)
+        public async Task<IActionResult> Edit(int id, [Bind("MaAdmin,TenDangNhap,MatKhau,HoTen,Email,SoDienThoai,NgayTao,TrangThai,ChucVu")] TaiKhoanAdmin taiKhoanAdmin)
         {
             if (id != taiKhoanAdmin.MaAdmin)
             {

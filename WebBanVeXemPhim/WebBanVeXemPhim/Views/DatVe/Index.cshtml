@@ -145,23 +145,42 @@
                 //     </div>
                 // }
             }
-            <form method="post" asp-controller="CheckoutApi" asp-action="Create" id="paymentForm" style="display:flex; justify-content:end;">
-                <input hidden type="number" name="Makhach" value="@Makhach" />
-                <input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
-                <input hidden type="text" name="soghe" value="@soghe" required />
-                <input hidden type="text" name="TenPhim" value="@TenPhim" required />
-                <input hidden type="number" name="giave" value="@giave" required />
-                <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
-                <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
-                <a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg" style="margin-right:25px">Quay lại</a>
-                
-                <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg">Tạo Link thanh toán</button>
-              
-                <button class="btn btn-success btn-lg" id="loadingButton" style="display: none;" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                    Đang tạo mã...
-                </button>
-            </form>
+            <div style="display:flex; justify-content:end;">
+                <form method="post" asp-controller="CheckoutApi" asp-action="Create" id="paymentForm">
+                    <input hidden type="number" name="Makhach" value="@Makhach" />
+                    <input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
+                    <input hidden type="text" name="soghe" value="@soghe" required />
+                    <input hidden type="text" name="TenPhim" value="@TenPhim" required />
+                    <input hidden type="number" name="giave" value="@giave" required />
+                    <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
+                    <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
+                    <a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg" style="margin-right:25px">Hủy vé</a>
+
+                    <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg">Tạo Link thanh toán</button>
+
+                    <button class="btn btn-success btn-lg" id="loadingButton" style="display: none;" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Đang tạo mã...
+                    </button>
+                </form>
+                @{
+                    var ChucVu = Context.Session.GetString("ChucVu") ?? "";
+                    if (ChucVu == "Nhan Vien")
+                    {
+                        <form method="post" asp-controller="NhanVien" asp-action="DatVe" id="paymentForm" style="display:flex; justify-content:end;">
+                            <input hidden type="number" name="Makhach" value="@Makhach" />
+                            <input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
+                            <input hidden type="text" name="soghe" value="@soghe" required />
+                            <input hidden type="text" name="TenPhim" value="@TenPhim" required />
+                            <input hidden type="number" name="giave" value="@giave" required />
+                            <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
+                            <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
+                            <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg" style="margin-left:25px;">Thanh toán tiền mặt</button>
+                        </form>
+                    }
+                }
+            </div>
+           
         </div>
     </div>
     @*  @if (link == "")
