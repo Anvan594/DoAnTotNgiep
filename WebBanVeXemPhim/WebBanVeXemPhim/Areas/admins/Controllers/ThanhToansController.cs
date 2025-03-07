@@ -21,7 +21,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         // GET: admins/ThanhToans
         public async Task<IActionResult> Index(int? pageNumber)
         {
-            int pageSize = 10; // Số bản ghi trên mỗi trang
+            int pageSize = 8; // Số bản ghi trên mỗi trang
             int currentPage = pageNumber ?? 1; // Mặc định trang đầu tiên
 
             var query = _context.ThanhToans

@@ -46,7 +46,7 @@ public class DangKyController : Controller
         // Gửi thử email
         await GuiXacNhanEmail(model.Email, model.Username, "https://fake-link.com");
 
-        // Chờ 2 phút để nhận phản hồi từ Gmail
+        // Chờ 30s để nhận phản hồi từ Gmail
         await Task.Delay(TimeSpan.FromMilliseconds(500));
 
         // Kiểm tra email tồn tại
@@ -188,7 +188,7 @@ public class DangKyController : Controller
                 var inbox = client.Inbox;
                 inbox.Open(FolderAccess.ReadOnly);
 
-                // Chờ 2 phút trước khi kiểm tra email
+                // Chờ  30s trước khi kiểm tra email
                 await Task.Delay(TimeSpan.FromMilliseconds(500));
 
                 // Tìm email từ Mailer-Daemon hoặc Postmaster

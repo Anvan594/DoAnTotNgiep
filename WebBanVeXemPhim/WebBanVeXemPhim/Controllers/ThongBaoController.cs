@@ -15,6 +15,7 @@ namespace WebBanVeXemPhim.Controllers
         [HttpPost]
         public IActionResult updateThongBao(int MaThongBao)
         {
+            int makhachhang = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
             var thongBao = _context.ThongBaos.FirstOrDefault(t => t.MaThongBao == MaThongBao);
             if (thongBao != null)
             {
@@ -22,7 +23,7 @@ namespace WebBanVeXemPhim.Controllers
                 _context.SaveChanges();
 
                 // Đếm số thông báo chưa đọc còn lại
-                int soLuongChuaDoc = _context.ThongBaos.Count(t => t.TrangThai == false);
+                int soLuongChuaDoc = _context.ThongBaos.Count(t => t.TrangThai == false && t.MaNguoiDung == makhachhang);
 
                 return Ok(soLuongChuaDoc); // Trả về số lượng thông báo chưa đọc
             }
