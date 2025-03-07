@@ -9,10 +9,11 @@ public partial class ThongBao
 
     public int MaNguoiDung { get; set; }
 
-    public string NoiDung { get; set; }
-    public bool TrangThai {  get; set; }=false;
+    public string NoiDung { get; set; } = null!;
 
-    public DateTime? NgayGui { get; set; }=DateTime.Now;
+    public DateTime? NgayGui { get; set; }
+
+    public bool? TrangThai { get; set; }
 
     public virtual NguoiDung MaNguoiDungNavigation { get; set; } = null!;
 }

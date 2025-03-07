@@ -10,7 +10,8 @@ public partial class Phong
     public string TenPhong { get; set; } = null!;
 
     public int SoLuongGhe { get; set; }
-    public bool TrangThai { get; set; }
+
+    public bool? TrangThai { get; set; }
 
     public virtual ICollection<Ghe> Ghes { get; set; } = new List<Ghe>();
 

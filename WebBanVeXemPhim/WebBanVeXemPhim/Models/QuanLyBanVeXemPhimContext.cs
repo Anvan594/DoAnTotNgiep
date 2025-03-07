@@ -15,7 +15,13 @@ public partial class QuanLyBanVeXemPhimContext : DbContext
     {
     }
 
+    public virtual DbSet<Banner> Banners { get; set; }
+
+    public virtual DbSet<Combo> Combos { get; set; }
+
     public virtual DbSet<Ghe> Ghes { get; set; }
+
+    public virtual DbSet<KhuyenMai> KhuyenMais { get; set; }
 
     public virtual DbSet<LichChieu> LichChieus { get; set; }
 
@@ -36,10 +42,38 @@ public partial class QuanLyBanVeXemPhimContext : DbContext
     public virtual DbSet<Ve> Ves { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=DESKTOP-GHP029P\\SQLEXPRESS;Database=QuanLyBanVeXemPhim;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Banner>(entity =>
+        {
+            entity.HasKey(e => e.MaBanner).HasName("PK__Banner__508B4A497445066A");
+
+            entity.ToTable("Banner");
+
+            entity.Property(e => e.MoTa)
+                .HasMaxLength(50)
+                .IsFixedLength();
+        });
+
+        modelBuilder.Entity<Combo>(entity =>
+        {
+            entity.HasKey(e => e.MaCombo).HasName("PK__Combo__C3EDBC780EC4547C");
+
+            entity.ToTable("Combo");
+
+            entity.Property(e => e.Anh).HasMaxLength(50);
+            entity.Property(e => e.Gia).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.TenCombo).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaThanhToanNavigation).WithMany(p => p.Combos)
+                .HasForeignKey(d => d.MaThanhToan)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Combo_ThanhToan");
+        });
+
         modelBuilder.Entity<Ghe>(entity =>
         {
             entity.HasKey(e => e.MaGhe).HasName("PK__Ghe__3CD3C67B277838C9");
@@ -54,6 +88,13 @@ public partial class QuanLyBanVeXemPhimContext : DbContext
                 .HasForeignKey(d => d.MaPhong)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Ghe__MaPhong__3B75D760");
+        });
+
+        modelBuilder.Entity<KhuyenMai>(entity =>
+        {
+            entity.HasKey(e => e.MaKhuyenMai).HasName("PK__KhuyenMa__6F56B3BD22D6A6E3");
+
+            entity.ToTable("KhuyenMai");
         });
 
         modelBuilder.Entity<LichChieu>(entity =>
@@ -86,6 +127,9 @@ public partial class QuanLyBanVeXemPhimContext : DbContext
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.MatKhau).HasMaxLength(255);
             entity.Property(e => e.TenNguoiDung).HasMaxLength(100);
+            entity.Property(e => e.Token)
+                .HasMaxLength(50)
+                .IsFixedLength();
             entity.Property(e => e.TrangThai).HasDefaultValue(true);
         });
 
@@ -95,6 +139,15 @@ public partial class QuanLyBanVeXemPhimContext : DbContext
 
             entity.ToTable("Phim");
 
+            entity.Property(e => e.DaoDien)
+                .HasMaxLength(50)
+                .IsFixedLength();
+            entity.Property(e => e.DoTuoi)
+                .HasMaxLength(10)
+                .IsFixedLength();
+            entity.Property(e => e.NgonNgu)
+                .HasMaxLength(20)
+                .IsFixedLength();
             entity.Property(e => e.Poster).HasMaxLength(255);
             entity.Property(e => e.TenPhim).HasMaxLength(255);
             entity.Property(e => e.TheLoai).HasMaxLength(100);
@@ -119,6 +172,7 @@ public partial class QuanLyBanVeXemPhimContext : DbContext
 
             entity.HasIndex(e => e.Email, "UQ__TaiKhoan__A9D10534278C91B6").IsUnique();
 
+            entity.Property(e => e.ChucVu).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.HoTen).HasMaxLength(100);
             entity.Property(e => e.MatKhau).HasMaxLength(255);
