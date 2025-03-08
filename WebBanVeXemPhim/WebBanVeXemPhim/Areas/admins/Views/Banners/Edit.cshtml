@@ -7,10 +7,19 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-group">
-            <label asp-for="Anh" class="control-label">Ảnh</label>
-            <input type="file" name="fileAnh" class="form-control" />
-            <span asp-validation-for="Anh" class="text-danger"></span>
+            <label class="control-label">Ảnh hiện tại</label>
+            <br />
+            @if (!string.IsNullOrEmpty(Model.Anh))
+            {
+                <img src="~/images/@Model.Anh" alt="Ảnh hiện tại" style="max-width: 200px; margin-bottom: 10px;" />
+            }
         </div>
+
+        <div class="form-group">
+            <label class="control-label">Chọn ảnh mới (nếu muốn thay đổi)</label>
+            <input type="file" name="fileAnh" class="form-control" />
+        </div>
+
 
         <div class="form-group">
             <label asp-for="MoTa" class="control-label">Mô tả</label>

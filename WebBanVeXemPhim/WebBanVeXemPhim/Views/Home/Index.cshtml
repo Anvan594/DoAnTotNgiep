@@ -516,7 +516,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 <!-- Banner (Carousel) -->
-<div id="bannerCarousel" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel" data-bs-interval="2500"">
+@* <div id="bannerCarousel" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel" data-bs-interval="2500"">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"></button>
         <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"></button>
@@ -541,7 +541,58 @@ document.addEventListener("DOMContentLoaded", function () {
     <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
         <span class="carousel-control-next-icon"></span>
     </button>
+</div> *@
+<style>
+    /* Tạo hiệu ứng slide-in mượt */
+.carousel-item {
+    transition: transform 1s ease-out, opacity 1s ease-in-out;
+}
+</style>
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+   <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @{
+            var isFirst = true;
+            var isFirst1 = true;
+            var dem = 0;
+        }
+        @foreach (var b in ViewBag.Banner)
+        {
+            if (b.TrangThai == true)
+            {
+                <div class="carousel-item @(isFirst ? "active" : "")" data-bs-interval="3000">
+                    <img src="~/images/@b.Anh" class="d-block w-100 rounded banner-img slide-effect" 
+                         alt="Banner @b.MaBanner" style="object-fit:fill">
+                </div>             
+                isFirst = false;
+            }        
+        }
+    </div>
+    
+    <!-- Điều hướng chấm tròn -->
+    <div class="carousel-indicators">
+        @foreach (var b in ViewBag.Banner)
+        {
+            if (b.TrangThai == true)
+            {
+                 <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="@dem" class="@(isFirst1 ? "active" : "")"></button>
+                 isFirst1 = false;
+                 dem++;                    
+            }
+        }
+    </div>
+
+    <!-- Nút điều hướng -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
+
 @* phát trailer *@
 <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">

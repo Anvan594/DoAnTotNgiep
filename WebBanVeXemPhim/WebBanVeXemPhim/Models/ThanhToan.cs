@@ -15,7 +15,7 @@ public partial class ThanhToan
 
     public DateTime? NgayThanhToan { get; set; }
 
-    public virtual ICollection<Combo> Combos { get; set; } = new List<Combo>();
+    public int? MaComBo { get; set; }
 
     public virtual Ve MaVeNavigation { get; set; } = null!;
 }

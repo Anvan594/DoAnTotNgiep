@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\images\Combo\" />
     <Folder Include="wwwroot\Trailers\" />
   </ItemGroup>
 

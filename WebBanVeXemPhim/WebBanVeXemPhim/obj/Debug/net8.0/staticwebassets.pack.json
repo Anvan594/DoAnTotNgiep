@@ -1637,12 +1637,20 @@
       "PackagePath": "staticwebassets\\images\\37678e3b-3e8c-40b2-a017-795826186793_DenAmHon.png"
     },
     {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\4b0b0e47-cc69-4ab6-bc1e-173b19062b66.png",
+      "PackagePath": "staticwebassets\\images\\4b0b0e47-cc69-4ab6-bc1e-173b19062b66.png"
+    },
+    {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\4d92146d-9c14-44ec-968a-41aeb9790ebc_SatThuVoCungCucHai.jpg",
       "PackagePath": "staticwebassets\\images\\4d92146d-9c14-44ec-968a-41aeb9790ebc_SatThuVoCungCucHai.jpg"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\59a4f373-3fad-4416-a758-f0cee0c1214b_TheGioiMoi.png",
       "PackagePath": "staticwebassets\\images\\59a4f373-3fad-4416-a758-f0cee0c1214b_TheGioiMoi.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\5ae77d1a-66e1-497d-9634-4f299a976129.jpg",
+      "PackagePath": "staticwebassets\\images\\5ae77d1a-66e1-497d-9634-4f299a976129.jpg"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\64b23a34-b23d-4ae7-99fa-72b02f50040f_TruyenCoTichBiCam.png",
@@ -1653,8 +1661,32 @@
       "PackagePath": "staticwebassets\\images\\8d69f739-370e-46ac-9ad0-9a0674a46079_BoTuBaoThu.jpg"
     },
     {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\9622d232-8d36-49f7-8f73-c6265d35528d.png",
+      "PackagePath": "staticwebassets\\images\\9622d232-8d36-49f7-8f73-c6265d35528d.png"
+    },
+    {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\9c8e6cce-837a-4619-a47d-fca7f5c26689_NinjaLoanThi.png",
       "PackagePath": "staticwebassets\\images\\9c8e6cce-837a-4619-a47d-fca7f5c26689_NinjaLoanThi.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\Combo\\781d79f4-d594-4129-940f-48e52ed13ace.png",
+      "PackagePath": "staticwebassets\\images\\Combo\\781d79f4-d594-4129-940f-48e52ed13ace.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\Combo\\c8e2fa01-eed3-4b0a-8f1e-227651567990.png",
+      "PackagePath": "staticwebassets\\images\\Combo\\c8e2fa01-eed3-4b0a-8f1e-227651567990.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\Combo\\Ảnh chụp màn hình 2025-03-04 103458.png",
+      "PackagePath": "staticwebassets\\images\\Combo\\Ảnh chụp màn hình 2025-03-04 103458.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\Combo\\Ảnh chụp màn hình 2025-03-04 105309.png",
+      "PackagePath": "staticwebassets\\images\\Combo\\Ảnh chụp màn hình 2025-03-04 105309.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\Combo\\Ảnh chụp màn hình 2025-03-05 150803.png",
+      "PackagePath": "staticwebassets\\images\\Combo\\Ảnh chụp màn hình 2025-03-05 150803.png"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\a241aede-6f4a-4b7d-a3b8-189b153290ee_NuHonBacTy.jpg",
@@ -1673,6 +1705,14 @@
       "PackagePath": "staticwebassets\\images\\d33dd127-07d5-45d8-a8dc-0597b854ecdf_NuTuBongToi.png"
     },
     {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\d5d8c3ec-944b-4ac6-b117-90384308ccfb.png",
+      "PackagePath": "staticwebassets\\images\\d5d8c3ec-944b-4ac6-b117-90384308ccfb.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\e19133e3-c4bf-41e3-b8bd-61e47cf8b588.png",
+      "PackagePath": "staticwebassets\\images\\e19133e3-c4bf-41e3-b8bd-61e47cf8b588.png"
+    },
+    {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\e2a12f25-d650-4d81-826a-94e62b68df35_AnhKhongDau.jpg",
       "PackagePath": "staticwebassets\\images\\e2a12f25-d650-4d81-826a-94e62b68df35_AnhKhongDau.jpg"
     },
@@ -1683,6 +1723,10 @@
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\emvatrinh.jpg",
       "PackagePath": "staticwebassets\\images\\emvatrinh.jpg"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\f6907c1e-aa23-4d8f-9312-4558cab1487b.png",
+      "PackagePath": "staticwebassets\\images\\f6907c1e-aa23-4d8f-9312-4558cab1487b.png"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\fe6ccb6e-ed37-4e9e-b302-bc165c264cde_voduongdainao.png",
@@ -1701,8 +1745,16 @@
       "PackagePath": "staticwebassets\\images\\nhabanu.jpg"
     },
     {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\thang-cua-xinh-iu-545-x-415-103920-050325-89.png",
+      "PackagePath": "staticwebassets\\images\\thang-cua-xinh-iu-545-x-415-103920-050325-89.png"
+    },
+    {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\thanhsoi.jpg",
       "PackagePath": "staticwebassets\\images\\thanhsoi.jpg"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\Ảnh chụp màn hình 2025-03-04 103458.png",
+      "PackagePath": "staticwebassets\\images\\Ảnh chụp màn hình 2025-03-04 103458.png"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\js\\site.js",

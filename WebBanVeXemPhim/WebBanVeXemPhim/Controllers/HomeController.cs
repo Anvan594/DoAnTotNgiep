@@ -14,11 +14,6 @@ namespace WebBanVeXemPhim.Controllers
         {
             _context = context;
         }
-
-
-        
-
-
         public IActionResult Privacy()
         {
             return View();
@@ -140,6 +135,7 @@ namespace WebBanVeXemPhim.Controllers
             int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
             var SoThongBao=_context.ThongBaos.Where(tb=>tb.MaNguoiDung == MaNguoiDung&&tb.TrangThai==false).ToArray();
             HttpContext.Session.SetInt32("SoThongBao", SoThongBao.Length);
+            ViewBag.Banner=await _context.Banners.ToListAsync();
             return View(danhSachPhim);
         }
         public async Task<IActionResult> VeDaDat(int? page)

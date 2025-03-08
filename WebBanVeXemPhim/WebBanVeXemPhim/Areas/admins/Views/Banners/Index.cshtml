@@ -89,7 +89,11 @@
                             @Html.DisplayFor(modelItem => item.MoTa)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TrangThai)
+                            @if (item.TrangThai==true){
+                                <span style="color:green">Đang Hoạt Động</span>
+                            }else{
+                                         <span style="color:red">Ẩn</span>
+                            }
                         </td>
                         <td>
                             <button class="btn btn-warning btn-sm btnOn" onclick="loadbanner_edit(@item.MaBanner)">

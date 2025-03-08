@@ -17,7 +17,7 @@ public partial class QuanLyBanVeXemPhimContext : DbContext
 
     public virtual DbSet<Banner> Banners { get; set; }
 
-    public virtual DbSet<Combo> Combos { get; set; }
+    public virtual DbSet<Combo> Comboes { get; set; }
 
     public virtual DbSet<Ghe> Ghes { get; set; }
 
@@ -62,16 +62,9 @@ public partial class QuanLyBanVeXemPhimContext : DbContext
         {
             entity.HasKey(e => e.MaCombo).HasName("PK__Combo__C3EDBC780EC4547C");
 
-            entity.ToTable("Combo");
-
             entity.Property(e => e.Anh).HasMaxLength(50);
             entity.Property(e => e.Gia).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.TenCombo).HasMaxLength(50);
-
-            entity.HasOne(d => d.MaThanhToanNavigation).WithMany(p => p.Combos)
-                .HasForeignKey(d => d.MaThanhToan)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Combo_ThanhToan");
         });
 
         modelBuilder.Entity<Ghe>(entity =>

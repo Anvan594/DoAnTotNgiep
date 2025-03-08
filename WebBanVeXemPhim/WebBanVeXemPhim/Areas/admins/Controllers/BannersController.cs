@@ -73,6 +73,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
             }
 
             var banner = await _context.Banners.FindAsync(id);
+            ViewBag.Anh = banner.Anh;
             if (banner == null)
             {
                 return NotFound();
@@ -85,44 +86,55 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, IFormFile fileAnh, [Bind("MaBanner,Anh,MoTa,TrangThai")] Banner banner)
+        public async Task<IActionResult> Edit(int id, IFormFile fileAnh, [Bind("MaBanner,MoTa,TrangThai")] Banner banner)
         {
             if (id != banner.MaBanner)
             {
                 return NotFound();
             }
 
+            var item = await _context.Banners.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            if (fileAnh == null)
+            {
+                item.MoTa = banner.MoTa;
+                item.TrangThai = banner.TrangThai;
+                _context.Update(item);
+                await _context.SaveChangesAsync();
+
+            }
+            // Nếu có ảnh mới, cập nhật ảnh
             if (fileAnh != null && fileAnh.Length > 0)
             {
-                // Định nghĩa thư mục lưu ảnh
+                // Xử lý ảnh mới như cũ
                 string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-
-                // Đảm bảo thư mục tồn tại
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
                 }
-
-                // Định danh file (để tránh trùng tên)
                 string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(fileAnh.FileName);
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                // Lưu file vào thư mục ~/wwwroot/images
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await fileAnh.CopyToAsync(fileStream);
                 }
-
-                // Cập nhật đường dẫn ảnh vào database
-                banner.Anh = uniqueFileName;
+                item.Anh = uniqueFileName;
             }
+            // Nếu không có ảnh mới, item.Anh giữ nguyên giá trị cũ từ cơ sở dữ liệu
+
+            item.MoTa = banner.MoTa;
+            item.TrangThai = banner.TrangThai;
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(banner);
+                    _context.Update(item);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -130,18 +142,16 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(banner);
+
+            return RedirectToAction("Index", "Banners");
         }
 
-        // GET: admins/Banners/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+
+            // GET: admins/Banners/Delete/5
+            public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
