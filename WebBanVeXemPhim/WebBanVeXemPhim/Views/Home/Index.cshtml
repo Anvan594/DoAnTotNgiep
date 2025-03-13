@@ -646,7 +646,7 @@ document.addEventListener("DOMContentLoaded", function () {
         {
             var trailer = ((List<Trailer>)ViewBag.DanhSachTrailer)
             .FirstOrDefault(t => t.MaPhim == item.MaPhim);
-            if (item.TrangThai == true && item.NgayKhoiChieu < DateOnly.FromDateTime(DateTime.Now.AddDays(3)))
+            if (item.TrangThai == true && item.NgayKhoiChieu < DateOnly.FromDateTime(DateTime.Now.AddDays(4)))
             {
                 <div class="col">
                     <div class="card movie-card h-100 border-0 shadow-sm">

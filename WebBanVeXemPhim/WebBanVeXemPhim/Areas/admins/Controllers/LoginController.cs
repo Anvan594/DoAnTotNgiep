@@ -68,7 +68,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         {
             HttpContext.Session.Remove("AdminLogin"); // huỷ session với key AdminLogin đã lưu trước đó
             HttpContext.Session.Remove("ChucVu");
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home");
         }
     }
 

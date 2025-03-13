@@ -64,7 +64,7 @@ namespace WebBanVeXemPhim.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("NguoiDung"); // huỷ session với key AdminLogin đã lưu trước đó
-
+            HttpContext.Session.Remove("ChucVu");
             return RedirectToAction("Index","home");
         }
         private string HashPassword(string password)

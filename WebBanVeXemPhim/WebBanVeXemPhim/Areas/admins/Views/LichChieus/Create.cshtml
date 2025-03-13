@@ -64,6 +64,10 @@
         </div>
     </form>
 </div>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @Html.RenderPartialAsync("_ValidationScriptsPartial")
+}
 <script>
     $(document).ready(function () {
         let isDuplicate = false; // Biến kiểm tra trùng giờ

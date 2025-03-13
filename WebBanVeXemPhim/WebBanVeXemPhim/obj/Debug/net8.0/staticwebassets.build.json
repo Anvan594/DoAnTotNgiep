@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "42Zez1Zeq5IfJBQoumY1hz7fnVW9yA1UGDNgrJLinLo=",
+  "Hash": "ipPZSQAsHliNiRaolobqypvNE+Bl9Jeb9y4/0XY6xso=",
   "Source": "WebBanVeXemPhim",
   "BasePath": "_content/WebBanVeXemPhim",
   "Mode": "Default",
@@ -8033,6 +8033,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Combo\\781d79f4-d594-4129-940f-48e52ed13ace.png"
+    },
+    {
+      "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\Combo\\8a25908c-b746-4d1b-9d17-5e01e66a421a.png",
+      "SourceId": "WebBanVeXemPhim",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\",
+      "BasePath": "_content/WebBanVeXemPhim",
+      "RelativePath": "images/Combo/8a25908c-b746-4d1b-9d17-5e01e66a421a.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Combo\\8a25908c-b746-4d1b-9d17-5e01e66a421a.png"
     },
     {
       "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\Combo\\Ảnh chụp màn hình 2025-03-04 103458.png",

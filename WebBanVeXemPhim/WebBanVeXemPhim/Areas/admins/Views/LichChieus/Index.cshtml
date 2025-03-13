@@ -186,6 +186,8 @@
     }
     function submitCreateForm() {
         var formData = $("#createForm").serialize(); // Lấy dữ liệu form
+       console.log("Dữ liệu form:", formData); // ĐÚNG
+
         $.ajax({
             url: '/admins/LichChieus/Create',
             type: 'POST',
@@ -193,6 +195,8 @@
             success: function (response) {
                 if (response.success) {
                     alert(response.message);
+                  console.log("Dữ liệu frm:", formData); // ĐÚNG
+
                     location.reload(); // Reload lại trang để cập nhật danh sách
                 } else {
                     alert("Lỗi: " + response.message);

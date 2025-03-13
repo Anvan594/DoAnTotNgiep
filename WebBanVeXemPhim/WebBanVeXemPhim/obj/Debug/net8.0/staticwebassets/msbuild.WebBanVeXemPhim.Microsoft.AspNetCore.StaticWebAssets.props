@@ -6704,6 +6704,22 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\Combo\781d79f4-d594-4129-940f-48e52ed13ace.png))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\Combo\8a25908c-b746-4d1b-9d17-5e01e66a421a.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebBanVeXemPhim</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebBanVeXemPhim</BasePath>
+      <RelativePath>images/Combo/8a25908c-b746-4d1b-9d17-5e01e66a421a.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\Combo\8a25908c-b746-4d1b-9d17-5e01e66a421a.png))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\images\Combo\c8e2fa01-eed3-4b0a-8f1e-227651567990.png))">
       <SourceType>Package</SourceType>
       <SourceId>WebBanVeXemPhim</SourceId>

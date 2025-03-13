@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using WebBanVeXemPhim.Models;
 
 namespace WebBanVeXemPhim.Areas.admins.Controllers
@@ -92,7 +93,12 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Dữ liệu không hợp lệ!" });
+                var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => $"{x.Key}: {x.Value.Errors.First().ErrorMessage}")
+                    .ToArray();
+
+                return Json(new { success = false, message = "Dữ liệu không hợp lệ.", errors = string.Join("\n", errors) });
             }
 
             List<LichChieu> lichChieus = new List<LichChieu>();
