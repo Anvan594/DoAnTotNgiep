@@ -89,7 +89,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         // POST: Thêm lịch chiếu
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(LichChieu lichChieu)
+        public async Task<IActionResult> Create(LichChieu lichChieu, int songay)
         {
             if (!ModelState.IsValid)
             {
@@ -103,32 +103,71 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 
             List<LichChieu> lichChieus = new List<LichChieu>();
             TimeOnly gioChieu = lichChieu.GioChieu; // Lấy giờ chiếu ban đầu
-            for (int i = 0; i < 8; i++)
+            var ngaychieu = lichChieu.NgayChieu;
+            if (ngaychieu != null)
             {
-                // Kiểm tra lịch chiếu có bị trùng không
-                bool isDuplicate = await _context.LichChieus.AnyAsync(lc =>
-                    lc.MaPhong == lichChieu.MaPhong &&
-                    lc.NgayChieu == lichChieu.NgayChieu &&
-                    lc.GioChieu == gioChieu);
-
-                if (!isDuplicate)
+                for (var j = 0; j < songay; j++)
                 {
-                    lichChieus.Add(new LichChieu
+                    gioChieu = lichChieu.GioChieu;
+                    for (int i = 0; i < 8; i++)
                     {
-                        MaPhim = lichChieu.MaPhim,
-                        MaPhong = lichChieu.MaPhong,
-                        NgayChieu = lichChieu.NgayChieu,
-                        GioChieu = gioChieu, // Gán giờ chiếu hiện tại
-                        GiaVe = lichChieu.GiaVe,
-                        TrangThai = lichChieu.TrangThai
-                    });
-                }
+                        // Kiểm tra lịch chiếu có bị trùng không
+                        bool isDuplicate = await _context.LichChieus.AnyAsync(lc =>
+                            lc.MaPhong == lichChieu.MaPhong &&
+                            lc.NgayChieu == lichChieu.NgayChieu &&
+                            lc.GioChieu == gioChieu);
 
-                // Tăng giờ chiếu thêm 2 tiếng
-                gioChieu = gioChieu.Add(TimeSpan.FromHours(2));
-                if (gioChieu == new TimeOnly(23,30)||gioChieu==new TimeOnly(22,00))
-                    break;
+                        if (!isDuplicate)
+                        {
+                            lichChieus.Add(new LichChieu
+                            {
+                                MaPhim = lichChieu.MaPhim,
+                                MaPhong = lichChieu.MaPhong,
+                                NgayChieu = ngaychieu,
+                                GioChieu = gioChieu, // Gán giờ chiếu hiện tại
+                                GiaVe = lichChieu.GiaVe,
+                                TrangThai = lichChieu.TrangThai
+                            });
+                        }
+
+                        // Tăng giờ chiếu thêm 2 tiếng
+                        gioChieu = gioChieu.Add(TimeSpan.FromHours(2));
+                        if (gioChieu == new TimeOnly(23, 30) || gioChieu == new TimeOnly(22, 00))
+                            break;
+                    }
+                    ngaychieu = ngaychieu.AddDays(1);
+                }
             }
+            else {
+                for (int i = 0; i < 8; i++)
+                {
+                    // Kiểm tra lịch chiếu có bị trùng không
+                    bool isDuplicate = await _context.LichChieus.AnyAsync(lc =>
+                        lc.MaPhong == lichChieu.MaPhong &&
+                        lc.NgayChieu == lichChieu.NgayChieu &&
+                        lc.GioChieu == gioChieu);
+
+                    if (!isDuplicate)
+                    {
+                        lichChieus.Add(new LichChieu
+                        {
+                            MaPhim = lichChieu.MaPhim,
+                            MaPhong = lichChieu.MaPhong,
+                            NgayChieu = ngaychieu,
+                            GioChieu = gioChieu, // Gán giờ chiếu hiện tại
+                            GiaVe = lichChieu.GiaVe,
+                            TrangThai = lichChieu.TrangThai
+                        });
+                    }
+
+                    // Tăng giờ chiếu thêm 2 tiếng
+                    gioChieu = gioChieu.Add(TimeSpan.FromHours(2));
+                    if (gioChieu == new TimeOnly(23, 30) || gioChieu == new TimeOnly(22, 00))
+                        break;
+                }
+            }
+
+
 
             if (lichChieus.Count > 0)
             {

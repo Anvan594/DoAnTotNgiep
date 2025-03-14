@@ -22,10 +22,20 @@ namespace WebBanVeXemPhim.Controllers
             _context = context;
         }
         [HttpPost]
-        public async Task<IActionResult> Create(int maKhach, decimal giave, string soghe, DateTime ngaydat, string giochieu,int MaLichChieu,string TenPhim)
+        public async Task<IActionResult> Create(int maKhach, decimal giave,decimal tongtien, string soghe, DateTime ngaydat, string giochieu,int MaLichChieu,string TenPhim,int selectedCombo)
         {
-            var domain = "https://localhost:7126"; 
-            
+            var tencombo = "";
+            var combo=_context.Comboes.Where(c=>c.MaCombo==selectedCombo).FirstOrDefault();
+            if (combo != null) { 
+                tencombo = combo.TenCombo;
+                tencombo = tencombo + " x" + (tongtien - giave) / combo.Gia;
+                HttpContext.Session.SetString("Tencombo", tencombo);
+            }
+            var scheme = Request.Scheme; // http hoặc https
+            var host = Request.Host.Value; // tên miền + cổng, ví dụ "localhost:7126"
+            var domain = $"{scheme}://{host}";
+
+            HttpContext.Session.SetInt32("MaCombo", selectedCombo);
             long code = int.Parse(DateTimeOffset.Now.ToString("ffffff"));
             long expirationTime = ((DateTimeOffset)DateTime.UtcNow.AddMinutes(30)).ToUnixTimeSeconds();
 
@@ -33,9 +43,9 @@ namespace WebBanVeXemPhim.Controllers
             HttpContext.Session.SetInt32("MaDonHang", MaDonHang);
             var paymentLinkRequest = new PaymentData(
                 orderCode: code,
-                amount: Convert.ToInt32(giave),
+                amount: Convert.ToInt32(tongtien),
                 description: $"Thanh toán đơn hàng {MaLichChieu}",
-                items: [new($"Phim:{TenPhim}, Số ghế: {soghe}, Giờ chiếu: {giochieu}, Giá vé: {giave}", 1, Convert.ToInt32(giave))], // Khởi tạo mảng items đúng cách
+                items: [new($"Phim:{TenPhim}, Số ghế: {soghe}, Giờ chiếu: {giochieu},{tencombo} ", 1, Convert.ToInt32(tongtien))], // Khởi tạo mảng items đúng cách
                 returnUrl: domain + "/DatVe/ThanhToanThanhCong",
                 cancelUrl: domain + "/DatVe/dieuhuong",
                 expiredAt: expirationTime
