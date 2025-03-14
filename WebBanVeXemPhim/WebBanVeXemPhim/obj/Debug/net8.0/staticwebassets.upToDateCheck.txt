@@ -434,7 +434,14 @@ wwwroot\images\emvatrinh.jpg
 wwwroot\images\f6907c1e-aa23-4d8f-9312-4558cab1487b.png
 wwwroot\images\fe6ccb6e-ed37-4e9e-b302-bc165c264cde_voduongdainao.png
 wwwroot\images\images.jpg
+wwwroot\images\KhuyenMai\339090620-769688404468201-6997705945754521027-n-113050-160424-59.jpg
+wwwroot\images\KhuyenMai\420660970-765393018955821-8676073937922951771-n-133335-120824-47.jpg
+wwwroot\images\KhuyenMai\545x415-131203-010924-53.jpg
+wwwroot\images\KhuyenMai\den-beta-xanh-sm-nha-545x415cm-164506-170225-58.png
+wwwroot\images\KhuyenMai\don-thang-tinh-yeu-545x415-140251-120325-30.png
 wwwroot\images\latmat48h.jpg
+wwwroot\images\logo.jfif
+wwwroot\images\logo.jpeg
 wwwroot\images\nhabanu.jpg
 wwwroot\images\thang-cua-xinh-iu-545-x-415-103920-050325-89.png
 wwwroot\images\thanhsoi.jpg

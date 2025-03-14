@@ -76,6 +76,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/KhuyenMais/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXEtodXllbk1haXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/KhuyenMais/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXEtodXllbk1haXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/KhuyenMais/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXEtodXllbk1haXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/KhuyenMais/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXEtodXllbk1haXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/KhuyenMais/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXEtodXllbk1haXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/LichChieus/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXExpY2hDaGlldXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -266,6 +286,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/Home/VeDaDat.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWZURhRGF0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/KhuyenMais/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2h1eWVuTWFpc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Administrator/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Views/Login/DangKy.cshtml]

@@ -67,14 +67,13 @@
 
 
 
-<div class=" mt-5">
+<div class="container mt-5">
     @{
         var orders = ViewBag.VeDaDat as IEnumerable<dynamic>;
     }
 
     @if (orders == null || !orders.Any())
     {
-        <div class="container" style="width:600px"></div>
         <div class="center-box" style="width:300px">
             <i class="bi bi-x-circle-fill text-danger" style="font-size: 4rem;"></i>
             <h5 class="mt-1 text-danger">Bạn chưa mua vé!  </h5>
@@ -139,66 +138,6 @@
                                 </tr>
                                 dem++;
                             }
-                            @* @foreach (var o in ViewBag.VeDaDat)
-                            {
-                                if (o.MaLichChieu != currentMaLichChieu)
-                                {
-                                    // Nếu không phải dòng đầu tiên, in ra dữ liệu của lịch chiếu trước đó
-                                    if (currentMaLichChieu != -1)
-                                    {
-                                        <tr>
-                                            <td>@dem</td>
-                                            <td>@TenPhim</td>
-                                            <td>@NgayChieu.ToString("dd/MM/yyyy")</td>
-                                            <td>@GioChieu</td>
-                                            <td>@ThoiLuong phút</td>
-                                            <td>@SoPhong</td>
-                                            <td>@soghe.TrimEnd(',', ' ')</td>
-                                            <td class="text-danger fw-bold">@giave.ToString("N0") VNĐ</td>
-                                            <td>
-                                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#barcodeModal" onclick="showBarcode(@o.MaVe)">
-                                                    📦 Hiện Mã Vạch
-                                                </button>
-                                            </td>
-
-                                        </tr>
-                                        dem++;
-                                    }
-
-                                    // Reset lại biến để chuẩn bị cho nhóm lịch chiếu mới
-                                    soghe = o.SoGhe + ", ";
-                                    giave = o.GiaVe;
-                                    TenPhim = o.TenPhim;
-                                    NgayChieu = o.NgayChieu;
-                                    GioChieu = o.GioChieu;
-                                    SoPhong = o.SoPhong;
-                                    ThoiLuong = o.ThoiLuong;
-                                    currentMaLichChieu = o.MaLichChieu;
-                                    MaVe = o.MaVe;
-                                }
-                                else
-                                {
-                                    // Cộng dồn ghế và giá vé
-                                    soghe += o.SoGhe + ", ";
-                                    giave += o.GiaVe;
-                                }
-                            }
-                            <tr>
-                                <td>@dem</td>
-                                <td>@TenPhim</td>
-                                <td>@NgayChieu.ToString("dd/MM/yyyy")</td>
-                                <td>@GioChieu</td>
-                                <td>@ThoiLuong phút</td>
-                                <td>@SoPhong</td>
-                                <td>@soghe.TrimEnd(',', ' ')</td>
-                                <td class="text-danger fw-bold">@giave.ToString("N0") VNĐ</td>
-                                <td>
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#barcodeModal" onclick="showBarcode(@MaVe)">
-                                        📦 Hiện Mã Vạch
-                                    </button>
-                                </td>
-                            </tr> *@
-
                         </tbody>
                     </table>
                 </div>
