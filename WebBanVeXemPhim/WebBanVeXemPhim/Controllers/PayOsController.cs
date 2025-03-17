@@ -25,7 +25,7 @@ public class PayOSController : ControllerBase
             var response = await _payOS.getPaymentLinkInformation(orderCode);
             if (response.status == "PAID")
             {
-                return RedirectToAction("ThongTinVe", "DatVe", new { check = true });
+                return RedirectToAction("ThongTinVe", "DatVe", new { check = true, });
 
             }
             if (response.status == "PENDING")

@@ -27,7 +27,7 @@ namespace WebBanVeXemPhim.Controllers
             var pass = HashPassword(model.MatKhau);
             var dataLogin = _context.NguoiDungs
     .Where(x => x.Email == model.Email && x.MatKhau == pass)
-    .Select(x => new { x.MaNguoiDung, x.Email, x.TrangThai,x.TenNguoiDung }) // Chỉ lấy cột cần thiết
+    .Select(x => new { x.MaNguoiDung, x.Email, x.TrangThai,x.TenNguoiDung,x.Token }) // Chỉ lấy cột cần thiết
     .FirstOrDefault();
 
 
@@ -45,12 +45,21 @@ namespace WebBanVeXemPhim.Controllers
             }
 
             // Đăng nhập thành công
-            
-            HttpContext.Session.SetInt32("NguoiDung", dataLogin.MaNguoiDung);
-            HttpContext.Session.SetString("Email", dataLogin.Email);
-            HttpContext.Session.SetString("TenNguoiDung", dataLogin.TenNguoiDung);
-            return RedirectToAction("index", "Home");
-
+            if (dataLogin.Token != null&&dataLogin.Token.Trim() == "Nhan Vien")
+            {
+                HttpContext.Session.SetInt32("NguoiDung", dataLogin.MaNguoiDung);
+                HttpContext.Session.SetString("Email", dataLogin.Email);
+                HttpContext.Session.SetString("TenNguoiDung", dataLogin.TenNguoiDung);
+                HttpContext.Session.SetString("ChucVu",dataLogin.Token.Trim());
+                return RedirectToAction("index", "NhanVien");
+            }
+            else
+            {
+                HttpContext.Session.SetInt32("NguoiDung", dataLogin.MaNguoiDung);
+                HttpContext.Session.SetString("Email", dataLogin.Email);
+                HttpContext.Session.SetString("TenNguoiDung", dataLogin.TenNguoiDung);
+                return RedirectToAction("index", "Home");
+            }
         }
         public IActionResult DangKy()
         {

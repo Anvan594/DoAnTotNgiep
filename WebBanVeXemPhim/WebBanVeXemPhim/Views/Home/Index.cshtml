@@ -20,21 +20,23 @@
         box-shadow: none !important; /* Loại bỏ bóng nếu có */
         border: none !important; /* Loại bỏ viền nếu có */
     }
-
+    .carousel-item {
+    transition: transform 1s ease-out, opacity 1s ease-in-out;
+}
     /* Hiệu ứng chuyển slide mượt mà */
-    .carousel-fade .carousel-item {
+/*     .carousel-fade .carousel-item {
         opacity: 0;
         transition: opacity 1.5s ease-in-out;
     }
 
         .carousel-fade .carousel-item.active {
             opacity: 1;
-        }
+        } */
 
     /* Điều chỉnh hình ảnh */
     .banner-img {
         object-fit: cover;
-        height: 400px; /* Điều chỉnh kích thước theo trang */
+        height: 450px; /* Điều chỉnh kích thước theo trang */
         border-radius: 12px;
     }
 
@@ -515,39 +517,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-<!-- Banner (Carousel) -->
-@* <div id="bannerCarousel" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel" data-bs-interval="2500"">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="2"></button>
-    </div>
-
-    <div class="carousel-inner rounded shadow-lg">
-        <div class="carousel-item active">
-            <img src="https://files.betacorp.vn/media/images/2025/02/17/con-tet-ni-oi-tang-ni-deal-hoi-1702-x-621-111106-170225-90.png" class="d-block w-100 rounded banner-img" alt="Banner 1">
-        </div>
-        <div class="carousel-item">
-            <img src="https://files.betacorp.vn/media/images/2025/02/14/1702x621-29-130857-140225-28.jpg" class="d-block w-100 rounded banner-img" alt="Banner 2">
-        </div>
-        <div class="carousel-item">
-            <img src="https://files.betacorp.vn/media/images/2025/02/14/ngt-payoff-poster-1702x621-sneak-155826-140225-38.jpg" class="d-block w-100 rounded banner-img" alt="Banner 3">
-        </div>
-    </div>
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-</div> *@
-<style>
-    /* Tạo hiệu ứng slide-in mượt */
-.carousel-item {
-    transition: transform 1s ease-out, opacity 1s ease-in-out;
-}
-</style>
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">

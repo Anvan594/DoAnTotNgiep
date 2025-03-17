@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\Combo\" />
+    <Folder Include="wwwroot\images\KhuyenMai\" />
     <Folder Include="wwwroot\Trailers\" />
   </ItemGroup>
 

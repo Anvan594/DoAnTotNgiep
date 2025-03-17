@@ -92,10 +92,14 @@ namespace WebBanVeXemPhim.Controllers
             ViewBag.DanhSachVe = DanhSachVe;
             return View();
         }
-        public async Task<IActionResult> DatVe()
+        public async Task<IActionResult> DatVe(int selectedCombo)
         {
             int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
-
+            int? MaCombo = null;
+			if (selectedCombo != 0) {
+           
+                MaCombo = selectedCombo;
+            }
             var order = _context.Ves
                 .Include(v => v.MaGheNavigation)
                 .Include(v => v.MaLichChieuNavigation)
@@ -144,6 +148,7 @@ namespace WebBanVeXemPhim.Controllers
                     MaVe = item.MaVe,
                     PhuongThuc = "Thanh Toán Bằng Tiền M",
                     NgayThanhToan = DateTime.Now,
+                    MaComBo= MaCombo,
                     TrangThai = "Đã Thanh Toán"
                 });
             }
@@ -151,6 +156,7 @@ namespace WebBanVeXemPhim.Controllers
             {
                 MaNguoiDung = MaNguoiDung,
                 NoiDung = "Bạn đã đặt vé thành công<br/>Tên Phim: " + order[0].TenPhim + "<br/>Ngày chiếu:" + order[0].Ngaychieu + " Giờ chiếu: " + order[0].GioChieu + "<br/> Số ghế: " + SoGhe_ThongBao
+
             };
             _context.ThongBaos.Add(ThongBao);
             _context.ThanhToans.AddRange(payments);

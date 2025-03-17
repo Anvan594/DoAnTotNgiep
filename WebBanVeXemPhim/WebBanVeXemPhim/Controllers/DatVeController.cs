@@ -80,7 +80,8 @@ namespace WebBanVeXemPhim.Controllers
 
         public IActionResult Index(int orderId)
         {
-
+            var combo =_context.Comboes.ToList();
+            ViewBag.combo = combo;
             var ve = _context.Ves
                 .Include(v => v.MaGheNavigation)
                 .Where(v => v.MaVe == orderId && v.TrangThai==false)
@@ -123,6 +124,9 @@ namespace WebBanVeXemPhim.Controllers
         }
         public async Task<IActionResult> ThongTinVe( bool check)
         {
+            int? MaCombo = HttpContext.Session.GetInt32("MaCombo") ?? null;
+            var tencombo = HttpContext.Session.GetString("Tencombo") ?? "";
+            tencombo = "<br/>"+tencombo;
             if (check == true)
             {
                 int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
@@ -173,6 +177,7 @@ namespace WebBanVeXemPhim.Controllers
                     payments.Add(new ThanhToan
                     {
                         MaVe = item.MaVe,
+                        MaComBo=MaCombo,
                         PhuongThuc = "Chuyển khoản qua ngân hàng",
                         NgayThanhToan = DateTime.Now,
                         TrangThai = "Đã Thanh Toán"
@@ -181,7 +186,7 @@ namespace WebBanVeXemPhim.Controllers
                 var ThongBao = new ThongBao
                 {
                     MaNguoiDung = MaNguoiDung,
-                    NoiDung ="Bạn đã đặt vé thành công<br/>Tên Phim: " + order[0].TenPhim+"<br/>Ngày chiếu:"+order[0].Ngaychieu+" Giờ chiếu: " + order[0].GioChieu + "<br/> Số ghế: "+SoGhe_ThongBao
+                    NoiDung ="Bạn đã đặt vé thành công<br/>Tên Phim: " + order[0].TenPhim+"<br/>Ngày chiếu:"+order[0].Ngaychieu+" Giờ chiếu: " + order[0].GioChieu + "<br/> Số ghế: "+SoGhe_ThongBao+tencombo
                 };
                 _context.ThongBaos.Add(ThongBao);
                 _context.ThanhToans.AddRange(payments);

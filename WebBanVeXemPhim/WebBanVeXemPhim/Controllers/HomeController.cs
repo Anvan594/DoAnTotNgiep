@@ -20,6 +20,7 @@ namespace WebBanVeXemPhim.Controllers
         }
         public async Task<IActionResult> IndexAsync(string searchString)
         {
+            HttpContext.Session.Remove("MaCombo");
             var ChucVu = HttpContext.Session.GetString("ChucVu") ?? "";
             if (ChucVu == "Nhan Vien")
             {
