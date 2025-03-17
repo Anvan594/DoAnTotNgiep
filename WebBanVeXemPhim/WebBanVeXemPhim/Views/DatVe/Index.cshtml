@@ -229,7 +229,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			}
 			<h3 class="TongTien">Tổng: @TongTien.ToString("N0") VNĐ</h3>
 			<div style="display:flex; justify-content:end;">
-				<form method="post" asp-controller="CheckoutApi" asp-action="Create" id="paymentForm">
+				<form method="post" asp-controller="CheckoutApi" asp-action="Create" id="paymentForm" style="display:flex">
 					<input hidden type="number" name="Makhach" value="@Makhach" />
 					<input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
 					<input hidden type="text" name="soghe" value="@soghe" required />
