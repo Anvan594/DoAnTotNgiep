@@ -94,6 +94,7 @@ namespace WebBanVeXemPhim.Controllers
             ViewBag.DanhSachVe = DanhSachVe;
             return View();
         }
+<<<<<<< HEAD
         public async Task<IActionResult> InVe()
         {
             return View();
@@ -177,6 +178,8 @@ namespace WebBanVeXemPhim.Controllers
         }
 
 
+=======
+>>>>>>> d76df6057d5d16aa444ad0575e9033a0d835e617
         public async Task<IActionResult> DatVe(int selectedCombo)
         {
             int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
@@ -233,7 +236,11 @@ namespace WebBanVeXemPhim.Controllers
                     MaVe = item.MaVe,
                     PhuongThuc = "Thanh Toán Bằng Tiền Mặt",
                     NgayThanhToan = DateTime.Now,
+<<<<<<< HEAD
                     MaComBo= MaCombo,
+=======
+                    MaComBo=selectedCombo,
+>>>>>>> d76df6057d5d16aa444ad0575e9033a0d835e617
                     TrangThai = "Đã Thanh Toán"
                 });
             }

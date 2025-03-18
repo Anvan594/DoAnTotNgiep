@@ -1379,6 +1379,7 @@ C:\Users\Administrator\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXem
 C:\Users\Administrator\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\WebBanVeXemPhim.pdb
 C:\Users\Administrator\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\WebBanVeXemPhim.genruntimeconfig.cache
 C:\Users\Administrator\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\ref\WebBanVeXemPhim.dll
+<<<<<<< HEAD
 C:\Users\An\Downloads\DoAnTotNgiep-main\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\An\Downloads\DoAnTotNgiep-main\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\appsettings.json
 C:\Users\An\Downloads\DoAnTotNgiep-main\WebBanVeXemPhim\WebBanVeXemPhim\bin\Debug\net8.0\WebBanVeXemPhim.staticwebassets.runtime.json
@@ -1663,3 +1664,5 @@ C:\Users\An\Downloads\DoAnTotNgiep-main\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debu
 C:\Users\An\Downloads\DoAnTotNgiep-main\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\WebBanVeXemPhim.pdb
 C:\Users\An\Downloads\DoAnTotNgiep-main\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\WebBanVeXemPhim.genruntimeconfig.cache
 C:\Users\An\Downloads\DoAnTotNgiep-main\WebBanVeXemPhim\WebBanVeXemPhim\obj\Debug\net8.0\ref\WebBanVeXemPhim.dll
+=======
+>>>>>>> d76df6057d5d16aa444ad0575e9033a0d835e617
