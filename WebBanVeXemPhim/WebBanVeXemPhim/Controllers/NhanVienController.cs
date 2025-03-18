@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using WebBanVeXemPhim.Models;
 
 namespace WebBanVeXemPhim.Controllers
@@ -15,6 +16,7 @@ namespace WebBanVeXemPhim.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             var ChucVu = HttpContext.Session.GetString("ChucVu") ?? "";
+            Console.WriteLine("chức vụ là :"+ChucVu);
             if (ChucVu != "Nhan Vien")
             {
                 return RedirectToAction("Index", "Home");
@@ -92,6 +94,89 @@ namespace WebBanVeXemPhim.Controllers
             ViewBag.DanhSachVe = DanhSachVe;
             return View();
         }
+        public async Task<IActionResult> InVe()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Inve(int MaKhach, int MaLichChieu)
+        {
+            var danhSachVe = _context.Ves
+              .Include(v => v.MaGheNavigation)
+              .Include(v => v.MaLichChieuNavigation)
+              .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
+              .Include(v => v.MaLichChieuNavigation.MaPhongNavigation)
+              .Where(v => v.MaKhachHang == MaKhach&& v.MaLichChieu==MaLichChieu && v.TrangThai == true)
+              .OrderByDescending(v => v.NgayDat)
+              .ThenBy(v => v.MaLichChieu) // Giữ thứ tự ban đầu
+              .ThenBy(v => v.MaVe) // Đảm bảo vé cùng lịch chiếu giữ đúng thứ tự
+              .ToList();
+
+            var result = new List<object>();
+            int? currentMaLichChieu = null;
+            string soghe = "";
+            decimal giave = 0;
+
+            foreach (var ve in danhSachVe)
+            {
+                if (currentMaLichChieu == null || ve.MaLichChieu != currentMaLichChieu)
+                {
+                    // Nếu không phải dòng đầu tiên, thêm dữ liệu đã gộp vào danh sách kết quả
+                    if (currentMaLichChieu != null)
+                    {
+                        result.Add(new
+                        {
+                            MaLichChieu = currentMaLichChieu,
+                            ThoiLuong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                            TenPhim = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                            NgayChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.NgayChieu,
+                            GioChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.GioChieu,
+                            SoPhong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                            SoGhe = soghe.TrimEnd(',', ' '), // Bỏ dấu phẩy cuối cùng
+                            GiaVe = giave
+                        });
+                    }
+
+                    // Reset dữ liệu cho nhóm mới
+                    currentMaLichChieu = ve.MaLichChieu;
+                    soghe = ve.MaGheNavigation.SoGhe + ", ";
+                    giave = ve.GiaVe;
+                }
+                else
+                {
+                    // Nếu cùng lịch chiếu, tiếp tục ghép ghế & cộng tiền
+                    soghe += ve.MaGheNavigation.SoGhe + ", ";
+                    giave += ve.GiaVe;
+                }
+            }
+
+            // Thêm nhóm cuối cùng vào danh sách kết quả
+            if (currentMaLichChieu != null)
+            {
+                result.Add(new
+                {
+
+                    MaLichChieu = currentMaLichChieu,
+                    ThoiLuong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.ThoiLuong,
+                    TenPhim = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhimNavigation.TenPhim,
+                    NgayChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.NgayChieu,
+                    GioChieu = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.GioChieu,
+                    SoPhong = danhSachVe.First(v => v.MaLichChieu == currentMaLichChieu).MaLichChieuNavigation.MaPhongNavigation.TenPhong,
+                    SoGhe = soghe.TrimEnd(',', ' '),
+                    GiaVe = giave
+                });
+            }
+
+            if (result == null)
+            {
+                return Json(new { success = false, message = "Không tìm thấy vé!" });
+            }
+            Console.WriteLine(JsonConvert.SerializeObject(result));
+
+            return Json(new { success = true, data = result });
+        }
+
+
         public async Task<IActionResult> DatVe(int selectedCombo)
         {
             int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
@@ -146,7 +231,7 @@ namespace WebBanVeXemPhim.Controllers
                 payments.Add(new ThanhToan
                 {
                     MaVe = item.MaVe,
-                    PhuongThuc = "Thanh Toán Bằng Tiền M",
+                    PhuongThuc = "Thanh Toán Bằng Tiền Mặt",
                     NgayThanhToan = DateTime.Now,
                     MaComBo= MaCombo,
                     TrangThai = "Đã Thanh Toán"

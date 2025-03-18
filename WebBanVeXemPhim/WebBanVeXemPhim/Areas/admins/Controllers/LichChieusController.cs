@@ -77,10 +77,10 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         public IActionResult Create()
         {
             ViewBag.MaPhim = new SelectList(_context.Phims
-     .Where(p => p.TrangThai == true &&
+        .Where(p => p.TrangThai == true &&
                  p.NgayKhoiChieu <= DateOnly.FromDateTime(DateTime.Now.AddDays(8))) // Chuyển đổi để so sánh
-     .OrderByDescending(p => p.NgayKhoiChieu), // Sắp xếp theo ngày khởi chiếu mới nhất
-     "MaPhim", "TenPhim"); // Chọn dữ liệu cho dropdown
+        .OrderByDescending(p => p.NgayKhoiChieu), // Sắp xếp theo ngày khởi chiếu mới nhất
+        "MaPhim", "TenPhim"); // Chọn dữ liệu cho dropdown
 
             ViewBag.MaPhong = new SelectList(_context.Phongs, "MaPhong", "TenPhong");
             return PartialView("Create");

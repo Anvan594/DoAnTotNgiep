@@ -31,7 +31,7 @@
     }
 
     function showBarcode(makhach,malichchieu) {
-        let macode = makhach + "_" + malichchieu + "_" + Math.floor(1000 + Math.random() * 9000)
+        let macode = makhach + "_" + malichchieu
         let encoded = encodeToNumbers(macode.toString()); // Mã hóa
         console.log("Mã hóa:", encoded); // Kiểm tra trên console
 
@@ -60,13 +60,7 @@
         </div>
     </div>
 </div>
-
-
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
-
-
-
-
 <div class="container mt-5">
     @{
         var orders = ViewBag.VeDaDat as IEnumerable<dynamic>;
