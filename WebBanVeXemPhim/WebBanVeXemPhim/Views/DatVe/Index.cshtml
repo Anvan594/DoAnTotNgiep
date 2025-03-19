@@ -235,13 +235,8 @@ input[type="number"]::-webkit-inner-spin-button {
 					<input hidden type="text" name="soghe" value="@soghe" required />
 					<input hidden type="number" name="selectedCombo" id="selectedComboInput" value="0" />
 					<input hidden type="text" name="TenPhim" value="@TenPhim" required />
-<<<<<<< HEAD
 					<input hidden type="number" name="tongtien" id="TongTien" value="@giave" required />
 					<input hidden type="number" name="giave" id="TongTien" value="@giave" required />
-=======
-					<input hidden type="number" name="tongtien" id="TongTien" value="@giave.ToString("N0")" required />
-					<input hidden type="number" name="giave" id="TongTien" value="@giave.ToString("N0")" required />
->>>>>>> d76df6057d5d16aa444ad0575e9033a0d835e617
 					<input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
 					<input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
 					<a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg" style="margin-right:25px">Hủy vé</a>
@@ -260,18 +255,15 @@ input[type="number"]::-webkit-inner-spin-button {
 						<form method="post" asp-controller="NhanVien" asp-action="DatVe" id="paymentForm" style="display:flex; justify-content:end;">
 							<input hidden type="number" name="Makhach" value="@Makhach" />
 							<input hidden type="number" name="MaLichChieu" value="@maLichChieu" />
-<<<<<<< HEAD
 							<input hidden type="number" name="selectedCombo" id="selectedComboInput_2" value="0" />
 							<input hidden type="text" name="soghe" value="@soghe" required />
 							<input hidden type="text" name="TenPhim" value="@TenPhim" required />
 							<input hidden type="number" name="tongtien" id="TongTien" value="@giave" required />
 							<input hidden type="number" name="giave" id="TongTien" value="@giave" required />
-=======
 							<input hidden type="number" name="selectedCombo" id="selectedComboInput" value="0" />
 							<input hidden type="text" name="soghe" value="@soghe" required />
 							<input hidden type="text" name="TenPhim" value="@TenPhim" required />
 							<input hidden type="number" name="giave" id="TongTien" value="@giave.ToString("N0")" required />
->>>>>>> d76df6057d5d16aa444ad0575e9033a0d835e617
 							<input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
 							<input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
 							<button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg" style="margin-left:25px;">Thanh toán tiền mặt</button>
@@ -383,10 +375,7 @@ function updateTotal() {
 
     if (selectedComboId) {
         document.getElementById('selectedComboInput').value = selectedComboId;
-<<<<<<< HEAD
 		document.getElementById('selectedComboInput_2').value = selectedComboId;
-=======
->>>>>>> d76df6057d5d16aa444ad0575e9033a0d835e617
     }
 }
 
