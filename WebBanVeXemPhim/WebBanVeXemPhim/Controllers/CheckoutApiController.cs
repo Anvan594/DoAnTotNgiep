@@ -72,7 +72,7 @@ namespace WebBanVeXemPhim.Controllers
                 amount: Convert.ToInt32(giave),
                 description: $"Thanh toán đơn hàng {MaLichChieu}",
                 items: [new($"Phim:{TenPhim}, Số ghế: {soghe}, Giờ chiếu: {giochieu}, Giá vé: {giave}", 1, Convert.ToInt32(giave))], // Khởi tạo mảng items đúng cách
-                returnUrl: domain + "/DatVe/ThanhToanThanhCong",
+                returnUrl: "",
                 cancelUrl: domain + "/DatVe/dieuhuong",
                 expiredAt: expirationTime
             );
