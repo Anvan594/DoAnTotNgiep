@@ -34,10 +34,10 @@ public async Task<IActionResult> Index(int? pageNumber)
             .ThenInclude(lc => lc.MaPhimNavigation)
             .OrderBy(v => v.MaKhachHang)
             .ThenBy(v => v.MaLichChieu)
-            .ThenBy(v => v.MaGhe)
+            .ThenBy(v => v.MaGhe).OrderByDescending(t => t.NgayDat)
             .ToListAsync();
 
-        var mergedList = new List<dynamic>();
+            var mergedList = new List<dynamic>();
 
         foreach (var item in allTickets)
         {

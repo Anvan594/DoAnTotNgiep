@@ -177,15 +177,24 @@ namespace WebBanVeXemPhim.Controllers
         }
 
 
-        public async Task<IActionResult> DatVe(int selectedCombo)
+        public async Task<IActionResult> DatVe(int selectedCombo,string HinhThucTT, decimal giave, decimal tongtien)
         {
+            Console.WriteLine(selectedCombo.ToString(), HinhThucTT, giave, tongtien);
             int MaNguoiDung = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
             int? MaCombo = null;
 			if (selectedCombo != 0) {
            
                 MaCombo = selectedCombo;
             }
-            var order = _context.Ves
+            var tencombo = "";
+            var combo = _context.Comboes.Where(c => c.MaCombo == selectedCombo).FirstOrDefault();
+            if (combo != null)
+            {
+                tencombo = combo.TenCombo;
+                tencombo = tencombo + " x" + (tongtien - giave) / combo.Gia;
+                tencombo = "<br/>Combo: " + tencombo;
+            }
+                var order = _context.Ves
                 .Include(v => v.MaGheNavigation)
                 .Include(v => v.MaLichChieuNavigation)
                 .Include(v => v.MaLichChieuNavigation.MaPhimNavigation)
@@ -214,6 +223,15 @@ namespace WebBanVeXemPhim.Controllers
 
             var payments = new List<ThanhToan>();
             var SoGhe_ThongBao = "";
+            var TT = "";
+            if (HinhThucTT == "CK")
+            {
+                 TT = "Chuyển khoản qua ngân hàng";
+            }
+            else
+            {
+                 TT = "Thanh Toán Bằng Tiền Mặt";
+            }
             foreach (var item in order)
             {
                 if (!string.IsNullOrEmpty(SoGhe_ThongBao))
@@ -231,7 +249,7 @@ namespace WebBanVeXemPhim.Controllers
                 payments.Add(new ThanhToan
                 {
                     MaVe = item.MaVe,
-                    PhuongThuc = "Thanh Toán Bằng Tiền Mặt",
+                    PhuongThuc = TT,
                     NgayThanhToan = DateTime.Now,
                     MaComBo= MaCombo,
                     TrangThai = "Đã Thanh Toán"
@@ -240,7 +258,7 @@ namespace WebBanVeXemPhim.Controllers
             var ThongBao = new ThongBao
             {
                 MaNguoiDung = MaNguoiDung,
-                NoiDung = "Bạn đã đặt vé thành công<br/>Tên Phim: " + order[0].TenPhim + "<br/>Ngày chiếu:" + order[0].Ngaychieu + " Giờ chiếu: " + order[0].GioChieu + "<br/> Số ghế: " + SoGhe_ThongBao
+                NoiDung = "Bạn đã đặt vé thành công<br/>Tên Phim: " + order[0].TenPhim + "<br/>Ngày chiếu:" + order[0].Ngaychieu + " Giờ chiếu: " + order[0].GioChieu + "<br/> Số ghế: " + SoGhe_ThongBao + tencombo
 
             };
             _context.ThongBaos.Add(ThongBao);

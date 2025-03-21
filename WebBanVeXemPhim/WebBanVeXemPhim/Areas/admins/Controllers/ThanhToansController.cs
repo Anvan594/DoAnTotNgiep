@@ -23,10 +23,10 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         {
             int pageSize = 8; // Số bản ghi trên mỗi trang
             int currentPage = pageNumber ?? 1; // Mặc định trang đầu tiên
-
             var query = _context.ThanhToans
                 .Include(t => t.MaVeNavigation)
-                .OrderBy(t => t.MaThanhToan); // Sắp xếp theo ID hoặc một trường phù hợp
+                .OrderByDescending(t => t.NgayThanhToan);
+            // Sắp xếp theo ID hoặc một trường phù hợp
 
             var allRecords = await query.ToListAsync(); // Lấy toàn bộ dữ liệu từ DB
 

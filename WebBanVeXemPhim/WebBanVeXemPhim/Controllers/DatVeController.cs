@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using WebBanVeXemPhim.Models;
+using System.Transactions;
 
 namespace WebBanVeXemPhim.Controllers
 {
@@ -10,11 +15,14 @@ namespace WebBanVeXemPhim.Controllers
     public class DatVeController : Controller
     {
         private readonly QuanLyBanVeXemPhimContext _context;
-
-        public DatVeController(QuanLyBanVeXemPhimContext context)
+		private readonly ILogger<DatVeController> _logger;
+		private readonly IHttpClientFactory _httpClientFactory;
+		public DatVeController(QuanLyBanVeXemPhimContext context, ILogger<DatVeController> logger, IHttpClientFactory httpClientFactory)
         {
             _context = context;
-        }
+			_logger = logger;
+			_httpClientFactory = httpClientFactory;
+		}
         
         [HttpPost]
         public IActionResult XacNhanDatVe([FromBody] DatVeRequest request)
@@ -266,10 +274,74 @@ namespace WebBanVeXemPhim.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+		[HttpPost]
+		public IActionResult CreateTransaction(float amount)
+		{
+            Console.WriteLine(amount);
+			string transactionId = $"TX{DateTime.Now:yyyyMMddHHmmss}{new Random().Next(1000, 9999)}";
+        //https://api.vietqr.io/image/970422-3120182092003-e2ryJKx.jpg?accountName=NGUYEN%20VAN%20AN&amount=&amount={amount}&des={transactionId}
+            string qrUrl = $"https://api.vietqr.io/image/970422-3120182892003-e2ryJKx.jpg?accountName=NGUYEN%20VAN%20AN&amount={amount}&addInfo={transactionId}";
+			return Json(new { transactionId, qrUrl });
+		}
 
+		[HttpGet]
+		public async Task<IActionResult> TimGiaoDich(string content)
+		{
+			try
+			{
+				var client = _httpClientFactory.CreateClient();
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "XICNVOG02WQR45X1BOCBSKZTIIUYJTPZAJE9FADSRPBE6LWPL5QWHZTXD7FRIDPM");
 
+				var response = await client.GetAsync("https://my.sepay.vn/userapi/transactions/list");
 
-        public class DatVeRequest
+				if (!response.IsSuccessStatusCode)
+				{
+					_logger.LogError("Lỗi khi gọi API: {StatusCode}", response.StatusCode);
+					return StatusCode((int)response.StatusCode);
+				}
+
+				var responseString = await response.Content.ReadAsStringAsync();
+				var jsonObject = JObject.Parse(responseString);
+                var success = jsonObject["messages"]?["success"]?.ToString();
+                // Kiểm tra transactions tồn tại
+                var transactions = jsonObject["transactions"];
+				if (transactions == null || !transactions.Any())
+				{
+					return Json(new { message = "Không tìm thấy giao dịch nào!" });
+				}
+
+				// Regex tách mã giao dịch dạng "TX..."
+				string ExtractTransactionId(string transactionContent)
+				{
+					var match = Regex.Match(transactionContent, @"TX\d+");
+					return match.Success ? match.Value : null;
+				}
+
+				// Tìm kiếm giao dịch với mã TX đúng bằng content
+				var matchedTransaction = transactions
+					.Select(t => new
+					{
+						TransactionContent = t["transaction_content"]?.ToString(),
+                        Amount=t["amount_in"]?.ToString(),
+                        TransactionId = ExtractTransactionId(t["transaction_content"]?.ToString() ?? ""),
+                        Success = success
+                    })
+					.FirstOrDefault(t => t.TransactionId == content&&t.TransactionId!=null);
+
+				if (matchedTransaction == null)
+				{
+					return Json(new { message = "Không tìm thấy giao dịch nào!" });
+				}
+
+				return Json(matchedTransaction);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError("Lỗi khi tìm giao dịch: {Message}", ex.Message);
+				return StatusCode(500, "Đã xảy ra lỗi!");
+			}
+		}
+		public class DatVeRequest
         {
             [Required(ErrorMessage = "Mã lịch chiếu không được để trống.")]
             public int MaLichChieu { get; set; }
