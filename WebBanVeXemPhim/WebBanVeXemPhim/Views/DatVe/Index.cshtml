@@ -441,7 +441,7 @@
         document.getElementById('transactionId').innerText = data.transactionId;
         document.getElementById('qrCode').src = data.qrUrl;
         // Kiểm tra nếu transactionId không rỗng, thì gọi API mỗi 1 giây
-        setInterval(searchTransactions, 1000);
+        setInterval(searchTransactions, 1500);
     }
     let searchTimeout;
 

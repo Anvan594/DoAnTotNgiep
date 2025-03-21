@@ -280,7 +280,7 @@ namespace WebBanVeXemPhim.Controllers
             Console.WriteLine(amount);
 			string transactionId = $"TX{DateTime.Now:yyyyMMddHHmmss}{new Random().Next(1000, 9999)}";
         //https://api.vietqr.io/image/970422-3120182092003-e2ryJKx.jpg?accountName=NGUYEN%20VAN%20AN&amount=&amount={amount}&des={transactionId}
-            string qrUrl = $"https://api.vietqr.io/image/970422-3120182892003-e2ryJKx.jpg?accountName=NGUYEN%20VAN%20AN&amount={amount}&addInfo={transactionId}";
+            string qrUrl = $"https://api.vietqr.io/image/970422-VQRQABSTC4478-e2ryJKx.jpg?accountName=NGUYEN%20VAN%20AN&amount={amount}&addInfo={transactionId}";
 			return Json(new { transactionId, qrUrl });
 		}
 
