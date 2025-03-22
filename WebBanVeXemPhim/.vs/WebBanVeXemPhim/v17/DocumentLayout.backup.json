@@ -30,8 +30,7 @@
               "RelativeToolTip": "WebBanVeXemPhim\\Controllers\\DatVeController.cs",
               "ViewState": "AgIAAAEBAAAAAAAAAAAqwBoBAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T19:30:10.891Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-21T19:30:10.891Z"
             },
             {
               "$type": "Document",
@@ -39,12 +38,16 @@
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Views\\DatVe\\Index.cshtml",
               "RelativeDocumentMoniker": "WebBanVeXemPhim\\Views\\DatVe\\Index.cshtml",
-              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Views\\DatVe\\Index.cshtml*",
-              "RelativeToolTip": "WebBanVeXemPhim\\Views\\DatVe\\Index.cshtml*",
-              "ViewState": "AgIAAK8BAAAAAAAAAAAmwLkBAAA7AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\Views\\DatVe\\Index.cshtml",
+              "RelativeToolTip": "WebBanVeXemPhim\\Views\\DatVe\\Index.cshtml",
+              "ViewState": "AgIAAMoBAAAAAAAAAAAAALkBAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-21T13:17:47.309Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
             }
           ]
         }
