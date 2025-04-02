@@ -5,8 +5,8 @@ namespace WebBanVeXemPhim.Controllers
 {
     public class KhuyenMaisController : Controller
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
-        public KhuyenMaisController(QuanLyBanVeXemPhimContext context)
+        private readonly QuanLyBanVeXemPhimV2Context _context;
+        public KhuyenMaisController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

@@ -6,9 +6,9 @@ namespace WebBanVeXemPhim.Controllers
 {
     public class ThongBaoController : Controller
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public ThongBaoController(QuanLyBanVeXemPhimContext context)
+        public ThongBaoController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

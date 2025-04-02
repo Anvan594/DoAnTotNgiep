@@ -10,8 +10,8 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
     [Area("Admins")]
     public class LoginController : Controller
     {
-        public QuanLyBanVeXemPhimContext _context;
-        public LoginController(QuanLyBanVeXemPhimContext context)
+        public QuanLyBanVeXemPhimV2Context _context;
+        public LoginController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

@@ -14,10 +14,10 @@ namespace WebBanVeXemPhim.Controllers
     [TypeFilter(typeof(CheckLoginFilter))]
     public class DatVeController : Controller
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 		private readonly ILogger<DatVeController> _logger;
 		private readonly IHttpClientFactory _httpClientFactory;
-		public DatVeController(QuanLyBanVeXemPhimContext context, ILogger<DatVeController> logger, IHttpClientFactory httpClientFactory)
+		public DatVeController(QuanLyBanVeXemPhimV2Context context, ILogger<DatVeController> logger, IHttpClientFactory httpClientFactory)
         {
             _context = context;
 			_logger = logger;
@@ -132,7 +132,11 @@ namespace WebBanVeXemPhim.Controllers
         }
         public async Task<IActionResult> ThongTinVe( bool check)
         {
-            int? MaCombo = HttpContext.Session.GetInt32("MaCombo") ?? null;
+            int? MaCombo = HttpContext.Session.GetInt32("MaCombo");
+            if (MaCombo.HasValue) {
+                MaCombo = null;
+            }
+            Console.WriteLine(MaCombo.ToString());
             var tencombo = HttpContext.Session.GetString("Tencombo") ?? "";
             tencombo = "<br/>"+tencombo;
             if (check == true)
@@ -196,6 +200,7 @@ namespace WebBanVeXemPhim.Controllers
                     MaNguoiDung = MaNguoiDung,
                     NoiDung ="Bạn đã đặt vé thành công<br/>Tên Phim: " + order[0].TenPhim+"<br/>Ngày chiếu:"+order[0].Ngaychieu+" Giờ chiếu: " + order[0].GioChieu + "<br/> Số ghế: "+SoGhe_ThongBao+tencombo
                 };
+                HttpContext.Session.Remove("NoiDung");
                 _context.ThongBaos.Add(ThongBao);
                 _context.ThanhToans.AddRange(payments);
                 await _context.SaveChangesAsync();
@@ -275,10 +280,17 @@ namespace WebBanVeXemPhim.Controllers
             return RedirectToAction("Index");
         }
 		[HttpPost]
-		public IActionResult CreateTransaction(float amount)
+		public IActionResult CreateTransaction(float amount,int orderId)
 		{
             Console.WriteLine(amount);
-			string transactionId = $"TX{DateTime.Now:yyyyMMddHHmmss}{new Random().Next(1000, 9999)}";
+            var transactionId = HttpContext.Session.GetString("NoiDung_"+orderId);
+            if (transactionId == null)
+            {
+                string NoiDung = $"TX{DateTime.Now:yyyyMMddHHmmss}{new Random().Next(1000, 9999)}";
+                HttpContext.Session.SetString("NoiDung_"+orderId, NoiDung);
+                transactionId = NoiDung;
+            }
+
         //https://api.vietqr.io/image/970422-3120182092003-e2ryJKx.jpg?accountName=NGUYEN%20VAN%20AN&amount=&amount={amount}&des={transactionId}
             string qrUrl = $"https://api.vietqr.io/image/970422-VQRQABSTC4478-e2ryJKx.jpg?accountName=NGUYEN%20VAN%20AN&amount={amount}&addInfo={transactionId}";
 			return Json(new { transactionId, qrUrl });

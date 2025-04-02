@@ -10,9 +10,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class ComboesController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public ComboesController(QuanLyBanVeXemPhimContext context)
+        public ComboesController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }
@@ -35,7 +35,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 
             // Sắp xếp theo tên Combo (A-Z) và lấy dữ liệu theo trang
             var danhSachCombo = await query
-                .OrderBy(c => c.TenCombo)
+                .OrderByDescending(c => c.TenCombo)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

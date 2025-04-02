@@ -124,8 +124,7 @@
 
                 // Nếu server trả về thông báo đăng ký thành công, chuyển hướng
                 if (result.includes("thành công") || result.includes("Vui lòng kiểm tra email")) {
-                    window.location.href = "https://mail.google.com/";
-
+                   window.open("https://mail.google.com/", "_blank");
                 } else {
                     throw new Error(result);
                 }

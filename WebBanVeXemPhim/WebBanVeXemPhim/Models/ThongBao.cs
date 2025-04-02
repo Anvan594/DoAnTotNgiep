@@ -13,7 +13,7 @@ public partial class ThongBao
 
     public DateTime? NgayGui { get; set; }
 
-    public bool? TrangThai { get; set; } = false;
+    public bool? TrangThai { get; set; }=false;
 
     public virtual NguoiDung MaNguoiDungNavigation { get; set; } = null!;
 }

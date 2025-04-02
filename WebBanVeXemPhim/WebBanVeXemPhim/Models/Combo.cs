@@ -7,10 +7,11 @@ public partial class Combo
 {
     public string? Anh { get; set; }
 
-    public decimal Gia { get; set; }
+    public decimal? Gia { get; set; }
 
     public string? TenCombo { get; set; }
 
     public int MaCombo { get; set; }
 
+    public virtual ICollection<ThanhToan> ThanhToans { get; set; } = new List<ThanhToan>();
 }

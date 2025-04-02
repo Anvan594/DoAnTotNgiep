@@ -25,6 +25,8 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = C:\Users\An\Documents\GitHub\DoAnTotNgiep\WebBanVeXemPhim\WebBanVeXemPhim
 build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
 
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/Banners/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXEJhbm5lcnNcQ3JlYXRlLmNzaHRtbA==
@@ -136,6 +138,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/NguoiDungs/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXE5ndW9pRHVuZ3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/NhanViens/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXE5oYW5WaWVuc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/NhanViens/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcYWRtaW5zXFZpZXdzXE5oYW5WaWVuc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/An/Documents/GitHub/DoAnTotNgiep/WebBanVeXemPhim/WebBanVeXemPhim/Areas/admins/Views/Phims/Create.cshtml]

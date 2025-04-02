@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebBanVeXemPhim.bundle.scp.css",
-      "PackagePath": "staticwebassets\\WebBanVeXemPhim.bundle.scp.css"
+      "PackagePath": "staticwebassets\\WebBanVeXemPhim.iykkzns9te.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\Trailers\\trailer_latmat48h.mp4",
@@ -11,6 +11,14 @@
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\admin.png",
       "PackagePath": "staticwebassets\\admin.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\appsettings.Development.json",
+      "PackagePath": "staticwebassets\\appsettings.Development.json"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\appsettings.json",
+      "PackagePath": "staticwebassets\\appsettings.json"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\assets\\css\\bootstrap.min.css",
@@ -1633,8 +1641,28 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\05308a65-91ef-4759-ac3a-1957409dadcc_media_images_2025_03_21_400x633-172149-210325-20.jpg",
+      "PackagePath": "staticwebassets\\images\\05308a65-91ef-4759-ac3a-1957409dadcc_media_images_2025_03_21_400x633-172149-210325-20.jpg"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\0e99214c-25d1-4608-b965-c5ec07bd33b6_diadao.png",
+      "PackagePath": "staticwebassets\\images\\0e99214c-25d1-4608-b965-c5ec07bd33b6_diadao.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\104f0fa2-b510-4c94-971e-400544ff5d72_media_images_2025_03_27_poster-minecraft-1-111444-270325-61.jpg",
+      "PackagePath": "staticwebassets\\images\\104f0fa2-b510-4c94-971e-400544ff5d72_media_images_2025_03_27_poster-minecraft-1-111444-270325-61.jpg"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\18a761a3-7010-4ea0-a92e-d5f925050038_doramon.jpg",
+      "PackagePath": "staticwebassets\\images\\18a761a3-7010-4ea0-a92e-d5f925050038_doramon.jpg"
+    },
+    {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\37678e3b-3e8c-40b2-a017-795826186793_DenAmHon.png",
       "PackagePath": "staticwebassets\\images\\37678e3b-3e8c-40b2-a017-795826186793_DenAmHon.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\3ac8b91e-5e59-4b82-a137-a9fe2157c725_thang-cua-xinh-iu-545-x-415-103920-050325-89.png",
+      "PackagePath": "staticwebassets\\images\\3ac8b91e-5e59-4b82-a137-a9fe2157c725_thang-cua-xinh-iu-545-x-415-103920-050325-89.png"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\4b0b0e47-cc69-4ab6-bc1e-173b19062b66.png",
@@ -1651,6 +1679,10 @@
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\5ae77d1a-66e1-497d-9634-4f299a976129.jpg",
       "PackagePath": "staticwebassets\\images\\5ae77d1a-66e1-497d-9634-4f299a976129.jpg"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\6495fb55-b649-46f0-8c1a-90bf2e17a473.jpg",
+      "PackagePath": "staticwebassets\\images\\6495fb55-b649-46f0-8c1a-90bf2e17a473.jpg"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\64b23a34-b23d-4ae7-99fa-72b02f50040f_TruyenCoTichBiCam.png",
@@ -1733,6 +1765,10 @@
       "PackagePath": "staticwebassets\\images\\bayngotngao.jpg"
     },
     {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\bb7ccbb8-b24c-451f-b75b-d8e7af8a45fc_media_images_2025_03_20_400w-x-663h-111620-200325-84.jpg",
+      "PackagePath": "staticwebassets\\images\\bb7ccbb8-b24c-451f-b75b-d8e7af8a45fc_media_images_2025_03_20_400w-x-663h-111620-200325-84.jpg"
+    },
+    {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\d33dd127-07d5-45d8-a8dc-0597b854ecdf_NuTuBongToi.png",
       "PackagePath": "staticwebassets\\images\\d33dd127-07d5-45d8-a8dc-0597b854ecdf_NuTuBongToi.png"
     },
@@ -1759,6 +1795,10 @@
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\f6907c1e-aa23-4d8f-9312-4558cab1487b.png",
       "PackagePath": "staticwebassets\\images\\f6907c1e-aa23-4d8f-9312-4558cab1487b.png"
+    },
+    {
+      "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\f83dfef1-7989-4d2f-9bd4-d0ff66a0818a_amduonglo.jpg",
+      "PackagePath": "staticwebassets\\images\\f83dfef1-7989-4d2f-9bd4-d0ff66a0818a_amduonglo.jpg"
     },
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\fe6ccb6e-ed37-4e9e-b302-bc165c264cde_voduongdainao.png",
@@ -2027,6 +2067,10 @@
     {
       "Id": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebBanVeXemPhim.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebBanVeXemPhim.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -7,9 +7,9 @@ namespace WebBanVeXemPhim.Controllers
 {
     public class NhanVienController : Controller
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public NhanVienController(QuanLyBanVeXemPhimContext context)
+        public NhanVienController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }
@@ -265,6 +265,7 @@ namespace WebBanVeXemPhim.Controllers
             _context.ThanhToans.AddRange(payments);
             await _context.SaveChangesAsync();
             await UpdateVe(MaNguoiDung, MaLichChieu);
+            HttpContext.Session.Remove("NoiDung");
             return RedirectToAction("Index", "NhanVien");
         }
         public async Task<IActionResult> UpdateVe(int MaNguoiDung, int MaLichChieu)

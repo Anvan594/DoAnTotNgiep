@@ -11,9 +11,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class BannersController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public BannersController(QuanLyBanVeXemPhimContext context)
+        public BannersController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

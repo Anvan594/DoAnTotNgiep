@@ -8,9 +8,9 @@
 <h1>Quản lý tài khoản người dùng</h1>
 
 <p>
-    <button style="font-size:14px" class="btn btn-success btn-sm btnOn" onclick="loadSidebar_create()">
-        Thêm người dùng <i class="fas fa-user-plus"></i>
-    </button>
+    @* <button style="font-size:14px" class="btn btn-success btn-sm btnOn" onclick="loadSidebar_create()"> *@
+    @*     Thêm người dùng <i class="fas fa-user-plus"></i> *@
+    @* </button> *@
     <form method="get" asp-action="Index">
         <input type="text" name="searchString" placeholder="Nhập tên người dùng..." class="form-control"
                style="width: 300px; display: inline-block; margin-right: 10px;"
@@ -53,9 +53,9 @@
                             <button class="btn btn-warning btn-sm btnOn" onclick="loadSidebar_edit(@item.MaNguoiDung)">
                                 Sửa <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn btn-danger btn-sm btnOn" onclick="deleteUser(@item.MaNguoiDung)">
-                                Xóa <i class="fas fa-trash-alt"></i>
-                            </button>
+                            @* <button class="btn btn-danger btn-sm btnOn" onclick="deleteUser(@item.MaNguoiDung)"> *@
+                            @*     Xóa <i class="fas fa-trash-alt"></i> *@
+                            @* </button> *@
                         </td>
                     </tr>
                 }

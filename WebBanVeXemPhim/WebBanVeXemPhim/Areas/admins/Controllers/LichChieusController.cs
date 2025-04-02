@@ -12,9 +12,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class LichChieusController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public LichChieusController(QuanLyBanVeXemPhimContext context)
+        public LichChieusController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

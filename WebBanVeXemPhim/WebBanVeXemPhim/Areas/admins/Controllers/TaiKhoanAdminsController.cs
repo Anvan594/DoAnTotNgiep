@@ -11,9 +11,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class TaiKhoanAdminsController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public TaiKhoanAdminsController(QuanLyBanVeXemPhimContext context)
+        public TaiKhoanAdminsController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }
@@ -32,7 +32,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
             }
 
             // Lấy danh sách tài khoản theo phân trang
-            var danhSachTaiKhoan = await query.OrderBy(t => t.MaAdmin)
+            var danhSachTaiKhoan = await query.OrderByDescending(t => t.MaAdmin)
                                               .Skip((page - 1) * pageSize)
                                               .Take(pageSize)
                                               .ToListAsync();

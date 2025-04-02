@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 public class HeaderViewComponent : ViewComponent
 {
-    private readonly QuanLyBanVeXemPhimContext _context;
+    private readonly QuanLyBanVeXemPhimV2Context _context;
 
-    public HeaderViewComponent(QuanLyBanVeXemPhimContext context)
+    public HeaderViewComponent(QuanLyBanVeXemPhimV2Context context)
     {
         _context = context;
     }

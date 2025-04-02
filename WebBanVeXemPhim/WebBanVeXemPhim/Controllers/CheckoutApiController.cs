@@ -13,20 +13,21 @@ namespace WebBanVeXemPhim.Controllers
     public class CheckoutApiController : Controller
     {
         private readonly PayOS _payOS;
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
         // Inject PayOS service
-        public CheckoutApiController(PayOS payOS , QuanLyBanVeXemPhimContext context)
+        public CheckoutApiController(PayOS payOS, QuanLyBanVeXemPhimV2Context context)
         {
             _payOS = payOS;
             _context = context;
         }
         [HttpPost]
-        public async Task<IActionResult> Create(int maKhach, decimal giave,decimal tongtien, string soghe, DateTime ngaydat, string giochieu,int MaLichChieu,string TenPhim,int selectedCombo)
+        public async Task<IActionResult> Create(int maKhach, decimal giave, decimal tongtien, string soghe, DateTime ngaydat, string giochieu, int MaLichChieu, string TenPhim, int selectedCombo)
         {
             var tencombo = "";
-            var combo=_context.Comboes.Where(c=>c.MaCombo==selectedCombo).FirstOrDefault();
-            if (combo != null) { 
+            var combo = _context.Comboes.Where(c => c.MaCombo == selectedCombo).FirstOrDefault();
+            if (combo != null)
+            {
                 tencombo = combo.TenCombo;
                 tencombo = tencombo + " x" + (tongtien - giave) / combo.Gia;
                 HttpContext.Session.SetString("Tencombo", tencombo);
@@ -34,23 +35,26 @@ namespace WebBanVeXemPhim.Controllers
             var scheme = Request.Scheme; // http hoặc https
             var host = Request.Host.Value; // tên miền + cổng, ví dụ "localhost:7126"
             var domain = $"{scheme}://{host}";
+            if (selectedCombo != null)
+            {
+                HttpContext.Session.SetInt32("MaCombo", selectedCombo);
+            }
 
-            HttpContext.Session.SetInt32("MaCombo", selectedCombo);
             long code = int.Parse(DateTimeOffset.Now.ToString("ffffff"));
             long expirationTime = ((DateTimeOffset)DateTime.UtcNow.AddMinutes(30)).ToUnixTimeSeconds();
-
+            string transactionId = $"TX{DateTime.Now:yyyyMMddHHmmss}{new Random().Next(1000, 9999)}";
             int MaDonHang = (int)code;
             HttpContext.Session.SetInt32("MaDonHang", MaDonHang);
             var paymentLinkRequest = new PaymentData(
                 orderCode: code,
                 amount: Convert.ToInt32(tongtien),
-                description: $"Thanh toán đơn hàng {MaLichChieu}",
+                description: transactionId,
                 items: [new($"Phim:{TenPhim}, Số ghế: {soghe}, Giờ chiếu: {giochieu},{tencombo} ", 1, Convert.ToInt32(tongtien))], // Khởi tạo mảng items đúng cách
                 returnUrl: domain + "/DatVe/ThanhToanThanhCong",
                 cancelUrl: domain + "/DatVe/dieuhuong",
                 expiredAt: expirationTime
             );
-            
+
             var response = await _payOS.createPaymentLink(paymentLinkRequest);
             // Chuyển hướng đến trang thanh toán
             HttpContext.Session.SetString("LinkThanhToan", response.checkoutUrl);
@@ -58,7 +62,7 @@ namespace WebBanVeXemPhim.Controllers
             return new StatusCodeResult(303);
         }
         [HttpPost]
-        public async Task<IActionResult> Create_Json(int maKhach, decimal giave, string soghe, DateTime ngaydat, string giochieu, int MaLichChieu, string TenPhim,int orderId)
+        public async Task<IActionResult> Create_Json(int maKhach, decimal giave, string soghe, DateTime ngaydat, string giochieu, int MaLichChieu, string TenPhim, int orderId)
         {
             var domain = "https://localhost:7126";
 

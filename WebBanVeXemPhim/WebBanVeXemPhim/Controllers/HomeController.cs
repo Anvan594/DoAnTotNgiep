@@ -8,9 +8,9 @@ namespace WebBanVeXemPhim.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public HomeController(QuanLyBanVeXemPhimContext context)
+        public HomeController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }
@@ -20,7 +20,7 @@ namespace WebBanVeXemPhim.Controllers
         }
         public async Task<IActionResult> IndexAsync(string searchString)
         {
-            HttpContext.Session.Remove("MaCombo");
+            //HttpContext.Session.Remove("MaCombo");
             var ChucVu = HttpContext.Session.GetString("ChucVu") ?? "";
             if (ChucVu == "Nhan Vien")
             {
@@ -29,7 +29,7 @@ namespace WebBanVeXemPhim.Controllers
             var currentTime = DateTime.Now;
             int MaKhachHang = HttpContext.Session.GetInt32("NguoiDung") ?? 0;
             // Lọc các vé có trạng thái là false và thời gian đặt vé quá 10 phút
-            if (MaKhachHang != 0) {
+            if (MaKhachHang != 0&&currentTime>DateTime.Now.AddMinutes(10)) {
                 var veCanXoa = await _context.Ves
                .Where(v => v.TrangThai == false && v.MaKhachHang == MaKhachHang)
                .ToListAsync();

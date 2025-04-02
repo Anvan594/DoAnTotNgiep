@@ -9,9 +9,9 @@ namespace Web_Api.Areas.admins.Controllers
     public class HomeController : BaseController
     {
         private readonly HttpClient _httpClient;
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public HomeController(IHttpClientFactory httpClientFactory,QuanLyBanVeXemPhimContext context)
+        public HomeController(IHttpClientFactory httpClientFactory, QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
             _httpClient = httpClientFactory.CreateClient();

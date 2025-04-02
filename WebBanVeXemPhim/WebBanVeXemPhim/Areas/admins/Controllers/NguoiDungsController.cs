@@ -10,9 +10,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class NguoiDungsController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public NguoiDungsController(QuanLyBanVeXemPhimContext context)
+        public NguoiDungsController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }
@@ -21,17 +21,20 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         public async Task<IActionResult> Index(string searchString, int page = 1)
         {
             int pageSize = 5;
-            var query = _context.NguoiDungs.AsQueryable();
-
+            var query = _context.NguoiDungs
+                            .Where(n => n.Token.Trim() != "Nhan Vien")
+                            .OrderByDescending(n => n.TrangThai) // Đang hoạt động (1) trước, không hoạt động (0) sau
+                            .ThenByDescending(n => n.MaNguoiDung) // Sau đó tiếp tục sắp xếp theo MaNguoiDung
+                            .AsQueryable();
             if (!string.IsNullOrEmpty(searchString))
             {
                 query = query.Where(u => u.TenNguoiDung.Contains(searchString));
             }
 
-            var danhSachNguoiDung = await query.OrderBy(u => u.MaNguoiDung)
-                                               .Skip((page - 1) * pageSize)
+            var danhSachNguoiDung = await query.Skip((page - 1) * pageSize)
                                                .Take(pageSize)
                                                .ToListAsync();
+                                               
 
             int totalRecords = await query.CountAsync();
             int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);

@@ -138,7 +138,7 @@
                 <div class="modal-body">
                     <img id="qrCode" src="" alt="QR Code" class="img-fluid" />
                     <h6 class="mt-3">Nội dung giao dịch: <span id="transactionId"></span></h6>
-                    
+
                 </div>
 
                 <!-- Footer -->
@@ -262,7 +262,7 @@
                     <input hidden type="number" name="selectedCombo" id="selectedComboInput" value="0" />
                     <input hidden type="text" name="TenPhim" value="@TenPhim" required />
                     <input hidden type="number" name="tongtien" id="TongTien" value="@giave" required />
-                    <input hidden type="number" name="giave"  value="@giave" required />
+                    <input hidden type="number" name="giave" value="@giave" required />
                     <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
                     <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
                     <a href="@Url.Action("XoaVe", "Home" ,new { MaLichChieu = maLichChieu })" class="btn btn-primary btn-lg" style="margin-right:15px">Hủy vé</a>
@@ -281,8 +281,8 @@
                     <input hidden type="number" name="selectedCombo" id="selectedComboInput_3" value="0" />
                     <input hidden type="text" name="soghe" value="@soghe" required />
                     <input hidden type="text" name="TenPhim" value="@TenPhim" required />
-                    <input hidden type="number" name="tongtien" id="TongTien3" value="@giave" required />
-                    <input hidden type="number" name="giave"  value="@giave" required />
+                    <input hidden type="number" name="tongtien" id="TongTien3" value="@giave required    />
+                    <input hidden type="number" name="giave" value="@giave" required />
                     <input hidden type="number" name="selectedCombo" id="selectedComboInput" value="0" />
                     <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
                     <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
@@ -306,7 +306,7 @@
                             <input hidden type="number" name="selectedCombo" id="selectedComboInput" value="0" />
                             <input hidden type="datetime" name="ngaydat" value="@ngaydat.ToString("yyyy-MM-dd")" required />
                             <input hidden type="time" name="giochieu" value="@giochieu.ToString("HH:mm")" required />
-                            <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg" >Thanh toán tiền mặt</button>
+                            <button type="submit" id="create-payment-link-btn" class="btn btn-success btn-lg">Thanh toán tiền mặt</button>
                         </form>
                     }
                 }
@@ -424,11 +424,14 @@
 
     // Tạo giao dịch mới
     async function createTransaction() {
-        const amount = parseFloat(document.getElementById('TongVe').value)
-        const response = await fetch('/DatVe/CreateTransaction?amount=' + amount, {
+        const amount = parseFloat(document.getElementById('TongTien').value)
+        console.log(amount);
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+        const response = await fetch('/DatVe/CreateTransaction?amount='+amount+'&orderId='+orderId, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: parseFloat(amount) })
+
         });
 
         if (!response.ok) {
@@ -443,31 +446,50 @@
         // Kiểm tra nếu transactionId không rỗng, thì gọi API mỗi 1 giây
         setInterval(searchTransactions, 1500);
     }
+    let isProcessing = false; // Biến kiểm soát tránh chạy lại nhiều lần
     let searchTimeout;
 
     async function searchTransactions() {
         if (searchTimeout) clearTimeout(searchTimeout);
 
         searchTimeout = setTimeout(async () => {
+            if (isProcessing) return; // Nếu đang xử lý, không chạy tiếp
+            isProcessing = true; // Đánh dấu đang xử lý
+
             const transactionElement = document.getElementById('transactionId');
             const transactionId = transactionElement.textContent.trim();
+
             try {
-                const response = await fetch(`/DatVe/TimGiaoDich?content=`+transactionId);
+                const response = await fetch(`/DatVe/TimGiaoDich?content=` + transactionId);
 
                 if (!response.ok) {
-                    alert("Không tìm thấy giao dịch nào!" + transactionId);
+                    alert("Không tìm thấy giao dịch nào! " + transactionId);
+                    isProcessing = false; // Cho phép gọi lại sau
                     return;
                 }
 
                 const transactions = await response.json();
                 if (transactions.success == "True") {
+                    var message = 'Thanh Toán Thành Công';
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Thông báo',
+                        text: message,
+                        confirmButtonText: 'OK'
+                    });
+
+                    // Chỉ submit sau khi người dùng nhấn OK
                     document.getElementById('paymentForm_TT').submit();
                 }
+
                 document.getElementById('transactionResult').textContent = JSON.stringify(transactions, null, 2);
             } catch (error) {
                 console.error("Lỗi khi gọi API:", error);
             }
-        }, 500);  // Chờ 500ms trước khi gọi API
+
+            isProcessing = false; // Cho phép gọi lại
+        }, 1000);  // Chờ 500ms trước khi gọi API
     }
+
     const transactionElement = document.getElementById('transactionId');
 </script>

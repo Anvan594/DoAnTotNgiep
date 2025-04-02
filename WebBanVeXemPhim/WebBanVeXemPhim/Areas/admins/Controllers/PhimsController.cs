@@ -12,10 +12,10 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class PhimsController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PhimsController(IWebHostEnvironment webHostEnvironment, QuanLyBanVeXemPhimContext context)
+        public PhimsController(IWebHostEnvironment webHostEnvironment, QuanLyBanVeXemPhimV2Context context)
         {
             _webHostEnvironment = webHostEnvironment;
             _context = context;

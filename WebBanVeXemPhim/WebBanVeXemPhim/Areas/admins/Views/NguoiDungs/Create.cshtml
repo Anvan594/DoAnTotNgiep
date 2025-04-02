@@ -16,6 +16,11 @@
             <input asp-for="MatKhau" class="form-control" />
             <span asp-validation-for="MatKhau" class="text-danger"></span>
         </div>
+        <div class="form-group" hidden>
+            <label asp-for="Token" class="control-label"></label>
+            <input asp-for="Token" value="Nhan Vien" class="form-control" />
+            <span asp-validation-for="Token" class="text-danger"></span>
+        </div>
         <div class="form-group">
             <label asp-for="Email" class="control-label"></label>
             <input asp-for="Email" class="form-control" />

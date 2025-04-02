@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Net.payOS;
 using WebBanVeXemPhim.Models;
 
@@ -9,16 +9,16 @@ namespace WebBanVeXemPhim
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<QuanLyBanVeXemPhimContext>(options =>
+            builder.Services.AddDbContext<QuanLyBanVeXemPhimV2Context>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("Dbcontext")));
-            builder.Services.AddDistributedMemoryCache();  // Dịch vụ lưu trữ bộ nhớ cho session
+            builder.Services.AddDistributedMemoryCache();  // D?ch v? l?u tr? b? nh? cho session
             builder.Services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);  // Thời gian hết hạn session
-                options.Cookie.HttpOnly = true;  // Bảo mật cookie
-                options.Cookie.IsEssential = true;  // Cookie bắt buộc cho session
+                options.IdleTimeout = TimeSpan.FromMinutes(30);  // Th?i gian h?t h?n session
+                options.Cookie.HttpOnly = true;  // B?o m?t cookie
+                options.Cookie.IsEssential = true;  // Cookie b?t bu?c cho session
             });
-            
+
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddControllersWithViews();
@@ -26,7 +26,7 @@ namespace WebBanVeXemPhim
 
             builder.Services.AddDistributedMemoryCache();
 
-            // Cấu hình PayOS
+            // C?u h�nh PayOS
             var clientId = builder.Configuration["PayOS:ClientId"];
             var apiKey = builder.Configuration["PayOS:ApiKey"];
             var checksumKey = builder.Configuration["PayOS:ChecksumKey"];

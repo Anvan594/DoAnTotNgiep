@@ -35,7 +35,7 @@
                 @foreach (var item in Model)
                 {
                     <tr id="row_@item.MaPhim">
-                        <td>@Html.DisplayFor(modelItem => item.TenPhim)</td>
+                        <td style="width:300px">@Html.DisplayFor(modelItem => item.TenPhim)</td>
                         <td>@Html.DisplayFor(modelItem => item.TheLoai)</td>
 
                         <td><img src="~/images/@Html.DisplayFor(modelItem => item.Poster)" alt="Alternate Text" width="150px" /></td>

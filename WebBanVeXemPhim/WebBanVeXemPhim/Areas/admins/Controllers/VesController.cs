@@ -13,9 +13,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class VesController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public VesController(QuanLyBanVeXemPhimContext context)
+        public VesController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

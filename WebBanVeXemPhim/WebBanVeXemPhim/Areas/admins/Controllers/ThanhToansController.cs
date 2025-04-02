@@ -11,9 +11,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class ThanhToansController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public ThanhToansController(QuanLyBanVeXemPhimContext context)
+        public ThanhToansController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

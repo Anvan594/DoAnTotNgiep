@@ -11,9 +11,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class KhuyenMaisController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public KhuyenMaisController(QuanLyBanVeXemPhimContext context)
+        public KhuyenMaisController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }
@@ -36,7 +36,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 
             // Sắp xếp theo tên Khuyến Mãi (A-Z) và lấy dữ liệu theo trang
             var danhSachKhuyenMai = await query
-                .OrderBy(km => km.ThongTin)
+                .OrderByDescending(km => km.ThongTin)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();

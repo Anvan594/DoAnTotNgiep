@@ -11,9 +11,9 @@ namespace WebBanVeXemPhim.Controllers
 {
     public class BaoCaoController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public BaoCaoController(QuanLyBanVeXemPhimContext context)
+        public BaoCaoController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

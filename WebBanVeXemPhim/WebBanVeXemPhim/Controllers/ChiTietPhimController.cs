@@ -7,9 +7,9 @@ namespace WebBanVeXemPhim.Controllers
 {
     public class ChiTietPhimController : Controller
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public ChiTietPhimController(QuanLyBanVeXemPhimContext context)
+        public ChiTietPhimController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

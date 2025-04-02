@@ -10,9 +10,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class PhongsController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public PhongsController(QuanLyBanVeXemPhimContext context)
+        public PhongsController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }
@@ -74,7 +74,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
             try
             {
                 Console.WriteLine("TongSoGhe nhận được: " + TongSoGhe); // Debug
-                using (var context = new QuanLyBanVeXemPhimContext())
+                using (var context = new QuanLyBanVeXemPhimV2Context())
                 {
                     context.Database.ExecuteSqlRaw("EXEC ThemPhongVaGhe @TenPhong = {0}, @TongSoGhe = {1}", TenPhong, TongSoGhe);
                 }
@@ -112,7 +112,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
             {
                 try
                 {
-                    using (var context = new QuanLyBanVeXemPhimContext())
+                    using (var context = new QuanLyBanVeXemPhimV2Context())
                     {
                         context.Database.ExecuteSqlRaw(
                             "EXEC CapNhatPhongVaGhe @MaPhong = {0}, @TenPhongMoi = {1}, @TongSoGheMoi = {2}, @TrangThaiMoi = {3}",
@@ -136,7 +136,7 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
         {
             try
             {
-                using (var context = new QuanLyBanVeXemPhimContext())
+                using (var context = new QuanLyBanVeXemPhimV2Context())
                 {
                     context.Database.ExecuteSqlRaw("EXEC XoaPhongVaGhe @MaPhong = {0}", id);
                 }

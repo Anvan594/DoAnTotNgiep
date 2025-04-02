@@ -17,5 +17,7 @@ public partial class ThanhToan
 
     public int? MaComBo { get; set; }
 
+    public virtual Combo? MaComBoNavigation { get; set; }
+
     public virtual Ve MaVeNavigation { get; set; } = null!;
 }

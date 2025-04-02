@@ -10,9 +10,9 @@ namespace WebBanVeXemPhim.Areas.admins.Controllers
 {
     public class TrailersController : BaseController
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
 
-        public TrailersController(QuanLyBanVeXemPhimContext context)
+        public TrailersController(QuanLyBanVeXemPhimV2Context context)
         {
             _context = context;
         }

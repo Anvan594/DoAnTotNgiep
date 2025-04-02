@@ -14,10 +14,10 @@ namespace WebBanVeXemPhim.Controllers
 
     public class QuenMatKhauController : Controller
     {
-        private readonly QuanLyBanVeXemPhimContext _context;
+        private readonly QuanLyBanVeXemPhimV2Context _context;
         private readonly IMemoryCache _cache;
 
-        public QuenMatKhauController(QuanLyBanVeXemPhimContext context, IMemoryCache cache)
+        public QuenMatKhauController(QuanLyBanVeXemPhimV2Context context, IMemoryCache cache)
         {
             _context = context;
             _cache = cache;
