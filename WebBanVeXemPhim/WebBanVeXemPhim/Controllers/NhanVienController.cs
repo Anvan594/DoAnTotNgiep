@@ -266,7 +266,7 @@ namespace WebBanVeXemPhim.Controllers
             await _context.SaveChangesAsync();
             await UpdateVe(MaNguoiDung, MaLichChieu);
             HttpContext.Session.Remove("NoiDung");
-            return RedirectToAction("Index", "NhanVien");
+            return RedirectToAction("Index", "Home");
         }
         public async Task<IActionResult> UpdateVe(int MaNguoiDung, int MaLichChieu)
         {
