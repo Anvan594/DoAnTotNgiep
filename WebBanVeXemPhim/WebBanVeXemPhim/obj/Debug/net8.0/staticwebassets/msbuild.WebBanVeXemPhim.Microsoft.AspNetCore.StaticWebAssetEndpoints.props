@@ -5016,6 +5016,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"o2elzs0iv2"},{"Name":"integrity","Value":"sha256-gK1BTQVlb35LhwsgJ9tqnePyxVx1y1Fz3ERwJAf50BA="},{"Name":"label","Value":"_content/WebBanVeXemPhim/images/5ae77d1a-66e1-497d-9634-4f299a976129.jpg"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"294663"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022gK1BTQVlb35LhwsgJ9tqnePyxVx1y1Fz3ERwJAf50BA=\u0022"},{"Name":"Last-Modified","Value":"Mon, 17 Mar 2025 14:16:31 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/WebBanVeXemPhim/images/6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-40Kvm\u002BJBy\u002BMqmfntoTw4RM/g\u002BaYDspYPXDPBRCoQZHc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"83250"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002240Kvm\u002BJBy\u002BMqmfntoTw4RM/g\u002BaYDspYPXDPBRCoQZHc=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 16:29:35 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/WebBanVeXemPhim/images/6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.rikwv5mwtu.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rikwv5mwtu"},{"Name":"integrity","Value":"sha256-40Kvm\u002BJBy\u002BMqmfntoTw4RM/g\u002BaYDspYPXDPBRCoQZHc="},{"Name":"label","Value":"_content/WebBanVeXemPhim/images/6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"83250"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002240Kvm\u002BJBy\u002BMqmfntoTw4RM/g\u002BaYDspYPXDPBRCoQZHc=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 16:29:35 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/WebBanVeXemPhim/images/6495fb55-b649-46f0-8c1a-90bf2e17a473.7s2u23nbp0.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\6495fb55-b649-46f0-8c1a-90bf2e17a473.jpg'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -5063,6 +5075,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"qnfdx9uu4e"},{"Name":"integrity","Value":"sha256-eoqtE8WQ5cupyV15xsDSizUuMmMeHHgq6mR9K83oMY4="},{"Name":"label","Value":"_content/WebBanVeXemPhim/images/9622d232-8d36-49f7-8f73-c6265d35528d.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"400709"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022eoqtE8WQ5cupyV15xsDSizUuMmMeHHgq6mR9K83oMY4=\u0022"},{"Name":"Last-Modified","Value":"Mon, 17 Mar 2025 14:16:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/WebBanVeXemPhim/images/9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"37904"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 16:31:09 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/WebBanVeXemPhim/images/9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.lekmy02mh3.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"lekmy02mh3"},{"Name":"integrity","Value":"sha256-zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA="},{"Name":"label","Value":"_content/WebBanVeXemPhim/images/9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"37904"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 16:31:09 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/WebBanVeXemPhim/images/9c8e6cce-837a-4619-a47d-fca7f5c26689_NinjaLoanThi.bntkm72glg.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\9c8e6cce-837a-4619-a47d-fca7f5c26689_NinjaLoanThi.png'))</AssetFile>

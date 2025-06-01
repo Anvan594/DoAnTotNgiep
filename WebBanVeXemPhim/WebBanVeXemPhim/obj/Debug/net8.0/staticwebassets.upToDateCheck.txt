@@ -416,10 +416,12 @@ wwwroot\images\4b0b0e47-cc69-4ab6-bc1e-173b19062b66.png
 wwwroot\images\4d92146d-9c14-44ec-968a-41aeb9790ebc_SatThuVoCungCucHai.jpg
 wwwroot\images\59a4f373-3fad-4416-a758-f0cee0c1214b_TheGioiMoi.png
 wwwroot\images\5ae77d1a-66e1-497d-9634-4f299a976129.jpg
+wwwroot\images\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg
 wwwroot\images\6495fb55-b649-46f0-8c1a-90bf2e17a473.jpg
 wwwroot\images\64b23a34-b23d-4ae7-99fa-72b02f50040f_TruyenCoTichBiCam.png
 wwwroot\images\8d69f739-370e-46ac-9ad0-9a0674a46079_BoTuBaoThu.jpg
 wwwroot\images\9622d232-8d36-49f7-8f73-c6265d35528d.png
+wwwroot\images\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg
 wwwroot\images\9c8e6cce-837a-4619-a47d-fca7f5c26689_NinjaLoanThi.png
 wwwroot\images\a241aede-6f4a-4b7d-a3b8-189b153290ee_NuHonBacTy.jpg
 wwwroot\images\af83e92c-a8f9-4a78-b0a2-bb59bdaa3af2_nhagiatien.jpg

@@ -7524,6 +7524,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\5ae77d1a-66e1-497d-9634-4f299a976129.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebBanVeXemPhim</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebBanVeXemPhim</BasePath>
+      <RelativePath>images/6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>rikwv5mwtu</Fingerprint>
+      <Integrity>40Kvm+JBy+MqmfntoTw4RM/g+aYDspYPXDPBRCoQZHc=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\6495fb55-b649-46f0-8c1a-90bf2e17a473.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>WebBanVeXemPhim</SourceId>
@@ -7595,6 +7613,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\9622d232-8d36-49f7-8f73-c6265d35528d.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>WebBanVeXemPhim</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/WebBanVeXemPhim</BasePath>
+      <RelativePath>images/9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>lekmy02mh3</Fingerprint>
+      <Integrity>zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\9c8e6cce-837a-4619-a47d-fca7f5c26689_NinjaLoanThi.png'))">
       <SourceType>Package</SourceType>

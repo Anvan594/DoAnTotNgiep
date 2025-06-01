@@ -353,6 +353,7 @@ namespace WebBanVeXemPhim.Controllers
 				return StatusCode(500, "Đã xảy ra lỗi!");
 			}
 		}
+
 		public class DatVeRequest
         {
             [Required(ErrorMessage = "Mã lịch chiếu không được để trống.")]

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "LJAV9FUQM2S6ZCoy515hOJWmd4TrGOzxxeaU504a5eY=",
+  "Hash": "wEBBT6IG0zjpUmZmD2dP5fABO2cmzD3/+lr9zvdlwVE=",
   "Source": "WebBanVeXemPhim",
   "BasePath": "_content/WebBanVeXemPhim",
   "Mode": "Default",
@@ -8837,6 +8837,27 @@
       "OriginalItemSpec": "wwwroot\\images\\5ae77d1a-66e1-497d-9634-4f299a976129.jpg"
     },
     {
+      "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg",
+      "SourceId": "WebBanVeXemPhim",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\",
+      "BasePath": "_content/WebBanVeXemPhim",
+      "RelativePath": "images/6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "rikwv5mwtu",
+      "Integrity": "40Kvm+JBy+MqmfntoTw4RM/g+aYDspYPXDPBRCoQZHc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg"
+    },
+    {
       "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\6495fb55-b649-46f0-8c1a-90bf2e17a473.jpg",
       "SourceId": "WebBanVeXemPhim",
       "SourceType": "Discovered",
@@ -8919,6 +8940,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\9622d232-8d36-49f7-8f73-c6265d35528d.png"
+    },
+    {
+      "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg",
+      "SourceId": "WebBanVeXemPhim",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\",
+      "BasePath": "_content/WebBanVeXemPhim",
+      "RelativePath": "images/9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "lekmy02mh3",
+      "Integrity": "zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg"
     },
     {
       "Identity": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\9c8e6cce-837a-4619-a47d-fca7f5c26689_NinjaLoanThi.png",
@@ -45173,6 +45215,88 @@
       ]
     },
     {
+      "Route": "images/6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg",
+      "AssetFile": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "83250"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"40Kvm+JBy+MqmfntoTw4RM/g+aYDspYPXDPBRCoQZHc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 16:29:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-40Kvm+JBy+MqmfntoTw4RM/g+aYDspYPXDPBRCoQZHc="
+        }
+      ]
+    },
+    {
+      "Route": "images/6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.rikwv5mwtu.jpg",
+      "AssetFile": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "83250"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"40Kvm+JBy+MqmfntoTw4RM/g+aYDspYPXDPBRCoQZHc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 16:29:35 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rikwv5mwtu"
+        },
+        {
+          "Name": "label",
+          "Value": "images/6299fc2e-ae45-4f39-aba0-d1bd628b65dc_ut_lan.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-40Kvm+JBy+MqmfntoTw4RM/g+aYDspYPXDPBRCoQZHc="
+        }
+      ]
+    },
+    {
       "Route": "images/6495fb55-b649-46f0-8c1a-90bf2e17a473.7s2u23nbp0.jpg",
       "AssetFile": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\6495fb55-b649-46f0-8c1a-90bf2e17a473.jpg",
       "Selectors": [],
@@ -45497,6 +45621,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-eoqtE8WQ5cupyV15xsDSizUuMmMeHHgq6mR9K83oMY4="
+        }
+      ]
+    },
+    {
+      "Route": "images/9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg",
+      "AssetFile": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37904"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 16:31:09 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA="
+        }
+      ]
+    },
+    {
+      "Route": "images/9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.lekmy02mh3.jpg",
+      "AssetFile": "C:\\Users\\An\\Documents\\GitHub\\DoAnTotNgiep\\WebBanVeXemPhim\\WebBanVeXemPhim\\wwwroot\\images\\9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37904"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 16:31:09 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "lekmy02mh3"
+        },
+        {
+          "Name": "label",
+          "Value": "images/9bfb02b9-4a37-4455-82ed-362d29702996_bi_kip_luyen_rong.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zRLMYJKhA8JlKtupkbUIhd97EkAsaxuz9Tdp9DIilYA="
         }
       ]
     },
